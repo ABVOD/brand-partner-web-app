@@ -4,10 +4,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import OfferManagement from './pages/OfferManagement';
-import ContentUpload from './pages/ContentUpload';
-import Analytics from './pages/Analytics';
-import Campaigns from './pages/Campaigns';
+import LocationBasedCampaigns from './pages/LocationBasedCampaigns';
 import Billing from './pages/Billing';
 import Support from './pages/Support';
 
@@ -27,34 +24,10 @@ function App() {
             }
           />
           <Route
-            path="/offers"
+            path="/location-campaigns"
             element={
               <PrivateRoute>
-                <OfferManagement />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/content"
-            element={
-              <PrivateRoute>
-                <ContentUpload />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/analytics"
-            element={
-              <PrivateRoute>
-                <Analytics />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/campaigns"
-            element={
-              <PrivateRoute>
-                <Campaigns />
+                <LocationBasedCampaigns />
               </PrivateRoute>
             }
           />
