@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { TEST_CREDENTIALS } from '../utils/dummyData';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showTestAccounts, setShowTestAccounts] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -24,6 +26,11 @@ export default function Login() {
     setLoading(false);
   }
 
+  const quickFillEmail = (testEmail: string) => {
+    setEmail(testEmail);
+    setPassword('test123'); // Any password works
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -40,6 +47,80 @@ export default function Login() {
             </div>
           )}
           
+          {/* Test Accounts Section */}
+          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium text-blue-900">🧪 Test Accounts</h3>
+              <button
+                type="button"
+                onClick={() => setShowTestAccounts(!showTestAccounts)}
+                className="text-blue-600 hover:text-blue-500 text-sm font-medium"
+              >
+                {showTestAccounts ? 'Hide' : 'Show'} Accounts
+              </button>
+            </div>
+            
+            {showTestAccounts && (
+              <div className="mt-3 space-y-2">
+                <p className="text-xs text-blue-700 mb-2">Click any email to auto-fill (any password works):</p>
+                
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold text-blue-900">👑 Admin Accounts:</p>
+                  <button
+                    type="button"
+                    onClick={() => quickFillEmail(TEST_CREDENTIALS.ADMIN)}
+                    className="block text-xs text-blue-600 hover:text-blue-500 hover:underline"
+                  >
+                    {TEST_CREDENTIALS.ADMIN} (Admin)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => quickFillEmail(TEST_CREDENTIALS.SUPER_ADMIN)}
+                    className="block text-xs text-blue-600 hover:text-blue-500 hover:underline"
+                  >
+                    {TEST_CREDENTIALS.SUPER_ADMIN} (Super Admin)
+                  </button>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold text-blue-900">🏢 Brand Partners:</p>
+                  <button
+                    type="button"
+                    onClick={() => quickFillEmail(TEST_CREDENTIALS.STARBUCKS)}
+                    className="block text-xs text-blue-600 hover:text-blue-500 hover:underline"
+                  >
+                    {TEST_CREDENTIALS.STARBUCKS} (Starbucks)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => quickFillEmail(TEST_CREDENTIALS.MCDONALDS)}
+                    className="block text-xs text-blue-600 hover:text-blue-500 hover:underline"
+                  >
+                    {TEST_CREDENTIALS.MCDONALDS} (McDonald's)
+                  </button>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold text-blue-900">🧪 Quick Test:</p>
+                  <button
+                    type="button"
+                    onClick={() => quickFillEmail(TEST_CREDENTIALS.TEST)}
+                    className="block text-xs text-blue-600 hover:text-blue-500 hover:underline"
+                  >
+                    {TEST_CREDENTIALS.TEST} (Test User)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => quickFillEmail(TEST_CREDENTIALS.DEMO)}
+                    className="block text-xs text-blue-600 hover:text-blue-500 hover:underline"
+                  >
+                    {TEST_CREDENTIALS.DEMO} (Demo User)
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+          
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -54,6 +135,7 @@ export default function Login() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter email or click a test account above"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
@@ -72,6 +154,7 @@ export default function Login() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Any password works for test accounts"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>

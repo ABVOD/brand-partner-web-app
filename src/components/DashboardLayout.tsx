@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, isAdmin } = useAuth();
 
   async function handleLogout() {
     try {
@@ -262,6 +262,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                             </div>
                           )}
                         </Menu.Item>
+                        {isAdmin && (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/admin/dashboard"
+                                className={`
+                                  block px-4 py-2 text-sm transition-colors duration-200
+                                  ${active ? 'bg-red-50 text-red-900' : 'text-red-700'}
+                                `}
+                              >
+                                🛡️ Admin Panel
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        )}
                         <Menu.Item>
                           {({ active }) => (
                             <button
