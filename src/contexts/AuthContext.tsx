@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
-export type UserRole = 'brand_partner' | 'admin' | 'super_admin';
+export type UserRole = 'brand_partner' | 'admin' | 'super_admin' | 'accident_user';
 
 export interface User {
   uid: string;
@@ -104,6 +104,35 @@ const defaultUsers: UserProfile[] = [
     role: 'brand_partner',
     displayName: 'Subway Franchise',
     createdAt: new Date('2024-02-01'),
+    isActive: true,
+    lastLogin: new Date()
+  },
+
+  // Accident Users
+  {
+    uid: 'accident-user-1',
+    email: 'alice.driver@example.com',
+    role: 'accident_user',
+    displayName: 'Alice Driver',
+    createdAt: new Date('2024-01-10'),
+    isActive: true,
+    lastLogin: new Date()
+  },
+  {
+    uid: 'accident-user-2',
+    email: 'bob.commuter@example.com',
+    role: 'accident_user',
+    displayName: 'Bob Commuter',
+    createdAt: new Date('2024-01-18'),
+    isActive: true,
+    lastLogin: new Date()
+  },
+  {
+    uid: 'accident-user-3',
+    email: 'carol.cyclist@example.com',
+    role: 'accident_user',
+    displayName: 'Carol Cyclist',
+    createdAt: new Date('2024-02-03'),
     isActive: true,
     lastLogin: new Date()
   },

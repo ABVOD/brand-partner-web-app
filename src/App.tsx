@@ -12,7 +12,10 @@ import Support from './pages/Support';
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
+import UserCrudDemo from './pages/admin/UserCrudDemo';
+import UserCrudPage from './pages/admin/UserCrudPage';
 import IncidentReports from './pages/admin/IncidentReports';
+import SafeIdManagement from './pages/admin/SafeIdManagement';
 
 // Import dummy data utilities (makes them available in browser console)
 import './utils/dummyData';
@@ -68,8 +71,27 @@ function App() {
               </AdminRoute>
             }
           />
+          {/* Main user management route - clean production version */}
           <Route
             path="/admin/users"
+            element={
+              <AdminRoute>
+                <UserCrudPage />
+              </AdminRoute>
+            }
+          />
+          {/* Demo version with explanatory header */}
+          <Route
+            path="/admin/users/demo"
+            element={
+              <AdminRoute>
+                <UserCrudDemo />
+              </AdminRoute>
+            }
+          />
+          {/* Keep the old user management as a legacy route */}
+          <Route
+            path="/admin/users/legacy"
             element={
               <AdminRoute>
                 <UserManagement />
@@ -81,6 +103,14 @@ function App() {
             element={
               <AdminRoute>
                 <IncidentReports />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/safe-id-management"
+            element={
+              <AdminRoute>
+                <SafeIdManagement />
               </AdminRoute>
             }
           />
