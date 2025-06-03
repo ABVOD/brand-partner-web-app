@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   UsersIcon,
   MagnifyingGlassIcon,
@@ -11,7 +11,11 @@ import {
   DocumentTextIcon,
   UserIcon,
   NoSymbolIcon,
-  CheckBadgeIcon
+  CheckBadgeIcon,
+  ArrowDownTrayIcon,
+  ChevronUpIcon,
+  ChevronDownIcon,
+  ArrowsUpDownIcon
 } from '@heroicons/react/24/outline';
 import AdminDashboardLayout from '../../components/AdminDashboardLayout';
 
@@ -19,7 +23,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  role: 'brand_partner' | 'user';
+  role: 'brand_partner' | 'user' | 'admin';
   status: 'active' | 'blocked' | 'pending_verification';
   isVerified: boolean;
   joinDate: string;
@@ -29,7 +33,15 @@ interface User {
   totalCheckIns: number;
   safeIdShares: number;
   avatar?: string;
+  activityLog?: {
+    action: string;
+    timestamp: string;
+    details: string;
+  }[];
 }
+
+type SortField = 'name' | 'joinDate' | 'lastLogin' | 'totalCheckIns';
+type SortDirection = 'asc' | 'desc';
 
 export default function UserManagement() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,6 +49,10 @@ export default function UserManagement() {
   const [filterRole, setFilterRole] = useState('all');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [showUserModal, setShowUserModal] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
+  const [sortField, setSortField] = useState<SortField>('joinDate');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [showActivityLog, setShowActivityLog] = useState(false);
 
   // Mock data - in a real app, this would come from your backend
   const users: User[] = [
@@ -98,14 +114,84 @@ export default function UserManagement() {
     }
   ];
 
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = filterStatus === 'all' || user.status === filterStatus;
-    const matchesRole = filterRole === 'all' || user.role === filterRole;
-    
-    return matchesSearch && matchesStatus && matchesRole;
-  });
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) return <ArrowsUpDownIcon className="h-4 w-4" />;
+    return sortDirection === 'asc' ? 
+      <ChevronUpIcon className="h-4 w-4" /> : 
+      <ChevronDownIcon className="h-4 w-4" />;
+  };
+
+  const filteredAndSortedUsers = useMemo(() => {
+    let filtered = users.filter(user => {
+      const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          user.email.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = filterStatus === 'all' || user.status === filterStatus;
+      const matchesRole = filterRole === 'all' || user.role === filterRole;
+      
+      return matchesSearch && matchesStatus && matchesRole;
+    });
+
+    return filtered.sort((a, b) => {
+      const direction = sortDirection === 'asc' ? 1 : -1;
+      switch (sortField) {
+        case 'name':
+          return direction * a.name.localeCompare(b.name);
+        case 'joinDate':
+          return direction * (new Date(a.joinDate).getTime() - new Date(b.joinDate).getTime());
+        case 'lastLogin':
+          return direction * (new Date(a.lastLogin).getTime() - new Date(b.lastLogin).getTime());
+        case 'totalCheckIns':
+          return direction * (a.totalCheckIns - b.totalCheckIns);
+        default:
+          return 0;
+      }
+    });
+  }, [users, searchTerm, filterStatus, filterRole, sortField, sortDirection]);
+
+  const handleBulkAction = (action: 'verify' | 'block' | 'unblock' | 'delete') => {
+    // In a real app, this would make an API call for each selected user
+    console.log(`Bulk action ${action} for users:`, Array.from(selectedUsers));
+    setSelectedUsers(new Set());
+  };
+
+  const exportUserData = () => {
+    const data = filteredAndSortedUsers.map(user => ({
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      status: user.status,
+      joinDate: user.joinDate,
+      lastLogin: user.lastLogin,
+      location: user.location,
+      totalCheckIns: user.totalCheckIns,
+      totalIncidents: user.totalIncidents,
+      safeIdShares: user.safeIdShares
+    }));
+
+    const csv = [
+      Object.keys(data[0]).join(','),
+      ...data.map(row => Object.values(row).join(','))
+    ].join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `users-export-${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
 
   const handleUserAction = (userId: string, action: 'verify' | 'block' | 'unblock') => {
     console.log(`Action ${action} for user ${userId}`);
@@ -155,15 +241,56 @@ export default function UserManagement() {
             <p className="mt-1 text-gray-600">View, verify, and manage user accounts</p>
           </div>
           <div className="flex items-center space-x-4">
+            <button
+              onClick={exportUserData}
+              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            >
+              <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
+              Export
+            </button>
             <div className="bg-white rounded-lg px-4 py-2 shadow-sm border border-gray-200">
               <div className="flex items-center space-x-2">
                 <UsersIcon className="h-5 w-5 text-gray-500" />
-                <span className="text-sm font-medium text-gray-900">{filteredUsers.length}</span>
+                <span className="text-sm font-medium text-gray-900">{filteredAndSortedUsers.length}</span>
                 <span className="text-sm text-gray-500">users</span>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Bulk Actions */}
+        {selectedUsers.size > 0 && (
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-gray-700">
+                {selectedUsers.size} users selected
+              </span>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => handleBulkAction('verify')}
+                  className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+                >
+                  <ShieldCheckIcon className="h-4 w-4 mr-1" />
+                  Verify
+                </button>
+                <button
+                  onClick={() => handleBulkAction('block')}
+                  className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+                >
+                  <NoSymbolIcon className="h-4 w-4 mr-1" />
+                  Block
+                </button>
+                <button
+                  onClick={() => handleBulkAction('unblock')}
+                  className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  <CheckBadgeIcon className="h-4 w-4 mr-1" />
+                  Unblock
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Filters and Search */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -218,7 +345,27 @@ export default function UserManagement() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    User
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                      checked={selectedUsers.size === filteredAndSortedUsers.length}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedUsers(new Set(filteredAndSortedUsers.map(u => u.id)));
+                        } else {
+                          setSelectedUsers(new Set());
+                        }
+                      }}
+                    />
+                  </th>
+                  <th 
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    onClick={() => handleSort('name')}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>User</span>
+                      {getSortIcon('name')}
+                    </div>
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Role
@@ -226,11 +373,23 @@ export default function UserManagement() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Activity
+                  <th 
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    onClick={() => handleSort('totalCheckIns')}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>Activity</span>
+                      {getSortIcon('totalCheckIns')}
+                    </div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Last Login
+                  <th 
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    onClick={() => handleSort('lastLogin')}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>Last Login</span>
+                      {getSortIcon('lastLogin')}
+                    </div>
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
@@ -238,8 +397,24 @@ export default function UserManagement() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredUsers.map((user) => (
+                {filteredAndSortedUsers.map((user) => (
                   <tr key={user.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                        checked={selectedUsers.has(user.id)}
+                        onChange={(e) => {
+                          const newSelected = new Set(selectedUsers);
+                          if (e.target.checked) {
+                            newSelected.add(user.id);
+                          } else {
+                            newSelected.delete(user.id);
+                          }
+                          setSelectedUsers(newSelected);
+                        }}
+                      />
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="h-10 w-10 rounded-lg bg-gray-200 flex items-center justify-center">
@@ -261,9 +436,11 @@ export default function UserManagement() {
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         user.role === 'brand_partner' 
                           ? 'bg-purple-100 text-purple-800' 
-                          : 'bg-blue-100 text-blue-800'
+                          : user.role === 'admin' 
+                            ? 'bg-gray-100 text-gray-800'
+                            : 'bg-blue-100 text-blue-800'
                       }`}>
-                        {user.role === 'brand_partner' ? 'Brand Partner' : 'App User'}
+                        {user.role === 'brand_partner' ? 'Brand Partner' : user.role === 'admin' ? 'Admin' : 'App User'}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -360,58 +537,49 @@ export default function UserManagement() {
                 </div>
 
                 {/* Activity Stats */}
-                <div>
-                  <h4 className="text-md font-semibold text-gray-900 mb-3">Activity Summary</h4>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="text-sm font-medium text-gray-900 mb-3">Activity Statistics</h4>
                   <div className="grid grid-cols-3 gap-4">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <div className="flex items-center">
-                        <MapPinIcon className="h-8 w-8 text-blue-600" />
-                        <div className="ml-3">
-                          <p className="text-2xl font-bold text-blue-900">{selectedUser.totalCheckIns}</p>
-                          <p className="text-sm text-blue-600">Check-ins</p>
-                        </div>
-                      </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-gray-900">{selectedUser.totalCheckIns}</div>
+                      <div className="text-sm text-gray-500">Check-ins</div>
                     </div>
-                    <div className="bg-orange-50 p-4 rounded-lg">
-                      <div className="flex items-center">
-                        <DocumentTextIcon className="h-8 w-8 text-orange-600" />
-                        <div className="ml-3">
-                          <p className="text-2xl font-bold text-orange-900">{selectedUser.totalIncidents}</p>
-                          <p className="text-sm text-orange-600">Incidents</p>
-                        </div>
-                      </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-gray-900">{selectedUser.totalIncidents}</div>
+                      <div className="text-sm text-gray-500">Incidents</div>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <div className="flex items-center">
-                        <ShieldCheckIcon className="h-8 w-8 text-green-600" />
-                        <div className="ml-3">
-                          <p className="text-2xl font-bold text-green-900">{selectedUser.safeIdShares}</p>
-                          <p className="text-sm text-green-600">Safe ID Shares</p>
-                        </div>
-                      </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-gray-900">{selectedUser.safeIdShares}</div>
+                      <div className="text-sm text-gray-500">Safe ID Shares</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Recent Activities */}
+                {/* Activity Log */}
                 <div>
-                  <h4 className="text-md font-semibold text-gray-900 mb-3">Recent Activities</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                      <MapPinIcon className="h-5 w-5 text-blue-500" />
-                      <div>
-                        <p className="text-sm text-gray-900">Check-in at Central Park</p>
-                        <p className="text-xs text-gray-500">2 hours ago</p>
-                      </div>
+                  <button
+                    onClick={() => setShowActivityLog(!showActivityLog)}
+                    className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                  >
+                    <ClockIcon className="h-5 w-5 mr-2" />
+                    Activity Log
+                    {showActivityLog ? (
+                      <ChevronUpIcon className="h-4 w-4 ml-1" />
+                    ) : (
+                      <ChevronDownIcon className="h-4 w-4 ml-1" />
+                    )}
+                  </button>
+                  
+                  {showActivityLog && (
+                    <div className="mt-3 space-y-2">
+                      {selectedUser.activityLog?.map((log, index) => (
+                        <div key={index} className="text-sm text-gray-600">
+                          <span className="font-medium">{log.action}</span> - {log.timestamp}
+                          <p className="text-gray-500">{log.details}</p>
+                        </div>
+                      ))}
                     </div>
-                    <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                      <ShieldCheckIcon className="h-5 w-5 text-green-500" />
-                      <div>
-                        <p className="text-sm text-gray-900">Safe ID shared with emergency contact</p>
-                        <p className="text-xs text-gray-500">1 day ago</p>
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

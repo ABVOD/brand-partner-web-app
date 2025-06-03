@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute, { BrandPartnerRoute } from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -25,38 +25,37 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           
-          {/* Brand Partner Routes */}
+          {/* Brand Partner Routes - Admin users redirected to admin dashboard */}
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute>
+              <BrandPartnerRoute>
                 <Dashboard />
-                {/* <AdminDashboard /> */}
-              </PrivateRoute>
+              </BrandPartnerRoute>
             }
           />
           <Route
             path="/location-campaigns"
             element={
-              <PrivateRoute>
+              <BrandPartnerRoute>
                 <LocationBasedCampaigns />
-              </PrivateRoute>
+              </BrandPartnerRoute>
             }
           />
           <Route
             path="/billing"
             element={
-              <PrivateRoute>
+              <BrandPartnerRoute>
                 <Billing />
-              </PrivateRoute>
+              </BrandPartnerRoute>
             }
           />
           <Route
             path="/support"
             element={
-              <PrivateRoute>
+              <BrandPartnerRoute>
                 <Support />
-              </PrivateRoute>
+              </BrandPartnerRoute>
             }
           />
 

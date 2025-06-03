@@ -252,16 +252,10 @@ export default function AdminDashboardLayout({ children }: AdminDashboardLayoutP
                       </p>
                     </div>
                   </div>
-                  <div className="mt-3 flex space-x-2">
-                    <Link
-                      to="/dashboard"
-                      className="flex-1 bg-white text-gray-700 text-xs font-medium py-2 px-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-center"
-                    >
-                      Brand Panel
-                    </Link>
+                  <div className="mt-3 flex justify-end">
                     <button
                       onClick={handleLogout}
-                      className="flex-1 bg-red-500 text-white text-xs font-medium py-2 px-3 rounded-lg hover:bg-red-600 transition-colors"
+                      className="bg-red-500 text-white text-xs font-medium py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
                     >
                       Logout
                     </button>
@@ -349,21 +343,6 @@ export default function AdminDashboardLayout({ children }: AdminDashboardLayoutP
                           <div className="flex items-center space-x-2">
                             <Cog6ToothIcon className="h-4 w-4" />
                             <span>Admin Settings</span>
-                          </div>
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/dashboard"
-                          className={`block px-3 py-1 text-sm leading-6 text-gray-900 ${
-                            active ? 'bg-gray-50' : ''
-                          }`}
-                        >
-                          <div className="flex items-center space-x-2">
-                            <SparklesIcon className="h-4 w-4" />
-                            <span>Brand Partner Panel</span>
                           </div>
                         </Link>
                       )}
