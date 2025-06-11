@@ -15,7 +15,8 @@ import {
   XMarkIcon,
   SparklesIcon,
   UserIcon,
-  Cog6ToothIcon
+  Cog6ToothIcon,
+  BuildingOfficeIcon
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -39,6 +40,12 @@ const adminNavigation = [
     description: 'Monitor accident reports' 
   },
   { 
+    name: 'Insurance Companies', 
+    href: '/admin/insurance-companies', 
+    icon: BuildingOfficeIcon, 
+    description: 'Manage insurance partners' 
+  },
+  { 
     name: 'Promotional Offers', 
     href: '/admin/offers', 
     icon: TagIcon, 
@@ -55,6 +62,12 @@ const adminNavigation = [
     href: '/admin/analytics', 
     icon: ChartBarIcon, 
     description: 'Visual analytics dashboard' 
+  },
+  { 
+    name: 'Heatmap Analytics', 
+    href: '/admin/heatmap-analytics', 
+    icon: MapIcon, 
+    description: 'User interaction heatmaps' 
   },
   { 
     name: 'Location Activity', 

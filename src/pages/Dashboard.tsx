@@ -1,4 +1,5 @@
 import DashboardLayout from '../components/DashboardLayout';
+import { useUsageTracking } from '../hooks/useUsageTracking';
 import { 
   MapPinIcon, 
   CreditCardIcon, 
@@ -103,6 +104,23 @@ const performanceData = [
 ];
 
 export default function Dashboard() {
+  const { trackEvent, trackFeatureUsage } = useUsageTracking();
+
+  const handleStatClick = (statName: string, href: string) => {
+    trackFeatureUsage('dashboard_stat_click', { 
+      statName, 
+      destination: href 
+    });
+  };
+
+  const handleCampaignView = (campaignId: number, campaignName: string) => {
+    trackEvent('campaign_view', { 
+      campaignId, 
+      campaignName,
+      source: 'dashboard'
+    });
+  };
+
   return (
     <DashboardLayout>
       <div className="space-y-8">
@@ -124,6 +142,7 @@ export default function Dashboard() {
               <Link
                 key={item.name}
                 to={item.href}
+                onClick={() => handleStatClick(item.name, item.href)}
                 className="relative overflow-hidden rounded-xl bg-white px-6 py-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
               >
                 <dt>

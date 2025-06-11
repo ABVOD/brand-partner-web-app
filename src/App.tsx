@@ -15,7 +15,15 @@ import UserManagement from './pages/admin/UserManagement';
 import UserCrudDemo from './pages/admin/UserCrudDemo';
 import UserCrudPage from './pages/admin/UserCrudPage';
 import IncidentReports from './pages/admin/IncidentReports';
+import InsuranceCompanies from './pages/admin/InsuranceCompanies';
 import SafeIdManagement from './pages/admin/SafeIdManagement';
+import PromotionalOffers from './pages/admin/PromotionalOffers';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
+import HeatmapAnalytics from './pages/admin/HeatmapAnalytics';
+import SupportManagement from './pages/admin/SupportManagement';
+import PushNotifications from './pages/admin/PushNotifications';
+import LocationActivity from './pages/admin/LocationActivity';
+import PrivacyCompliance from './pages/admin/PrivacyCompliance';
 
 // Import dummy data utilities (makes them available in browser console)
 import './utils/dummyData';
@@ -107,10 +115,74 @@ function App() {
             }
           />
           <Route
+            path="/admin/insurance-companies"
+            element={
+              <AdminRoute>
+                <InsuranceCompanies />
+              </AdminRoute>
+            }
+          />
+          <Route
             path="/admin/safe-id-management"
             element={
               <AdminRoute>
                 <SafeIdManagement />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/offers"
+            element={
+              <AdminRoute>
+                <PromotionalOffers />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/analytics"
+            element={
+              <AdminRoute>
+                <AdminAnalytics />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/heatmap-analytics"
+            element={
+              <AdminRoute>
+                <HeatmapAnalytics />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/support"
+            element={
+              <AdminRoute>
+                <SupportManagement />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/notifications"
+            element={
+              <AdminRoute>
+                <PushNotifications />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/location-activity"
+            element={
+              <AdminRoute>
+                <LocationActivity />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/privacy"
+            element={
+              <AdminRoute>
+                <PrivacyCompliance />
               </AdminRoute>
             }
           />

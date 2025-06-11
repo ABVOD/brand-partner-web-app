@@ -71,7 +71,7 @@ export default function AdminDashboard() {
       change: '+6%',
       changeType: 'increase',
       icon: ShieldCheckIcon,
-      href: '/admin/insurance-claims',
+      href: '/admin/insurance-companies',
       description: 'Claims processed this month'
     }
   ];
@@ -161,7 +161,7 @@ export default function AdminDashboard() {
       name: 'Insurance Partners',
       description: 'Manage insurance company integrations',
       icon: ShieldCheckIcon,
-      href: '/admin/insurance-partners',
+      href: '/admin/insurance-companies',
       bgColor: 'bg-indigo-500',
       hoverColor: 'hover:bg-indigo-600'
     },
