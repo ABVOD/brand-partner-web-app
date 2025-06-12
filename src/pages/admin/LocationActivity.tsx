@@ -1,21 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import  { useState, useMemo } from 'react';
 import {
   MapPinIcon,
   ClockIcon,
-  UsersIcon,
   ChartBarIcon,
   EyeIcon,
-  FunnelIcon,
   MagnifyingGlassIcon,
   ArrowTrendingUpIcon,
-  ArrowTrendingDownIcon,
-  CalendarIcon,
   BuildingOfficeIcon,
   ExclamationTriangleIcon,
   TagIcon,
   ArrowDownTrayIcon,
   GlobeAltIcon,
-  DevicePhoneMobileIcon,
   IdentificationIcon
 } from '@heroicons/react/24/outline';
 import AdminDashboardLayout from '../../components/AdminDashboardLayout';

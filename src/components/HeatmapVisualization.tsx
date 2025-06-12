@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { ClickHeatmapData, PageHeatmapData, HeatmapVisualizationData } from '../types/analytics';
 import { usageTracker } from '../utils/usageTracker';
 
@@ -9,13 +9,12 @@ interface HeatmapVisualizationProps {
   className?: string;
 }
 
-export default function HeatmapVisualization({ 
-  data, 
-  pageData, 
-  type, 
-  className = '' 
+export default function HeatmapVisualization({
+  data,
+  pageData,
+  type,
+  className = ''
 }: HeatmapVisualizationProps) {
-  const [showOverlay, setShowOverlay] = useState(false);
   const [selectedPage, setSelectedPage] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
   const [calendarData, setCalendarData] = useState<HeatmapVisualizationData[]>([]);
@@ -81,7 +80,7 @@ export default function HeatmapVisualization({
             />
           ))}
         </div>
-        
+
         <div className="bg-white p-4 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold mb-4">Click Heatmap</h3>
           <div className="grid grid-cols-2 gap-4 text-sm">
@@ -101,7 +100,7 @@ export default function HeatmapVisualization({
 
   const renderCalendarHeatmap = () => {
     const maxActivity = Math.max(...calendarData.map(d => d.count), 1);
-    
+
     return (
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h3 className="text-lg font-semibold mb-4">Usage Activity Calendar (Last 30 Days)</h3>
@@ -117,14 +116,14 @@ export default function HeatmapVisualization({
             const intensity = day.count / maxActivity;
             const date = new Date(day.date);
             const dayOfWeek = date.getDay();
-            
+
             return (
               <div
                 key={day.date}
                 className="aspect-square rounded-sm border border-gray-200 flex items-center justify-center text-xs relative group cursor-pointer"
                 style={{
-                  backgroundColor: day.count === 0 
-                    ? '#f3f4f6' 
+                  backgroundColor: day.count === 0
+                    ? '#f3f4f6'
                     : `rgba(34, 197, 94, ${0.2 + intensity * 0.8})`,
                   gridColumnStart: index === 0 ? dayOfWeek + 1 : undefined
                 }}
@@ -170,7 +169,7 @@ export default function HeatmapVisualization({
       <div className="space-y-4">
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold mb-4">Page Usage Heatmap</h3>
-          
+
           <div className="space-y-3">
             {pageData.map((page, index) => (
               <div key={index} className="relative">
@@ -181,9 +180,9 @@ export default function HeatmapVisualization({
                       {page.totalClicks} clicks • {page.uniqueUsers} users • {Math.round(page.averageTimeSpent)}s avg
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center space-x-4">
-                    <div 
+                    <div
                       className="h-6 rounded"
                       style={{
                         width: `${Math.max(20, (page.totalClicks / maxClicks) * 200)}px`,
@@ -198,7 +197,7 @@ export default function HeatmapVisualization({
                     </button>
                   </div>
                 </div>
-                
+
                 {selectedPage === page.page && (
                   <div className="mt-2 p-4 bg-gray-50 rounded-lg">
                     <h4 className="font-medium mb-2">Click Distribution</h4>

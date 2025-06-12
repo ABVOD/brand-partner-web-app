@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { GoogleMap, LoadScript, Marker, Circle, Autocomplete } from '@react-google-maps/api';
-import { MagnifyingGlassIcon, MapPinIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
 import { MapPinIcon as MapPinIconSolid } from '@heroicons/react/24/solid';
 import type { LocationData } from '../pages/LocationBasedCampaigns';
 
@@ -215,7 +215,7 @@ export default function LocationPicker({ onLocationSelect, initialLocation }: Lo
                   placeholder="Search for restaurants, addresses, or landmarks..."
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-200 text-lg"
+                  className="w-full pl-12 pr-4 py-4 bg-gray-800 border-2 border-gray-600 rounded-xl text-gray-100 placeholder-gray-400 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-200 text-lg"
                 />
               </Autocomplete>
             </LoadScript>
@@ -231,7 +231,7 @@ export default function LocationPicker({ onLocationSelect, initialLocation }: Lo
           <select
             value={selectedLocation.radius}
             onChange={(e) => handleRadiusChange(Number(e.target.value))}
-            className="w-full px-4 py-4 bg-white border-2 border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-200 text-lg font-medium"
+            className="w-full px-4 py-4 bg-gray-800 border-2 border-gray-600 rounded-xl text-gray-100 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-200 text-lg font-medium"
           >
             {radiusOptions.map((option) => (
               <option key={option.value} value={option.value}>

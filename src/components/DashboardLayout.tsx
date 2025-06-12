@@ -3,14 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   HomeIcon,
-  MapIcon,
-  PhotoIcon,
-  ChartBarIcon,
-  CalendarIcon,
   CreditCardIcon,
   ChatBubbleLeftRightIcon,
   Bars3Icon,
-  TagIcon,
   MapPinIcon,
   SparklesIcon,
   UserIcon

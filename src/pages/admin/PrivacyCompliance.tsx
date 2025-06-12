@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {
   ShieldCheckIcon,
   DocumentCheckIcon,
@@ -10,9 +10,6 @@ import {
   EyeIcon,
   ArrowDownTrayIcon,
   BellIcon,
-  KeyIcon,
-  LockClosedIcon,
-  TrashIcon,
   DocumentTextIcon
 } from '@heroicons/react/24/outline';
 import AdminDashboardLayout from '../../components/AdminDashboardLayout';

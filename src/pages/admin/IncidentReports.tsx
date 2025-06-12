@@ -9,7 +9,6 @@ import {
   CheckIcon,
   XMarkIcon,
   MagnifyingGlassIcon,
-  FunnelIcon,
   UserIcon
 } from '@heroicons/react/24/outline';
 import AdminDashboardLayout from '../../components/AdminDashboardLayout';

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { usageTracker } from '../utils/usageTracker';
 import type { UsageLog, ClickHeatmapData, UsageAnalytics, PageHeatmapData } from '../types/analytics';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 interface UsageLogsViewerProps {
   className?: string;
@@ -68,7 +68,6 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
     const pageViews = filteredLogs.filter(log => log.action === 'page_view');
     const clicks = filteredLogs.filter(log => log.action === 'click');
     const uniqueUsers = new Set(filteredLogs.map(log => log.userId)).size;
-    const uniqueSessions = new Set(filteredLogs.map(log => log.sessionId)).size;
 
     // Calculate page statistics
     const pageViewStats = new Map<string, { views: number; totalTime: number; users: Set<string> }>();
@@ -93,7 +92,7 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
     // Calculate click heatmap data
     const clickHeatmapData: ClickHeatmapData[] = [];
     const clickMap = new Map<string, ClickHeatmapData>();
-    
+
     clicks.forEach(log => {
       if (log.coordinates) {
         const key = `${log.page}-${Math.round(log.coordinates.x / 20) * 20}-${Math.round(log.coordinates.y / 20) * 20}`;
@@ -124,13 +123,13 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
       }
     });
 
-    const averageSessionDuration = sessionDurations.size > 0 ? 
+    const averageSessionDuration = sessionDurations.size > 0 ?
       Array.from(sessionDurations.values()).reduce((a, b) => a + b, 0) / sessionDurations.size / 1000 : 0;
 
     // Group click data by page for PageHeatmapData format
     const pageHeatmapData: PageHeatmapData[] = [];
     const pageClickMap = new Map<string, ClickHeatmapData[]>();
-    
+
     Array.from(clickMap.values()).forEach(click => {
       if (!pageClickMap.has(click.page)) {
         pageClickMap.set(click.page, []);
@@ -201,73 +200,73 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
     <div className="space-y-6">
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <div className="text-2xl font-bold text-blue-600">{analytics.totalPageViews}</div>
-          <div className="text-sm text-gray-600">Page Views</div>
+        <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+          <div className="text-2xl font-bold text-blue-400">{analytics.totalPageViews}</div>
+          <div className="text-sm text-gray-400">Page Views</div>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <div className="text-2xl font-bold text-green-600">{analytics.uniqueVisitors}</div>
-          <div className="text-sm text-gray-600">Unique Users</div>
+        <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+          <div className="text-2xl font-bold text-green-400">{analytics.uniqueVisitors}</div>
+          <div className="text-sm text-gray-400">Unique Users</div>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <div className="text-2xl font-bold text-purple-600">{analytics.averageSessionDuration}s</div>
-          <div className="text-sm text-gray-600">Avg Session</div>
+        <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+          <div className="text-2xl font-bold text-purple-400">{analytics.averageSessionDuration}s</div>
+          <div className="text-sm text-gray-400">Avg Session</div>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <div className="text-2xl font-bold text-orange-600">{filteredLogs.length}</div>
-          <div className="text-sm text-gray-600">Total Events</div>
+        <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+          <div className="text-2xl font-bold text-orange-400">{filteredLogs.length}</div>
+          <div className="text-sm text-gray-400">Total Events</div>
         </div>
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Action Distribution */}
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <h3 className="text-lg font-semibold mb-4">Action Distribution</h3>
+        <div className="bg-gray-800 p-6 rounded-lg shadow border border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-100 mb-4">Action Distribution</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={actionCounts}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="action" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#3B82F6" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="action" stroke="#9CA3AF" />
+              <YAxis stroke="#9CA3AF" />
+              <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px' }} />
+              <Bar dataKey="count" fill="#60A5FA" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* Hourly Activity */}
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <h3 className="text-lg font-semibold mb-4">Hourly Activity</h3>
+        <div className="bg-gray-800 p-6 rounded-lg shadow border border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-100 mb-4">Hourly Activity</h3>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={hourlyActivity}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="hour" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="count" stroke="#10B981" strokeWidth={2} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="hour" stroke="#9CA3AF" />
+              <YAxis stroke="#9CA3AF" />
+              <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px' }} />
+              <Line type="monotone" dataKey="count" stroke="#34D399" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Top Pages */}
-      <div className="bg-white p-6 rounded-lg shadow border">
-        <h3 className="text-lg font-semibold mb-4">Top Pages</h3>
+      <div className="bg-gray-800 p-6 rounded-lg shadow border border-gray-700">
+        <h3 className="text-lg font-semibold text-gray-100 mb-4">Top Pages</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-700">
               <tr>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-900">Page</th>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-900">Views</th>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-900">Avg Time (s)</th>
+                <th className="px-4 py-2 text-left text-sm font-medium text-gray-300">Page</th>
+                <th className="px-4 py-2 text-left text-sm font-medium text-gray-300">Views</th>
+                <th className="px-4 py-2 text-left text-sm font-medium text-gray-300">Avg Time (s)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-700">
               {analytics.topPages.map((page, index) => (
                 <tr key={index}>
-                  <td className="px-4 py-2 text-sm font-medium text-gray-900">{page.page}</td>
-                  <td className="px-4 py-2 text-sm text-gray-600">{page.views}</td>
-                  <td className="px-4 py-2 text-sm text-gray-600">{page.averageTime}</td>
+                  <td className="px-4 py-2 text-sm font-medium text-gray-100">{page.page}</td>
+                  <td className="px-4 py-2 text-sm text-gray-300">{page.views}</td>
+                  <td className="px-4 py-2 text-sm text-gray-300">{page.averageTime}</td>
                 </tr>
               ))}
             </tbody>
@@ -302,12 +301,11 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-600">{log.userId}</td>
                 <td className="px-4 py-2">
-                  <span className={`inline-flex px-2 py-1 text-xs rounded-full ${
-                    log.action === 'click' ? 'bg-blue-100 text-blue-800' :
-                    log.action === 'page_view' ? 'bg-green-100 text-green-800' :
-                    log.action === 'scroll' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-gray-100 text-gray-800'
-                  }`}>
+                  <span className={`inline-flex px-2 py-1 text-xs rounded-full ${log.action === 'click' ? 'bg-blue-100 text-blue-800' :
+                      log.action === 'page_view' ? 'bg-green-100 text-green-800' :
+                        log.action === 'scroll' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                    }`}>
                     {log.action}
                   </span>
                 </td>
@@ -346,7 +344,7 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600">
-                {analytics.clickHeatmap.reduce((sum, pageData) => 
+                {analytics.clickHeatmap.reduce((sum, pageData) =>
                   sum + pageData.clicks.filter(click => click.clicks > 5).length, 0)}
               </div>
               <div className="text-gray-600">Hot Spots</div>
@@ -358,7 +356,7 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
               <div className="text-gray-600">Pages</div>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <h4 className="font-medium">Top Click Areas</h4>
             {analytics.clickHeatmap
@@ -478,11 +476,10 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key as any)}
-                className={`px-4 py-2 font-medium ${
-                  currentView === tab.key
+                className={`px-4 py-2 font-medium ${currentView === tab.key
                     ? 'text-blue-600 border-b-2 border-blue-600'
                     : 'text-gray-600 hover:text-gray-900'
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>

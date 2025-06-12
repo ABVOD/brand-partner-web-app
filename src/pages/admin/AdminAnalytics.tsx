@@ -5,13 +5,7 @@ import {
   IdentificationIcon,
   BuildingOfficeIcon,
   EyeIcon,
-  CheckCircleIcon,
-  CurrencyDollarIcon,
   MapPinIcon,
-  CalendarIcon,
-  ArrowTrendingUpIcon,
-  ArrowTrendingDownIcon,
-  FunnelIcon,
   ArrowDownTrayIcon
 } from '@heroicons/react/24/outline';
 import AdminDashboardLayout from '../../components/AdminDashboardLayout';

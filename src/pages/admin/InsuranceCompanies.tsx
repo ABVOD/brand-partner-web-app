@@ -74,8 +74,6 @@ export default function InsuranceCompanies() {
   const [filterType, setFilterType] = useState('all');
   const [selectedCompany, setSelectedCompany] = useState<InsuranceCompany | null>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
 
   // Mock data - in a real app, this would come from your backend
   const insuranceCompanies: InsuranceCompany[] = [
@@ -375,15 +373,7 @@ export default function InsuranceCompanies() {
     }).format(amount);
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+
 
   return (
     <AdminDashboardLayout>

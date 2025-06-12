@@ -13,7 +13,6 @@ import {
   LifebuoyIcon,
   Bars3Icon,
   XMarkIcon,
-  SparklesIcon,
   UserIcon,
   Cog6ToothIcon,
   BuildingOfficeIcon
