@@ -198,32 +198,54 @@ export default function UserManagement() {
     // In a real app, this would make an API call
   };
 
-  const openUserDetails = (user: User) => {
-    setSelectedUser(user);
-    setShowUserModal(true);
-  };
-
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
             <CheckBadgeIcon className="h-3 w-3 mr-1" />
             Active
           </span>
         );
       case 'blocked':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-900/50 text-red-300">
             <NoSymbolIcon className="h-3 w-3 mr-1" />
             Blocked
           </span>
         );
       case 'pending_verification':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-900/50 text-yellow-300">
             <ClockIcon className="h-3 w-3 mr-1" />
             Pending
+          </span>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const getRoleBadge = (role: string) => {
+    switch (role) {
+      case 'admin':
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900/50 text-purple-300">
+            <ShieldCheckIcon className="h-3 w-3 mr-1" />
+            Admin
+          </span>
+        );
+      case 'brand_partner':
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/50 text-blue-300">
+            Brand Partner
+          </span>
+        );
+      case 'user':
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-600/50 text-gray-300">
+            <UserIcon className="h-3 w-3 mr-1" />
+            User
           </span>
         );
       default:
@@ -235,76 +257,33 @@ export default function UserManagement() {
     <AdminDashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-            <p className="mt-1 text-gray-600">View, verify, and manage user accounts</p>
+            <h1 className="text-2xl font-bold text-gray-100">User Management</h1>
+            <p className="text-gray-400 mt-1">Manage users, roles, and permissions</p>
           </div>
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={exportUserData}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-            >
-              <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
-              Export
-            </button>
-            <div className="bg-white rounded-lg px-4 py-2 shadow-sm border border-gray-200">
-              <div className="flex items-center space-x-2">
-                <UsersIcon className="h-5 w-5 text-gray-500" />
-                <span className="text-sm font-medium text-gray-900">{filteredAndSortedUsers.length}</span>
-                <span className="text-sm text-gray-500">users</span>
-              </div>
-            </div>
-          </div>
+          <button
+            onClick={exportUserData}
+            className="inline-flex items-center px-4 py-2 border border-gray-600 rounded-lg text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
+            Export CSV
+          </button>
         </div>
 
-        {/* Bulk Actions */}
-        {selectedUsers.size > 0 && (
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-gray-700">
-                {selectedUsers.size} users selected
-              </span>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => handleBulkAction('verify')}
-                  className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
-                >
-                  <ShieldCheckIcon className="h-4 w-4 mr-1" />
-                  Verify
-                </button>
-                <button
-                  onClick={() => handleBulkAction('block')}
-                  className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
-                >
-                  <NoSymbolIcon className="h-4 w-4 mr-1" />
-                  Block
-                </button>
-                <button
-                  onClick={() => handleBulkAction('unblock')}
-                  className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  <CheckBadgeIcon className="h-4 w-4 mr-1" />
-                  Unblock
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Filters and Search */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
             <div className="md:col-span-2">
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search users by name or email..."
+                  placeholder="Search users..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -314,12 +293,12 @@ export default function UserManagement() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
-                <option value="all">All Status</option>
+                <option value="all">All Statuses</option>
                 <option value="active">Active</option>
                 <option value="blocked">Blocked</option>
-                <option value="pending_verification">Pending Verification</option>
+                <option value="pending_verification">Pending</option>
               </select>
             </div>
 
@@ -328,27 +307,58 @@ export default function UserManagement() {
               <select
                 value={filterRole}
                 onChange={(e) => setFilterRole(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 <option value="all">All Roles</option>
-                <option value="user">App Users</option>
-                <option value="brand_partner">Brand Partners</option>
+                <option value="admin">Admin</option>
+                <option value="brand_partner">Brand Partner</option>
+                <option value="user">User</option>
               </select>
             </div>
           </div>
         </div>
 
+        {/* Bulk Actions */}
+        {selectedUsers.size > 0 && (
+          <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-300">
+                {selectedUsers.size} user{selectedUsers.size === 1 ? '' : 's'} selected
+              </span>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => handleBulkAction('verify')}
+                  className="px-3 py-1 text-xs font-medium text-green-300 bg-green-900/50 rounded-full hover:bg-green-800/50"
+                >
+                  Verify
+                </button>
+                <button
+                  onClick={() => handleBulkAction('block')}
+                  className="px-3 py-1 text-xs font-medium text-red-300 bg-red-900/50 rounded-full hover:bg-red-800/50"
+                >
+                  Block
+                </button>
+                <button
+                  onClick={() => handleBulkAction('unblock')}
+                  className="px-3 py-1 text-xs font-medium text-blue-300 bg-blue-900/50 rounded-full hover:bg-blue-800/50"
+                >
+                  Unblock
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Users Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-700">
+              <thead className="bg-gray-700">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left">
                     <input
                       type="checkbox"
-                      className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
-                      checked={selectedUsers.size === filteredAndSortedUsers.length}
+                      checked={selectedUsers.size === filteredAndSortedUsers.length && filteredAndSortedUsers.length > 0}
                       onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedUsers(new Set(filteredAndSortedUsers.map(u => u.id)));
@@ -356,10 +366,11 @@ export default function UserManagement() {
                           setSelectedUsers(new Set());
                         }
                       }}
+                      className="h-4 w-4 text-purple-600 bg-gray-600 border-gray-500 rounded focus:ring-purple-500"
                     />
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:text-gray-100"
                     onClick={() => handleSort('name')}
                   >
                     <div className="flex items-center space-x-1">
@@ -367,23 +378,20 @@ export default function UserManagement() {
                       {getSortIcon('name')}
                     </div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Role
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Role & Status
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                    onClick={() => handleSort('totalCheckIns')}
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:text-gray-100"
+                    onClick={() => handleSort('joinDate')}
                   >
                     <div className="flex items-center space-x-1">
-                      <span>Activity</span>
-                      {getSortIcon('totalCheckIns')}
+                      <span>Joined</span>
+                      {getSortIcon('joinDate')}
                     </div>
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:text-gray-100"
                     onClick={() => handleSort('lastLogin')}
                   >
                     <div className="flex items-center space-x-1">
@@ -391,18 +399,26 @@ export default function UserManagement() {
                       {getSortIcon('lastLogin')}
                     </div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th 
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:text-gray-100"
+                    onClick={() => handleSort('totalCheckIns')}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>Activity</span>
+                      {getSortIcon('totalCheckIns')}
+                    </div>
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-gray-800 divide-y divide-gray-700">
                 {filteredAndSortedUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                  <tr key={user.id} className="hover:bg-gray-700/50">
+                    <td className="px-6 py-4">
                       <input
                         type="checkbox"
-                        className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
                         checked={selectedUsers.has(user.id)}
                         onChange={(e) => {
                           const newSelected = new Set(selectedUsers);
@@ -413,85 +429,88 @@ export default function UserManagement() {
                           }
                           setSelectedUsers(newSelected);
                         }}
+                        className="h-4 w-4 text-purple-600 bg-gray-600 border-gray-500 rounded focus:ring-purple-500"
                       />
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4">
                       <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-lg bg-gray-200 flex items-center justify-center">
-                          <UserIcon className="h-6 w-6 text-gray-500" />
+                        <div className="h-10 w-10 flex-shrink-0">
+                          <div className="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center">
+                            <span className="text-sm font-medium text-white">
+                              {user.name.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
                         </div>
                         <div className="ml-4">
-                          <div className="flex items-center space-x-2">
-                            <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                            {user.isVerified && (
-                              <ShieldCheckIcon className="h-4 w-4 text-green-500" title="Verified" />
-                            )}
+                          <div className="text-sm font-medium text-gray-100">{user.name}</div>
+                          <div className="text-sm text-gray-400">{user.email}</div>
+                          <div className="flex items-center text-xs text-gray-500 mt-1">
+                            <MapPinIcon className="h-3 w-3 mr-1" />
+                            {user.location}
                           </div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
-                          <div className="text-xs text-gray-400">{user.location}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        user.role === 'brand_partner' 
-                          ? 'bg-purple-100 text-purple-800' 
-                          : user.role === 'admin' 
-                            ? 'bg-gray-100 text-gray-800'
-                            : 'bg-blue-100 text-blue-800'
-                      }`}>
-                        {user.role === 'brand_partner' ? 'Brand Partner' : user.role === 'admin' ? 'Admin' : 'App User'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getStatusBadge(user.status)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        <div className="flex items-center space-x-4 text-xs">
-                          <span title="Check-ins">📍 {user.totalCheckIns}</span>
-                          <span title="Incidents">⚠️ {user.totalIncidents}</span>
-                          <span title="Safe ID Shares">🛡️ {user.safeIdShares}</span>
-                        </div>
+                    <td className="px-6 py-4">
+                      <div className="space-y-1">
+                        {getRoleBadge(user.role)}
+                        {getStatusBadge(user.status)}
+                        {user.isVerified && (
+                          <div className="flex items-center text-xs text-green-400">
+                            <CheckBadgeIcon className="h-3 w-3 mr-1" />
+                            Verified
+                          </div>
+                        )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-gray-300">
+                      {new Date(user.joinDate).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-300">
                       {user.lastLogin}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-6 py-4">
+                      <div className="text-sm space-y-1">
+                        <div className="text-gray-300">{user.totalCheckIns} check-ins</div>
+                        <div className="text-gray-400">{user.totalIncidents} incidents</div>
+                        <div className="text-gray-400">{user.safeIdShares} ID shares</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => openUserDetails(user)}
-                          className="text-indigo-600 hover:text-indigo-900"
+                          onClick={() => {
+                            setSelectedUser(user);
+                            setShowUserModal(true);
+                          }}
+                          className="text-purple-400 hover:text-purple-300"
                         >
                           <EyeIcon className="h-4 w-4" />
                         </button>
-                        {!user.isVerified && (
+                        {user.status === 'pending_verification' && (
                           <button
                             onClick={() => handleUserAction(user.id, 'verify')}
-                            className="text-green-600 hover:text-green-900"
-                            title="Verify User"
+                            className="text-green-400 hover:text-green-300"
+                          >
+                            <CheckBadgeIcon className="h-4 w-4" />
+                          </button>
+                        )}
+                        {user.status === 'active' && (
+                          <button
+                            onClick={() => handleUserAction(user.id, 'block')}
+                            className="text-red-400 hover:text-red-300"
+                          >
+                            <NoSymbolIcon className="h-4 w-4" />
+                          </button>
+                        )}
+                        {user.status === 'blocked' && (
+                          <button
+                            onClick={() => handleUserAction(user.id, 'unblock')}
+                            className="text-blue-400 hover:text-blue-300"
                           >
                             <ShieldCheckIcon className="h-4 w-4" />
                           </button>
                         )}
-                        {user.status === 'active' ? (
-                          <button
-                            onClick={() => handleUserAction(user.id, 'block')}
-                            className="text-red-600 hover:text-red-900"
-                            title="Block User"
-                          >
-                            <NoSymbolIcon className="h-4 w-4" />
-                          </button>
-                        ) : user.status === 'blocked' ? (
-                          <button
-                            onClick={() => handleUserAction(user.id, 'unblock')}
-                            className="text-green-600 hover:text-green-900"
-                            title="Unblock User"
-                          >
-                            <CheckBadgeIcon className="h-4 w-4" />
-                          </button>
-                        ) : null}
                       </div>
                     </td>
                   </tr>
@@ -501,85 +520,92 @@ export default function UserManagement() {
           </div>
         </div>
 
+        {/* Empty State */}
+        {filteredAndSortedUsers.length === 0 && (
+          <div className="text-center py-12">
+            <UsersIcon className="mx-auto h-12 w-12 text-gray-500" />
+            <h3 className="mt-2 text-sm font-medium text-gray-100">No users found</h3>
+            <p className="mt-1 text-sm text-gray-400">
+              Try adjusting your search or filter criteria
+            </p>
+          </div>
+        )}
+
         {/* User Details Modal */}
         {showUserModal && selectedUser && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-            <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-900">User Details</h3>
-                <button
-                  onClick={() => setShowUserModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  ✕
-                </button>
-              </div>
-              
-              <div className="space-y-6">
-                {/* User Info */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Name</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedUser.name}</p>
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center p-4">
+              <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowUserModal(false)}></div>
+              <div className="relative w-full max-w-2xl mx-auto">
+                <div className="bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+                  <div className="px-6 py-4 border-b border-gray-700">
+                    <h3 className="text-lg font-medium text-gray-100">User Details</h3>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedUser.email}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Role</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedUser.role}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Join Date</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedUser.joinDate}</p>
-                  </div>
-                </div>
-
-                {/* Activity Stats */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="text-sm font-medium text-gray-900 mb-3">Activity Statistics</h4>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-900">{selectedUser.totalCheckIns}</div>
-                      <div className="text-sm text-gray-500">Check-ins</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-900">{selectedUser.totalIncidents}</div>
-                      <div className="text-sm text-gray-500">Incidents</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-900">{selectedUser.safeIdShares}</div>
-                      <div className="text-sm text-gray-500">Safe ID Shares</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Activity Log */}
-                <div>
-                  <button
-                    onClick={() => setShowActivityLog(!showActivityLog)}
-                    className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                  >
-                    <ClockIcon className="h-5 w-5 mr-2" />
-                    Activity Log
-                    {showActivityLog ? (
-                      <ChevronUpIcon className="h-4 w-4 ml-1" />
-                    ) : (
-                      <ChevronDownIcon className="h-4 w-4 ml-1" />
-                    )}
-                  </button>
-                  
-                  {showActivityLog && (
-                    <div className="mt-3 space-y-2">
-                      {selectedUser.activityLog?.map((log, index) => (
-                        <div key={index} className="text-sm text-gray-600">
-                          <span className="font-medium">{log.action}</span> - {log.timestamp}
-                          <p className="text-gray-500">{log.details}</p>
+                  <div className="px-6 py-4 space-y-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="h-16 w-16 rounded-full bg-purple-600 flex items-center justify-center">
+                        <span className="text-xl font-medium text-white">
+                          {selectedUser.name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-semibold text-gray-100">{selectedUser.name}</h4>
+                        <p className="text-gray-400">{selectedUser.email}</p>
+                        <div className="flex items-center space-x-2 mt-2">
+                          {getRoleBadge(selectedUser.role)}
+                          {getStatusBadge(selectedUser.status)}
                         </div>
-                      ))}
+                      </div>
                     </div>
-                  )}
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300">Location</h5>
+                        <p className="text-gray-100">{selectedUser.location}</p>
+                      </div>
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300">Joined</h5>
+                        <p className="text-gray-100">{new Date(selectedUser.joinDate).toLocaleDateString()}</p>
+                      </div>
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300">Last Login</h5>
+                        <p className="text-gray-100">{selectedUser.lastLogin}</p>
+                      </div>
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300">Verification Status</h5>
+                        <p className="text-gray-100">{selectedUser.isVerified ? 'Verified' : 'Not Verified'}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="text-sm font-medium text-gray-300 mb-2">Activity Summary</h5>
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="text-center p-3 bg-gray-700 rounded-lg">
+                          <div className="text-2xl font-bold text-gray-100">{selectedUser.totalCheckIns}</div>
+                          <div className="text-xs text-gray-400">Check-ins</div>
+                        </div>
+                        <div className="text-center p-3 bg-gray-700 rounded-lg">
+                          <div className="text-2xl font-bold text-gray-100">{selectedUser.totalIncidents}</div>
+                          <div className="text-xs text-gray-400">Incidents</div>
+                        </div>
+                        <div className="text-center p-3 bg-gray-700 rounded-lg">
+                          <div className="text-2xl font-bold text-gray-100">{selectedUser.safeIdShares}</div>
+                          <div className="text-xs text-gray-400">ID Shares</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-6 py-4 border-t border-gray-700 flex justify-end space-x-3">
+                    <button
+                      onClick={() => setShowUserModal(false)}
+                      className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-lg hover:bg-gray-600"
+                    >
+                      Close
+                    </button>
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700">
+                      Edit User
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

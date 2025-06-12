@@ -156,30 +156,30 @@ export default function SupportManagement() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'open':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'bg-red-900/50 text-red-300';
       case 'in-progress':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-blue-900/50 text-blue-300';
       case 'resolved':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-green-900/50 text-green-300';
       case 'closed':
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-gray-600/50 text-gray-300';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-gray-600/50 text-gray-300';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'urgent':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'bg-red-900/50 text-red-300';
       case 'high':
-        return 'bg-orange-100 text-orange-800 border-orange-200';
+        return 'bg-orange-900/50 text-orange-300';
       case 'medium':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return 'bg-yellow-900/50 text-yellow-300';
       case 'low':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-green-900/50 text-green-300';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-gray-600/50 text-gray-300';
     }
   };
 
@@ -247,17 +247,17 @@ export default function SupportManagement() {
     <AdminDashboardLayout>
       <div className="space-y-6">
         <div>
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <h2 className="text-2xl font-bold leading-7 text-gray-100 sm:truncate sm:text-3xl sm:tracking-tight">
             Support Management
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-500">
+          <p className="mt-1 text-sm leading-6 text-gray-400">
             Manage support requests from brands, users, and partners
           </p>
         </div>
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="bg-gray-800 overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -266,14 +266,14 @@ export default function SupportManagement() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">Total Requests</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.totalRequests}</dd>
+                    <dd className="text-lg font-medium text-gray-100">{stats.totalRequests}</dd>
                   </dl>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="bg-gray-800 overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -282,14 +282,14 @@ export default function SupportManagement() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">Open</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.openRequests}</dd>
+                    <dd className="text-lg font-medium text-gray-100">{stats.openRequests}</dd>
                   </dl>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="bg-gray-800 overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -298,14 +298,14 @@ export default function SupportManagement() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">In Progress</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.inProgressRequests}</dd>
+                    <dd className="text-lg font-medium text-gray-100">{stats.inProgressRequests}</dd>
                   </dl>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="bg-gray-800 overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -314,7 +314,7 @@ export default function SupportManagement() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">Resolved Today</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.resolvedToday}</dd>
+                    <dd className="text-lg font-medium text-gray-100">{stats.resolvedToday}</dd>
                   </dl>
                 </div>
               </div>
@@ -323,14 +323,14 @@ export default function SupportManagement() {
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-gray-200">
+        <div className="border-b border-gray-700">
           <nav className="-mb-px flex space-x-8">
             <button
               onClick={() => setActiveTab('overview')}
               className={`${
                 activeTab === 'overview'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:border-gray-600 hover:text-gray-300'
               } whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium`}
             >
               Overview
@@ -339,8 +339,8 @@ export default function SupportManagement() {
               onClick={() => setActiveTab('tickets')}
               className={`${
                 activeTab === 'tickets'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:border-gray-600 hover:text-gray-300'
               } whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium`}
             >
               All Tickets
@@ -349,8 +349,8 @@ export default function SupportManagement() {
               onClick={() => setActiveTab('chat')}
               className={`${
                 activeTab === 'chat'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:border-gray-600 hover:text-gray-300'
               } whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium`}
             >
               Chat Interface
@@ -361,7 +361,7 @@ export default function SupportManagement() {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             {/* Search and Filters */}
-            <div className="bg-white shadow rounded-lg p-6">
+            <div className="bg-gray-800 shadow rounded-lg p-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
                 <div className="relative">
                   <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -370,14 +370,14 @@ export default function SupportManagement() {
                     placeholder="Search tickets..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-100 ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                   />
                 </div>
                 
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Status</option>
                   <option value="open">Open</option>
@@ -389,7 +389,7 @@ export default function SupportManagement() {
                 <select
                   value={priorityFilter}
                   onChange={(e) => setPriorityFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Priority</option>
                   <option value="urgent">Urgent</option>
@@ -401,7 +401,7 @@ export default function SupportManagement() {
                 <select
                   value={userTypeFilter}
                   onChange={(e) => setUserTypeFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Users</option>
                   <option value="brand">Brands</option>
@@ -413,7 +413,7 @@ export default function SupportManagement() {
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Categories</option>
                   <option value="technical">Technical</option>
@@ -426,15 +426,15 @@ export default function SupportManagement() {
             </div>
 
             {/* Recent Tickets List */}
-            <div className="bg-white shadow rounded-lg">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">Recent Support Requests</h3>
+            <div className="bg-gray-800 shadow rounded-lg">
+              <div className="px-6 py-4 border-b border-gray-700">
+                <h3 className="text-lg font-medium text-gray-100">Recent Support Requests</h3>
               </div>
-              <ul role="list" className="divide-y divide-gray-200">
+              <ul role="list" className="divide-y divide-gray-700">
                 {filteredRequests.slice(0, 10).map((request) => {
                   const UserTypeIcon = getUserTypeIcon(request.userType);
                   return (
-                    <li key={request.id} className="px-6 py-4 hover:bg-gray-50">
+                    <li key={request.id} className="px-6 py-4 hover:bg-gray-700/50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className="flex-shrink-0">
@@ -442,13 +442,13 @@ export default function SupportManagement() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center space-x-2">
-                              <p className="text-sm font-medium text-gray-900 truncate">
+                              <p className="text-sm font-medium text-gray-100 truncate">
                                 {request.subject}
                               </p>
-                              <span className="text-xs text-gray-500">#{request.ticketNumber}</span>
+                              <span className="text-xs text-gray-400">#{request.ticketNumber}</span>
                             </div>
                             <div className="flex items-center space-x-2 mt-1">
-                              <p className="text-sm text-gray-500">{request.userName}</p>
+                              <p className="text-sm text-gray-400">{request.userName}</p>
                               <span className="text-xs text-gray-400">•</span>
                               <p className="text-xs text-gray-400 capitalize">{request.userType}</p>
                             </div>
@@ -466,7 +466,7 @@ export default function SupportManagement() {
                               setSelectedRequest(request);
                               setActiveTab('chat');
                             }}
-                            className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                            className="text-purple-600 hover:text-purple-900 text-sm font-medium"
                           >
                             View
                           </button>
@@ -483,7 +483,7 @@ export default function SupportManagement() {
         {activeTab === 'tickets' && (
           <div className="space-y-6">
             {/* Search and Filters */}
-            <div className="bg-white shadow rounded-lg p-6">
+            <div className="bg-gray-800 shadow rounded-lg p-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
                 <div className="relative">
                   <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -492,14 +492,14 @@ export default function SupportManagement() {
                     placeholder="Search tickets..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-100 ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                   />
                 </div>
                 
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Status</option>
                   <option value="open">Open</option>
@@ -511,7 +511,7 @@ export default function SupportManagement() {
                 <select
                   value={priorityFilter}
                   onChange={(e) => setPriorityFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Priority</option>
                   <option value="urgent">Urgent</option>
@@ -523,7 +523,7 @@ export default function SupportManagement() {
                 <select
                   value={userTypeFilter}
                   onChange={(e) => setUserTypeFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Users</option>
                   <option value="brand">Brands</option>
@@ -535,7 +535,7 @@ export default function SupportManagement() {
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-100 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                 >
                   <option value="all">All Categories</option>
                   <option value="technical">Technical</option>
@@ -548,55 +548,55 @@ export default function SupportManagement() {
             </div>
 
             {/* Full Tickets List */}
-            <div className="bg-white shadow rounded-lg overflow-hidden">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+            <div className="bg-gray-800 shadow rounded-lg overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-700">
+                <thead className="bg-gray-700">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Ticket
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       User
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Category
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Priority
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Created
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-gray-800 divide-y divide-gray-700">
                   {filteredRequests.map((request) => {
                     const UserTypeIcon = getUserTypeIcon(request.userType);
                     return (
-                      <tr key={request.id} className="hover:bg-gray-50">
+                      <tr key={request.id} className="hover:bg-gray-700/50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">{request.subject}</p>
-                            <p className="text-sm text-gray-500">#{request.ticketNumber}</p>
+                            <p className="text-sm font-medium text-gray-100">{request.subject}</p>
+                            <p className="text-sm text-gray-400">#{request.ticketNumber}</p>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <UserTypeIcon className="h-5 w-5 text-gray-400 mr-2" />
                             <div>
-                              <p className="text-sm font-medium text-gray-900">{request.userName}</p>
-                              <p className="text-sm text-gray-500 capitalize">{request.userType}</p>
+                              <p className="text-sm font-medium text-gray-100">{request.userName}</p>
+                              <p className="text-sm text-gray-400 capitalize">{request.userType}</p>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 capitalize">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900/50 text-purple-300 capitalize">
                             {request.category}
                           </span>
                         </td>
@@ -610,7 +610,7 @@ export default function SupportManagement() {
                             {request.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                           {request.createdAt.toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -620,13 +620,13 @@ export default function SupportManagement() {
                                 setSelectedRequest(request);
                                 setActiveTab('chat');
                               }}
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-purple-600 hover:text-purple-900"
                             >
                               View
                             </button>
                             <Menu as="div" className="relative inline-block text-left">
-                              <Menu.Button className="text-gray-400 hover:text-gray-600">
-                                <EllipsisVerticalIcon className="h-5 w-5" />
+                              <Menu.Button className="text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg">
+                                <EllipsisVerticalIcon className="h-4 w-4" />
                               </Menu.Button>
                               <Transition
                                 as={Fragment}
@@ -637,15 +637,15 @@ export default function SupportManagement() {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                               >
-                                <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                   <div className="py-1">
                                     <Menu.Item>
                                       {({ active }) => (
                                         <button
                                           onClick={() => updateRequestStatus(request.id, 'in-progress')}
                                           className={`${
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                                          } block w-full px-4 py-2 text-left text-sm`}
+                                            active ? 'bg-gray-600' : ''
+                                          } block px-4 py-2 text-sm text-gray-300 w-full text-left`}
                                         >
                                           Mark In Progress
                                         </button>
@@ -656,22 +656,10 @@ export default function SupportManagement() {
                                         <button
                                           onClick={() => updateRequestStatus(request.id, 'resolved')}
                                           className={`${
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                                          } block w-full px-4 py-2 text-left text-sm`}
+                                            active ? 'bg-gray-600' : ''
+                                          } block px-4 py-2 text-sm text-gray-300 w-full text-left`}
                                         >
                                           Mark Resolved
-                                        </button>
-                                      )}
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <button
-                                          onClick={() => updateRequestStatus(request.id, 'closed')}
-                                          className={`${
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                                          } block w-full px-4 py-2 text-left text-sm`}
-                                        >
-                                          Close Ticket
                                         </button>
                                       )}
                                     </Menu.Item>
@@ -694,25 +682,25 @@ export default function SupportManagement() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Tickets List */}
             <div className="lg:col-span-1">
-              <div className="bg-white shadow rounded-lg">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900">Active Tickets</h3>
+              <div className="bg-gray-800 shadow rounded-lg">
+                <div className="px-6 py-4 border-b border-gray-700">
+                  <h3 className="text-lg font-medium text-gray-100">Active Tickets</h3>
                 </div>
-                <ul role="list" className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+                <ul role="list" className="divide-y divide-gray-700 max-h-96 overflow-y-auto">
                   {filteredRequests.filter(r => r.status !== 'closed').map((request) => (
                     <li 
                       key={request.id} 
-                      className={`px-6 py-4 hover:bg-gray-50 cursor-pointer ${
-                        selectedRequest?.id === request.id ? 'bg-indigo-50 border-r-2 border-indigo-500' : ''
+                      className={`px-6 py-4 hover:bg-gray-700/50 cursor-pointer ${
+                        selectedRequest?.id === request.id ? 'bg-purple-900/50 border-r-2 border-purple-500' : ''
                       }`}
                       onClick={() => setSelectedRequest(request)}
                     >
                       <div className="flex items-center justify-between">
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-gray-100 truncate">
                             {request.subject}
                           </p>
-                          <p className="text-sm text-gray-500">{request.userName}</p>
+                          <p className="text-sm text-gray-400">{request.userName}</p>
                           <div className="flex items-center space-x-2 mt-1">
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(request.status)}`}>
                               {request.status}
@@ -732,12 +720,12 @@ export default function SupportManagement() {
             {/* Chat Interface */}
             <div className="lg:col-span-2">
               {selectedRequest ? (
-                <div className="bg-white shadow rounded-lg">
-                  <div className="px-6 py-4 border-b border-gray-200">
+                <div className="bg-gray-800 shadow rounded-lg">
+                  <div className="px-6 py-4 border-b border-gray-700">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-lg font-medium text-gray-900">{selectedRequest.subject}</h3>
-                        <p className="text-sm text-gray-500">
+                        <h3 className="text-lg font-medium text-gray-100">{selectedRequest.subject}</h3>
+                        <p className="text-sm text-gray-400">
                           {selectedRequest.userName} • #{selectedRequest.ticketNumber}
                         </p>
                       </div>
@@ -746,8 +734,8 @@ export default function SupportManagement() {
                           {selectedRequest.status}
                         </span>
                         <Menu as="div" className="relative inline-block text-left">
-                          <Menu.Button className="text-gray-400 hover:text-gray-600">
-                            <EllipsisVerticalIcon className="h-5 w-5" />
+                          <Menu.Button className="text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg">
+                            <EllipsisVerticalIcon className="h-4 w-4" />
                           </Menu.Button>
                           <Transition
                             as={Fragment}
@@ -758,15 +746,15 @@ export default function SupportManagement() {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div className="py-1">
                                 <Menu.Item>
                                   {({ active }) => (
                                     <button
                                       onClick={() => updateRequestStatus(selectedRequest.id, 'in-progress')}
                                       className={`${
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                                      } block w-full px-4 py-2 text-left text-sm`}
+                                        active ? 'bg-gray-600' : ''
+                                      } block px-4 py-2 text-sm text-gray-300 w-full text-left`}
                                     >
                                       Mark In Progress
                                     </button>
@@ -777,22 +765,10 @@ export default function SupportManagement() {
                                     <button
                                       onClick={() => updateRequestStatus(selectedRequest.id, 'resolved')}
                                       className={`${
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                                      } block w-full px-4 py-2 text-left text-sm`}
+                                        active ? 'bg-gray-600' : ''
+                                      } block px-4 py-2 text-sm text-gray-300 w-full text-left`}
                                     >
                                       Mark Resolved
-                                    </button>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <button
-                                      onClick={() => updateRequestStatus(selectedRequest.id, 'closed')}
-                                      className={`${
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                                      } block w-full px-4 py-2 text-left text-sm`}
-                                    >
-                                      Close Ticket
                                     </button>
                                   )}
                                 </Menu.Item>
@@ -815,8 +791,8 @@ export default function SupportManagement() {
                         >
                           <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                             message.sender === 'admin'
-                              ? 'bg-indigo-600 text-white'
-                              : 'bg-gray-100 text-gray-900'
+                              ? 'bg-purple-600 text-white'
+                              : 'bg-gray-700 text-gray-100'
                           }`}>
                             <p className="text-sm">{message.content}</p>
                             <div className="flex items-center justify-between mt-1">
@@ -837,11 +813,11 @@ export default function SupportManagement() {
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
                           placeholder="Type your response..."
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="flex-1 px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         />
                         <button
                           type="submit"
-                          className="rounded-md bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          className="rounded-md bg-purple-600 p-2 text-white shadow-sm hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                         >
                           <PaperAirplaneIcon className="h-5 w-5" />
                         </button>
@@ -850,11 +826,11 @@ export default function SupportManagement() {
                   </div>
                 </div>
               ) : (
-                <div className="bg-white shadow rounded-lg p-6">
+                <div className="bg-gray-800 shadow rounded-lg p-6">
                   <div className="text-center">
-                    <ChatBubbleLeftRightIcon className="mx-auto h-12 w-12 text-gray-400" />
-                    <h3 className="mt-2 text-sm font-medium text-gray-900">No ticket selected</h3>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <ChatBubbleLeftRightIcon className="mx-auto h-12 w-12 text-gray-500" />
+                    <h3 className="mt-2 text-sm font-medium text-gray-100">No ticket selected</h3>
+                    <p className="mt-1 text-sm text-gray-400">
                       Select a ticket from the list to start chatting with the user.
                     </p>
                   </div>

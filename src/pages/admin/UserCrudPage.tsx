@@ -270,13 +270,24 @@ export default function UserCrudPage() {
 
   return (
     <AdminDashboardLayout>
-      <UserCrudManager
-        users={users}
-        onUserCreate={handleUserCreate}
-        onUserUpdate={handleUserUpdate}
-        onUserDelete={handleUserDelete}
-        onUserExport={handleUserExport}
-      />
+      <div className="space-y-6">
+        {/* Page Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-100">User Management</h1>
+            <p className="text-gray-400 mt-1">Manage user accounts and permissions</p>
+          </div>
+        </div>
+
+        {/* User Management Component */}
+        <UserCrudManager
+          users={users}
+          onUserCreate={handleUserCreate}
+          onUserUpdate={handleUserUpdate}
+          onUserDelete={handleUserDelete}
+          onUserExport={handleUserExport}
+        />
+      </div>
     </AdminDashboardLayout>
   );
 } 

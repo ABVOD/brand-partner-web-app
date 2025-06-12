@@ -202,20 +202,29 @@ export default function PushNotifications() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'emergency': return 'bg-red-100 text-red-800';
-      case 'safety': return 'bg-yellow-100 text-yellow-800';
-      case 'marketing': return 'bg-blue-100 text-blue-800';
-      case 'update': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'emergency':
+        return 'bg-red-900/50 text-red-300';
+      case 'marketing':
+        return 'bg-blue-900/50 text-blue-300';
+      case 'safety':
+        return 'bg-green-900/50 text-green-300';
+      case 'update':
+        return 'bg-purple-900/50 text-purple-300';
+      default:
+        return 'bg-gray-600/50 text-gray-300';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'sent': return 'bg-green-100 text-green-800';
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'failed': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'pending':
+        return 'bg-yellow-900/50 text-yellow-300';
+      case 'sent':
+        return 'bg-green-900/50 text-green-300';
+      case 'failed':
+        return 'bg-red-900/50 text-red-300';
+      default:
+        return 'bg-gray-600/50 text-gray-300';
     }
   };
 
@@ -223,148 +232,126 @@ export default function PushNotifications() {
     <AdminDashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Push Notifications</h1>
-          <p className="mt-2 text-gray-600">
-            Send and manage push notifications to users
-          </p>
-        </div>
-
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <PaperAirplaneIcon className="h-6 w-6 text-blue-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Total Sent</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.totalSent.toLocaleString()}</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <CheckCircleIcon className="h-6 w-6 text-green-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Delivery Rate</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.deliveryRate}%</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <EyeIcon className="h-6 w-6 text-indigo-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Open Rate</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.openRate}%</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <ArrowTrendingUpIcon className="h-6 w-6 text-purple-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Click Rate</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.clickRate}%</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-100">Push Notifications</h1>
+            <p className="text-gray-400 mt-1">Send and manage push notifications to users</p>
           </div>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="border-b border-gray-200">
+        {/* Navigation Tabs */}
+        <div className="border-b border-gray-700">
           <nav className="-mb-px flex space-x-8">
             {[
-              { key: 'send', label: 'Send Notification', icon: PaperAirplaneIcon },
-              { key: 'scheduled', label: 'Scheduled', icon: CalendarIcon },
-              { key: 'templates', label: 'Templates', icon: DocumentTextIcon },
-              { key: 'analytics', label: 'Analytics', icon: ChartBarIcon }
-            ].map(tab => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as any)}
-                className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.key
-                    ? 'border-indigo-500 text-indigo-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                <tab.icon className="h-5 w-5" />
-                <span>{tab.label}</span>
-              </button>
-            ))}
+              { id: 'send', label: 'Send Notification', icon: PaperAirplaneIcon },
+              { id: 'scheduled', label: 'Scheduled', icon: ClockIcon },
+              { id: 'templates', label: 'Templates', icon: DocumentTextIcon },
+              { id: 'analytics', label: 'Analytics', icon: ChartBarIcon }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === tab.id
+                      ? 'border-purple-500 text-purple-400'
+                      : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </nav>
         </div>
 
         {/* Send Notification Tab */}
         {activeTab === 'send' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Compose Form */}
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-6">Compose Notification</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Notification Title
-                  </label>
-                  <input
-                    type="text"
-                    value={notificationTitle}
-                    onChange={(e) => setNotificationTitle(e.target.value)}
-                    placeholder="Enter notification title..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Message Body
-                  </label>
-                  <textarea
-                    value={notificationBody}
-                    onChange={(e) => setNotificationBody(e.target.value)}
-                    placeholder="Enter notification message..."
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Notification Form */}
+            <div className="lg:col-span-2">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-6">Create Notification</h3>
+                
+                <div className="space-y-6">
+                  {/* Template Selection */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Use Template (Optional)
+                    </label>
+                    <select
+                      value={selectedTemplate}
+                      onChange={(e) => {
+                        const template = templates.find(t => t.id === e.target.value);
+                        if (template) handleUseTemplate(template);
+                      }}
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+                      <option value="">Select a template...</option>
+                      {templates.map((template) => (
+                        <option key={template.id} value={template.id}>
+                          {template.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Title */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Notification Title *
+                    </label>
+                    <input
+                      type="text"
+                      value={notificationTitle}
+                      onChange={(e) => setNotificationTitle(e.target.value)}
+                      placeholder="Enter notification title..."
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+
+                  {/* Body */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Notification Body *
+                    </label>
+                    <textarea
+                      value={notificationBody}
+                      onChange={(e) => setNotificationBody(e.target.value)}
+                      placeholder="Enter notification message..."
+                      rows={4}
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+
+                  {/* Audience */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Target Audience
+                    </label>
+                    <select
+                      value={selectedAudience}
+                      onChange={(e) => setSelectedAudience(e.target.value as any)}
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+                      <option value="all">All Users ({getAudienceCount('all')})</option>
+                      <option value="accident_users">Accident Users ({getAudienceCount('accident_users')})</option>
+                      <option value="brand_partners">Brand Partners ({getAudienceCount('brand_partners')})</option>
+                      <option value="specific">Specific Users</option>
+                    </select>
+                  </div>
+
+                  {/* Category */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Category
                     </label>
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value as any)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     >
                       <option value="safety">Safety</option>
                       <option value="emergency">Emergency</option>
@@ -373,228 +360,297 @@ export default function PushNotifications() {
                     </select>
                   </div>
 
+                  {/* Scheduling */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Audience
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Delivery
                     </label>
-                    <select
-                      value={selectedAudience}
-                      onChange={(e) => setSelectedAudience(e.target.value as any)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    >
-                      <option value="all">All Users ({getAudienceCount('all')})</option>
-                      <option value="accident_users">Accident Users ({getAudienceCount('accident_users')})</option>
-                      <option value="brand_partners">Brand Partners ({getAudienceCount('brand_partners')})</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Delivery Options
-                  </label>
-                  <div className="space-y-2">
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        checked={isImmediate}
-                        onChange={() => setIsImmediate(true)}
-                        className="mr-2"
-                      />
-                      Send immediately
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        checked={!isImmediate}
-                        onChange={() => setIsImmediate(false)}
-                        className="mr-2"
-                      />
-                      Schedule for later
-                    </label>
-                  </div>
-                  
-                  {!isImmediate && (
-                    <div className="mt-2">
-                      <input
-                        type="datetime-local"
-                        value={scheduleTime}
-                        onChange={(e) => setScheduleTime(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                      />
+                    <div className="space-y-3">
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          checked={isImmediate}
+                          onChange={() => setIsImmediate(true)}
+                          className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600 bg-gray-700"
+                        />
+                        <span className="ml-2 text-sm text-gray-300">Send immediately</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          checked={!isImmediate}
+                          onChange={() => setIsImmediate(false)}
+                          className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600 bg-gray-700"
+                        />
+                        <span className="ml-2 text-sm text-gray-300">Schedule for later</span>
+                      </label>
+                      {!isImmediate && (
+                        <input
+                          type="datetime-local"
+                          value={scheduleTime}
+                          onChange={(e) => setScheduleTime(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                      )}
                     </div>
-                  )}
-                </div>
+                  </div>
 
-                <button
-                  onClick={handleSendNotification}
-                  className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
-                >
-                  {isImmediate ? 'Send Notification' : 'Schedule Notification'}
-                </button>
+                  {/* Send Button */}
+                  <button
+                    onClick={handleSendNotification}
+                    className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 flex items-center justify-center space-x-2"
+                  >
+                    <PaperAirplaneIcon className="h-4 w-4" />
+                    <span>{isImmediate ? 'Send Now' : 'Schedule Notification'}</span>
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* Templates Quick Select */}
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-6">Quick Templates</h2>
-              
-              <div className="space-y-3">
-                {templates.map((template) => (
-                  <div
-                    key={template.id}
-                    className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
-                    onClick={() => handleUseTemplate(template)}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-gray-900">{template.name}</h3>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(template.category)}`}>
-                        {template.category}
-                      </span>
+            {/* Preview */}
+            <div className="lg:col-span-1">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Preview</h3>
+                <div className="bg-gray-700 rounded-lg p-4 border border-gray-600">
+                  <div className="flex items-start space-x-3">
+                    <div className="p-2 bg-purple-900/50 rounded-lg">
+                      <BellIcon className="h-5 w-5 text-purple-400" />
                     </div>
-                    <p className="text-sm text-gray-600 mb-1">{template.title}</p>
-                    <p className="text-xs text-gray-500">{template.body}</p>
-                    <div className="mt-2 text-xs text-gray-400">
-                      Used {template.usageCount} times
+                    <div className="flex-1">
+                      <h4 className="text-sm font-medium text-gray-100">
+                        {notificationTitle || 'Notification Title'}
+                      </h4>
+                      <p className="text-sm text-gray-300 mt-1">
+                        {notificationBody || 'Notification message will appear here...'}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Safe ID App • now
+                      </p>
                     </div>
                   </div>
-                ))}
+                </div>
+                
+                <div className="mt-4 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Audience:</span>
+                    <span className="text-gray-300">{getAudienceCount(selectedAudience)} users</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Category:</span>
+                    <span className={`px-2 py-1 rounded-full text-xs ${getCategoryColor(selectedCategory)}`}>
+                      {selectedCategory}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Delivery:</span>
+                    <span className="text-gray-300">
+                      {isImmediate ? 'Immediate' : 'Scheduled'}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* Scheduled Notifications Tab */}
+        {/* Scheduled Tab */}
         {activeTab === 'scheduled' && (
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900">Scheduled Notifications</h2>
+          <div className="space-y-6">
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-yellow-900/50 rounded-lg">
+                    <ClockIcon className="h-6 w-6 text-yellow-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">
+                      {scheduledNotifications.filter(n => n.status === 'pending').length}
+                    </p>
+                    <p className="text-sm text-gray-400">Pending</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-green-900/50 rounded-lg">
+                    <CheckCircleIcon className="h-6 w-6 text-green-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">
+                      {scheduledNotifications.filter(n => n.status === 'sent').length}
+                    </p>
+                    <p className="text-sm text-gray-400">Sent</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-red-900/50 rounded-lg">
+                    <ExclamationTriangleIcon className="h-6 w-6 text-red-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">
+                      {scheduledNotifications.filter(n => n.status === 'failed').length}
+                    </p>
+                    <p className="text-sm text-gray-400">Failed</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Notification
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Audience
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Scheduled Time
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Recipients
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {scheduledNotifications.map((notification) => (
-                    <tr key={notification.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">{notification.title}</div>
-                          <div className="text-sm text-gray-500">{notification.body}</div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {notification.audience}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {notification.scheduledTime.toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(notification.status)}`}>
-                          {notification.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <div>
-                          <div>{notification.recipientCount.toLocaleString()} total</div>
-                          {notification.deliveredCount && (
-                            <div className="text-xs text-gray-500">
-                              {notification.deliveredCount.toLocaleString()} delivered
+
+            {/* Scheduled Notifications List */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-700">
+                <h3 className="text-lg font-semibold text-gray-100">Scheduled Notifications</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-700">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Notification
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Audience
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Scheduled Time
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Status
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Performance
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-gray-800 divide-y divide-gray-700">
+                    {scheduledNotifications.map((notification) => (
+                      <tr key={notification.id} className="hover:bg-gray-700/50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm font-medium text-gray-100">{notification.title}</div>
+                            <div className="text-sm text-gray-400">{notification.body}</div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <UsersIcon className="h-4 w-4 text-gray-400 mr-2" />
+                            <div>
+                              <div className="text-sm text-gray-100">{notification.audience}</div>
+                              <div className="text-sm text-gray-400">{notification.recipientCount.toLocaleString()} users</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-300">
+                            {notification.scheduledTime.toLocaleDateString()}
+                          </div>
+                          <div className="text-sm text-gray-400">
+                            {notification.scheduledTime.toLocaleTimeString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(notification.status)}`}>
+                            {notification.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {notification.status === 'sent' && (
+                            <div className="text-sm">
+                              <div className="text-gray-300">
+                                {notification.deliveredCount?.toLocaleString()} delivered
+                              </div>
+                              <div className="text-gray-400">
+                                {notification.openedCount?.toLocaleString()} opened
+                              </div>
                             </div>
                           )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex space-x-2">
-                          <button className="text-indigo-600 hover:text-indigo-900">
-                            <EyeIcon className="h-4 w-4" />
-                          </button>
-                          {notification.status === 'pending' && (
-                            <>
-                              <button className="text-gray-600 hover:text-gray-900">
-                                <PencilIcon className="h-4 w-4" />
-                              </button>
-                              <button className="text-red-600 hover:text-red-900">
-                                <TrashIcon className="h-4 w-4" />
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex items-center space-x-2">
+                            <button className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg">
+                              <EyeIcon className="h-4 w-4" />
+                            </button>
+                            {notification.status === 'pending' && (
+                              <>
+                                <button className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg">
+                                  <PencilIcon className="h-4 w-4" />
+                                </button>
+                                <button className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg">
+                                  <TrashIcon className="h-4 w-4" />
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}
 
         {/* Templates Tab */}
         {activeTab === 'templates' && (
-          <div className="bg-white shadow rounded-lg p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-medium text-gray-900">Notification Templates</h2>
-              <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-                Create Template
-              </button>
+          <div className="space-y-6">
+            {/* Search */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+              <div className="relative">
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search templates..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {templates.map((template) => (
-                <div key={template.id} className="border border-gray-200 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-medium text-gray-900">{template.name}</h3>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(template.category)}`}>
-                      {template.category}
-                    </span>
+            {/* Templates Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {templates.filter(template => 
+                template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                template.title.toLowerCase().includes(searchQuery.toLowerCase())
+              ).map((template) => (
+                <div key={template.id} className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-100">{template.name}</h3>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(template.category)}`}>
+                        {template.category}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleUseTemplate(template)}
+                        className="p-2 text-gray-400 hover:text-purple-400 hover:bg-gray-700 rounded-lg"
+                      >
+                        <PaperAirplaneIcon className="h-4 w-4" />
+                      </button>
+                      <button className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg">
+                        <PencilIcon className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
                   
-                  <div className="space-y-2 mb-4">
-                    <p className="text-sm font-medium text-gray-700">{template.title}</p>
-                    <p className="text-sm text-gray-600">{template.body}</p>
+                  <div className="bg-gray-700 rounded-lg p-4 mb-4">
+                    <h4 className="text-sm font-medium text-gray-100 mb-1">{template.title}</h4>
+                    <p className="text-sm text-gray-300">{template.body}</p>
                   </div>
-
-                  <div className="text-xs text-gray-500 mb-3">
-                    <div>Audience: {template.audience.replace('_', ' ')}</div>
-                    <div>Used {template.usageCount} times</div>
+                  
+                  <div className="flex items-center justify-between text-sm text-gray-400">
+                    <span>Used {template.usageCount} times</span>
                     {template.lastUsed && (
-                      <div>Last used: {template.lastUsed.toLocaleDateString()}</div>
+                      <span>Last used {template.lastUsed.toLocaleDateString()}</span>
                     )}
-                  </div>
-
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleUseTemplate(template)}
-                      className="flex-1 bg-indigo-600 text-white text-xs py-2 px-3 rounded hover:bg-indigo-700"
-                    >
-                      Use Template
-                    </button>
-                    <button className="text-gray-600 hover:text-gray-900">
-                      <PencilIcon className="h-4 w-4" />
-                    </button>
-                    <button className="text-red-600 hover:text-red-900">
-                      <TrashIcon className="h-4 w-4" />
-                    </button>
                   </div>
                 </div>
               ))}
@@ -605,86 +661,90 @@ export default function PushNotifications() {
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
           <div className="space-y-6">
-            {/* Recent Activity */}
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-              <div className="bg-white overflow-hidden shadow rounded-lg p-5">
+            {/* Key Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <ClockIcon className="h-6 w-6 text-blue-400" />
+                  <div className="p-2 bg-purple-900/50 rounded-lg">
+                    <PaperAirplaneIcon className="h-6 w-6 text-purple-400" />
                   </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Last Hour</dt>
-                      <dd className="text-lg font-medium text-gray-900">{stats.lastHour}</dd>
-                    </dl>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.totalSent.toLocaleString()}</p>
+                    <p className="text-sm text-gray-400">Total Sent</p>
                   </div>
                 </div>
               </div>
-
-              <div className="bg-white overflow-hidden shadow rounded-lg p-5">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <CalendarIcon className="h-6 w-6 text-green-400" />
+                  <div className="p-2 bg-green-900/50 rounded-lg">
+                    <CheckCircleIcon className="h-6 w-6 text-green-400" />
                   </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Last Day</dt>
-                      <dd className="text-lg font-medium text-gray-900">{stats.lastDay.toLocaleString()}</dd>
-                    </dl>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.deliveryRate}%</p>
+                    <p className="text-sm text-gray-400">Delivery Rate</p>
                   </div>
                 </div>
               </div>
-
-              <div className="bg-white overflow-hidden shadow rounded-lg p-5">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <CalendarIcon className="h-6 w-6 text-purple-400" />
+                  <div className="p-2 bg-blue-900/50 rounded-lg">
+                    <EyeIcon className="h-6 w-6 text-blue-400" />
                   </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">Last Week</dt>
-                      <dd className="text-lg font-medium text-gray-900">{stats.lastWeek.toLocaleString()}</dd>
-                    </dl>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.openRate}%</p>
+                    <p className="text-sm text-gray-400">Open Rate</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-orange-900/50 rounded-lg">
+                    <ArrowTrendingUpIcon className="h-6 w-6 text-orange-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.clickRate}%</p>
+                    <p className="text-sm text-gray-400">Click Rate</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Performance Metrics */}
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-6">Performance Metrics</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-indigo-600">{stats.deliveryRate}%</div>
-                  <div className="text-sm text-gray-500">Delivery Rate</div>
-                  <div className="mt-1">
-                    <DevicePhoneMobileIcon className="h-5 w-5 text-gray-400 mx-auto" />
+            {/* Recent Activity */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Recent Activity</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Last Hour</span>
+                    <span className="text-sm font-medium text-gray-100">{stats.lastHour}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Last 24 Hours</span>
+                    <span className="text-sm font-medium text-gray-100">{stats.lastDay.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Last 7 Days</span>
+                    <span className="text-sm font-medium text-gray-100">{stats.lastWeek.toLocaleString()}</span>
                   </div>
                 </div>
+              </div>
 
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600">{stats.openRate}%</div>
-                  <div className="text-sm text-gray-500">Open Rate</div>
-                  <div className="mt-1">
-                    <EyeIcon className="h-5 w-5 text-gray-400 mx-auto" />
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600">{stats.clickRate}%</div>
-                  <div className="text-sm text-gray-500">Click Rate</div>
-                  <div className="mt-1">
-                    <ArrowTrendingUpIcon className="h-5 w-5 text-gray-400 mx-auto" />
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">{stats.totalSent.toLocaleString()}</div>
-                  <div className="text-sm text-gray-500">Total Sent</div>
-                  <div className="mt-1">
-                    <PaperAirplaneIcon className="h-5 w-5 text-gray-400 mx-auto" />
-                  </div>
+              <div className="lg:col-span-2 bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Performance by Category</h3>
+                <div className="space-y-4">
+                  {['emergency', 'safety', 'marketing', 'update'].map((category) => (
+                    <div key={category} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(category)}`}>
+                          {category}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-4 text-sm">
+                        <span className="text-gray-400">98.5% delivered</span>
+                        <span className="text-gray-400">72.3% opened</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

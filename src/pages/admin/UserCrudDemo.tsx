@@ -172,17 +172,17 @@ export default function UserCrudDemo() {
     <AdminDashboardLayout>
       <div className="space-y-6">
         {/* Page Header */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
           <div className="max-w-3xl">
-            <h1 className="text-3xl font-bold text-gray-900">Advanced User Management</h1>
-            <p className="mt-2 text-gray-600">
+            <h1 className="text-3xl font-bold text-gray-100">Advanced User Management</h1>
+            <p className="mt-2 text-gray-300">
               This is an enhanced user management system with full CRUD (Create, Read, Update, Delete) operations. 
               You can create new users, view detailed user information, edit existing users, and delete users as needed.
             </p>
             
-            <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h3 className="text-sm font-medium text-blue-900">Features included:</h3>
-              <ul className="mt-2 text-sm text-blue-800 list-disc list-inside space-y-1">
+            <div className="mt-4 bg-purple-900/20 border border-purple-700 rounded-lg p-4">
+              <h3 className="text-sm font-medium text-purple-300">Features included:</h3>
+              <ul className="mt-2 text-sm text-purple-200 list-disc list-inside space-y-1">
                 <li>Create new users with comprehensive information</li>
                 <li>View detailed user profiles including activity statistics</li>
                 <li>Edit user information and status</li>

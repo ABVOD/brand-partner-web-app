@@ -4,6 +4,7 @@ import UsageLogsViewer from '../../components/UsageLogsViewer';
 import HeatmapVisualization from '../../components/HeatmapVisualization';
 import { usageTracker } from '../../utils/usageTracker';
 import type { ClickHeatmapData, PageHeatmapData, UsageLog } from '../../types/analytics';
+import AdminDashboardLayout from '../../components/AdminDashboardLayout';
 
 export default function HeatmapAnalytics() {
   const { trackFeatureUsage } = useUsageTracking();
@@ -110,62 +111,62 @@ export default function HeatmapAnalytics() {
     <div className="space-y-6">
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-lg shadow border">
+        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-blue-400">
                 {clickData.reduce((sum, click) => sum + click.clicks, 0)}
               </div>
-              <div className="text-sm text-gray-600">Total Clicks</div>
+              <div className="text-sm text-gray-400">Total Clicks</div>
             </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-12 h-12 bg-blue-900/50 rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.122 2.122" />
               </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
+        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-2xl font-bold text-green-600">{pageData.length}</div>
-              <div className="text-sm text-gray-600">Pages Tracked</div>
+              <div className="text-2xl font-bold text-green-400">{pageData.length}</div>
+              <div className="text-sm text-gray-400">Pages Tracked</div>
             </div>
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-12 h-12 bg-green-900/50 rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
+        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-2xl font-bold text-purple-600">
+              <div className="text-2xl font-bold text-purple-400">
                 {clickData.filter(click => click.clicks > 5).length}
               </div>
-              <div className="text-sm text-gray-600">Hot Spots</div>
+              <div className="text-sm text-gray-400">Hot Spots</div>
             </div>
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-12 h-12 bg-purple-900/50 rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
               </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
+        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
           <div className="flex items-center">
             <div className="flex-1">
-              <div className="text-2xl font-bold text-orange-600">
+              <div className="text-2xl font-bold text-orange-400">
                 {pageData.reduce((sum, page) => sum + page.uniqueUsers, 0)}
               </div>
-              <div className="text-sm text-gray-600">Active Users</div>
+              <div className="text-sm text-gray-400">Active Users</div>
             </div>
-            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-12 h-12 bg-orange-900/50 rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
               </svg>
             </div>
@@ -174,8 +175,8 @@ export default function HeatmapAnalytics() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white p-6 rounded-lg shadow border">
-        <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+      <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
+        <h3 className="text-lg font-semibold mb-4 text-gray-100">Quick Actions</h3>
         <div className="flex flex-wrap gap-3">
           <button
             onClick={() => loadHeatmapData()}
@@ -200,120 +201,105 @@ export default function HeatmapAnalytics() {
               const data = usageTracker.exportLogs();
               const blob = new Blob([data], { type: 'application/json' });
               const url = URL.createObjectURL(blob);
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = `heatmap-data-${new Date().toISOString().split('T')[0]}.json`;
-              link.click();
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `usage-logs-${new Date().toISOString().split('T')[0]}.json`;
+              a.click();
               URL.revokeObjectURL(url);
-              trackFeatureUsage('export_data');
             }}
-            className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
           >
             Export Data
           </button>
         </div>
       </div>
 
-      {/* Page Performance Table */}
-      <div className="bg-white rounded-lg shadow border">
-        <div className="p-6 border-b">
-          <h3 className="text-lg font-semibold">Page Performance</h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Page</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Clicks</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unique Users</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Time (s)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hot Spots</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {pageData.slice(0, 10).map((page, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{page.page}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{page.totalClicks}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{page.uniqueUsers}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{page.averageTimeSpent}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {page.clicks.filter(click => click.clicks > 5).length}
-                  </td>
+      {/* Page Statistics */}
+      {pageData.length > 0 && (
+        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-100">Page Statistics</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-700">
+              <thead className="bg-gray-700">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Page
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Total Clicks
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Unique Users
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Avg Time (s)
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-gray-800 divide-y divide-gray-700">
+                {pageData.map((page, index) => (
+                  <tr key={index} className="hover:bg-gray-700/50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
+                      {page.page}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                      {page.totalClicks}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                      {page.uniqueUsers}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                      {page.averageTimeSpent}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 
   const renderSettings = () => (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-lg shadow border">
-        <h3 className="text-lg font-semibold mb-4">Tracking Settings</h3>
-        
+      <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
+        <h3 className="text-lg font-semibold mb-4 text-gray-100">Tracking Settings</h3>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <label className="text-sm font-medium text-gray-900">Enable Usage Tracking</label>
-              <p className="text-sm text-gray-500">Collect user interaction data for analytics</p>
+              <label className="text-sm font-medium text-gray-100">Enable Usage Tracking</label>
+              <p className="text-sm text-gray-400">Track user interactions and page views</p>
             </div>
             <button
               onClick={handleTrackingToggle}
-              className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                isTrackingEnabled ? 'bg-blue-600' : 'bg-gray-200'
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                isTrackingEnabled ? 'bg-purple-600' : 'bg-gray-600'
               }`}
             >
               <span
-                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                  isTrackingEnabled ? 'translate-x-5' : 'translate-x-0'
+                className={`inline-block h-4 w-4 transform rounded-full bg-gray-100 transition-transform ${
+                  isTrackingEnabled ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
             </button>
           </div>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-            <div className="space-y-2">
-              <h4 className="font-medium text-gray-900">Tracking Status</h4>
-              <div className="text-sm text-gray-600">
-                <div className="flex justify-between py-1">
-                  <span>Click Tracking:</span>
-                  <span className="text-green-600">Enabled</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span>Scroll Tracking:</span>
-                  <span className="text-green-600">Enabled</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span>Hover Tracking:</span>
-                  <span className="text-red-600">Disabled</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span>Sample Rate:</span>
-                  <span className="text-blue-600">100%</span>
-                </div>
-              </div>
+      <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
+        <h3 className="text-lg font-semibold mb-4 text-gray-100">Data Management</h3>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <label className="text-sm font-medium text-gray-100">Storage Usage</label>
+              <p className="text-sm text-gray-400">Current usage tracking data size</p>
             </div>
-
-            <div className="space-y-2">
-              <h4 className="font-medium text-gray-900">Data Storage</h4>
-              <div className="text-sm text-gray-600">
-                <div className="flex justify-between py-1">
-                  <span>Stored Events:</span>
-                  <span>{usageTracker.getStoredLogs().length}</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span>Storage Location:</span>
-                  <span>Local Storage</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span>Auto Cleanup:</span>
-                  <span className="text-green-600">Yes (1000 events)</span>
-                </div>
-              </div>
-            </div>
+            <span className="text-sm text-gray-300">
+              {Math.round(JSON.stringify(usageTracker.getStoredLogs()).length / 1024)} KB
+            </span>
           </div>
         </div>
       </div>
@@ -321,57 +307,54 @@ export default function HeatmapAnalytics() {
   );
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Heatmap Analytics</h1>
-        <p className="text-gray-600">
-          Monitor user interactions and behavior patterns with comprehensive heatmap visualization
-        </p>
-      </div>
+    <AdminDashboardLayout>
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-100">Heatmap Analytics</h1>
+            <p className="text-gray-400 mt-1">User interaction tracking and behavior analysis</p>
+          </div>
+        </div>
 
-      {/* Tab Navigation */}
-      <div className="mb-6">
-        <div className="border-b border-gray-200">
+        {/* Navigation Tabs */}
+        <div className="border-b border-gray-700">
           <nav className="-mb-px flex space-x-8">
             {[
-              { key: 'overview', label: 'Overview', icon: '📊' },
-              { key: 'heatmaps', label: 'Heatmaps', icon: '🔥' },
-              { key: 'logs', label: 'Usage Logs', icon: '📋' },
-              { key: 'settings', label: 'Settings', icon: '⚙️' }
-            ].map(tab => (
+              { id: 'overview', label: 'Overview' },
+              { id: 'heatmaps', label: 'Heatmaps' },
+              { id: 'logs', label: 'Usage Logs' },
+              { id: 'settings', label: 'Settings' }
+            ].map((tab) => (
               <button
-                key={tab.key}
-                onClick={() => {
-                  setSelectedView(tab.key as any);
-                  trackFeatureUsage('tab_switch', { tab: tab.key });
-                }}
-                className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm ${
-                  selectedView === tab.key
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                key={tab.id}
+                onClick={() => setSelectedView(tab.id as any)}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  selectedView === tab.id
+                    ? 'border-purple-500 text-purple-400'
+                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600'
                 }`}
               >
-                <span>{tab.icon}</span>
-                <span>{tab.label}</span>
+                {tab.label}
               </button>
             ))}
           </nav>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="space-y-6">
+        {/* Content */}
         {selectedView === 'overview' && renderOverview()}
-        {selectedView === 'heatmaps' && (
-          <div className="space-y-6">
-            <HeatmapVisualization type="clicks" data={clickData} />
-            <HeatmapVisualization type="usage" pageData={pageData} />
-            <HeatmapVisualization type="calendar" />
+                 {selectedView === 'heatmaps' && (
+           <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
+             <HeatmapVisualization type="clicks" data={clickData} />
+           </div>
+         )}
+        {selectedView === 'logs' && (
+          <div className="bg-gray-800 rounded-lg border border-gray-700">
+            <UsageLogsViewer />
           </div>
         )}
-        {selectedView === 'logs' && <UsageLogsViewer />}
         {selectedView === 'settings' && renderSettings()}
       </div>
-    </div>
+    </AdminDashboardLayout>
   );
 } 

@@ -114,28 +114,28 @@ export default function SafeIdManagement() {
     switch (status) {
       case 'active':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
             <CheckCircleIcon className="h-3 w-3 mr-1" />
             Active
           </span>
         );
       case 'pending':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-900/50 text-yellow-300">
             <ClockIcon className="h-3 w-3 mr-1" />
             Pending
           </span>
         );
       case 'suspended':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-900/50 text-red-300">
             <XCircleIcon className="h-3 w-3 mr-1" />
             Suspended
           </span>
         );
       case 'expired':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-600/50 text-gray-300">
             Expired
           </span>
         );
@@ -195,110 +195,100 @@ export default function SafeIdManagement() {
         {/* Header */}
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Safe ID Management</h1>
-            <p className="mt-2 text-gray-600">
+            <h1 className="text-2xl font-bold text-gray-100">Safe ID Management</h1>
+            <p className="mt-1 text-gray-400">
               Monitor and manage Safe IDs for accident users and insurance integration
             </p>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <button
               onClick={exportData}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-4 py-2 border border-gray-600 rounded-lg text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
+              <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
               Export
             </button>
-            <div className="bg-white rounded-lg px-4 py-2 shadow-sm border border-gray-200">
-              <div className="flex items-center space-x-2">
-                <IdentificationIcon className="h-5 w-5 text-gray-500" />
-                <span className="text-sm font-medium text-gray-900">{filteredSafeIds.length}</span>
-                <span className="text-sm text-gray-500">Safe IDs</span>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Statistics Cards */}
+        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
             <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <CheckCircleIcon className="h-6 w-6 text-green-600" />
+              <div className="p-2 bg-green-900/50 rounded-lg">
+                <CheckCircleIcon className="h-6 w-6 text-green-400" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Active Safe IDs</p>
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="ml-3">
+                <p className="text-2xl font-bold text-gray-100">
                   {safeIds.filter(s => s.status === 'active').length}
                 </p>
+                <p className="text-sm text-gray-400">Active</p>
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
             <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <BuildingOfficeIcon className="h-6 w-6 text-blue-600" />
+              <div className="p-2 bg-yellow-900/50 rounded-lg">
+                <ClockIcon className="h-6 w-6 text-yellow-400" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Insurance Shares</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {safeIds.reduce((sum, s) => sum + s.insuranceShares.length, 0)}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center">
-              <div className="p-2 bg-yellow-100 rounded-lg">
-                <ClockIcon className="h-6 w-6 text-yellow-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Pending</p>
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="ml-3">
+                <p className="text-2xl font-bold text-gray-100">
                   {safeIds.filter(s => s.status === 'pending').length}
                 </p>
+                <p className="text-sm text-gray-400">Pending</p>
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
             <div className="flex items-center">
-              <div className="p-2 bg-red-100 rounded-lg">
-                <XCircleIcon className="h-6 w-6 text-red-600" />
+              <div className="p-2 bg-purple-900/50 rounded-lg">
+                <IdentificationIcon className="h-6 w-6 text-purple-400" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Suspended</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {safeIds.filter(s => s.status === 'suspended').length}
+              <div className="ml-3">
+                <p className="text-2xl font-bold text-gray-100">
+                  {safeIds.reduce((sum, s) => sum + s.shareCount, 0)}
                 </p>
+                <p className="text-sm text-gray-400">Total Shares</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-900/50 rounded-lg">
+                <BuildingOfficeIcon className="h-6 w-6 text-blue-400" />
+              </div>
+              <div className="ml-3">
+                <p className="text-2xl font-bold text-gray-100">
+                  {safeIds.reduce((sum, s) => sum + s.insuranceShares.length, 0)}
+                </p>
+                <p className="text-sm text-gray-400">Insurance Shares</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Filters and Search */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {/* Filters */}
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Search */}
             <div>
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search by Safe ID, user name, or email..."
+                  placeholder="Search Safe IDs, users..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
             </div>
-
-            {/* Status Filter */}
             <div>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
-                <option value="all">All Status</option>
+                <option value="all">All Statuses</option>
                 <option value="active">Active</option>
                 <option value="pending">Pending</option>
                 <option value="suspended">Suspended</option>
@@ -309,73 +299,82 @@ export default function SafeIdManagement() {
         </div>
 
         {/* Safe IDs Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-700">
+              <thead className="bg-gray-700">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     Safe ID
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     User
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Share Count
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Usage
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Last Used
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Location
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-gray-800 divide-y divide-gray-700">
                 {filteredSafeIds.map((safeId) => (
-                  <tr key={safeId.id} className="hover:bg-gray-50">
+                  <tr key={safeId.id} className="hover:bg-gray-700/50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <code className="text-sm font-mono bg-gray-100 px-2 py-1 rounded">
-                          {safeId.safeId}
-                        </code>
-                        <button
-                          onClick={() => copyToClipboard(safeId.safeId)}
-                          className="ml-2 text-gray-400 hover:text-gray-600"
-                        >
-                          <DocumentDuplicateIcon className="h-4 w-4" />
-                        </button>
+                        <div className="p-2 bg-purple-900/50 rounded-lg mr-3">
+                          <IdentificationIcon className="h-5 w-5 text-purple-400" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-100">{safeId.safeId}</div>
+                          <div className="text-xs text-gray-400">
+                            Created: {formatDate(safeId.createdAt)}
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
-                        <div className="text-sm font-medium text-gray-900">{safeId.userName}</div>
-                        <div className="text-sm text-gray-500">{safeId.userEmail}</div>
-                        <div className="text-xs text-gray-400">{safeId.location}</div>
+                        <div className="text-sm font-medium text-gray-100">{safeId.userName}</div>
+                        <div className="text-sm text-gray-400">{safeId.userEmail}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {getStatusBadge(safeId.status)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{safeId.shareCount}</div>
-                      <div className="text-xs text-gray-500">
-                        {safeId.insuranceShares.length} insurance shares
+                      <div className="text-sm text-gray-100">
+                        {safeId.shareCount} shares
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        Last used: {formatDate(safeId.lastUsed)}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatDate(safeId.lastUsed)}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-100">{safeId.location}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => handleViewDetails(safeId)}
-                        className="text-red-600 hover:text-red-900 mr-4"
-                      >
-                        <EyeIcon className="h-5 w-5" />
-                      </button>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => handleViewDetails(safeId)}
+                          className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg"
+                        >
+                          <EyeIcon className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => copyToClipboard(safeId.safeId)}
+                          className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg"
+                        >
+                          <DocumentDuplicateIcon className="h-4 w-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -384,87 +383,128 @@ export default function SafeIdManagement() {
           </div>
         </div>
 
+        {/* Empty State */}
+        {filteredSafeIds.length === 0 && (
+          <div className="text-center py-12">
+            <IdentificationIcon className="mx-auto h-12 w-12 text-gray-500" />
+            <h3 className="mt-2 text-sm font-medium text-gray-100">No Safe IDs found</h3>
+            <p className="mt-1 text-sm text-gray-400">
+              Try adjusting your search or filter criteria
+            </p>
+          </div>
+        )}
+
         {/* Detail Modal */}
         {showDetailModal && selectedSafeId && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-            <div className="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-lg font-bold text-gray-900">Safe ID Details</h3>
-                <button
-                  onClick={() => setShowDetailModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <XCircleIcon className="h-6 w-6" />
-                </button>
-              </div>
-              
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Safe ID</label>
-                    <div className="mt-1 flex items-center">
-                      <code className="text-lg font-mono bg-gray-100 px-3 py-2 rounded">
-                        {selectedSafeId.safeId}
-                      </code>
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center p-4">
+              <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowDetailModal(false)}></div>
+              <div className="relative w-full max-w-2xl mx-auto">
+                <div className="bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+                  <div className="px-6 py-4 border-b border-gray-700">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium text-gray-100">Safe ID Details</h3>
                       <button
-                        onClick={() => copyToClipboard(selectedSafeId.safeId)}
-                        className="ml-2 text-gray-400 hover:text-gray-600"
+                        onClick={() => setShowDetailModal(false)}
+                        className="text-gray-400 hover:text-gray-300"
                       >
-                        <DocumentDuplicateIcon className="h-5 w-5" />
+                        <XCircleIcon className="h-6 w-6" />
                       </button>
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Status</label>
-                    <div className="mt-1">{getStatusBadge(selectedSafeId.status)}</div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">User Name</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedSafeId.userName}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedSafeId.userEmail}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Created</label>
-                    <p className="mt-1 text-sm text-gray-900">{formatDate(selectedSafeId.createdAt)}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Last Used</label>
-                    <p className="mt-1 text-sm text-gray-900">{formatDate(selectedSafeId.lastUsed)}</p>
-                  </div>
-                </div>
 
-                {/* Insurance Shares */}
-                <div>
-                  <h4 className="text-lg font-medium text-gray-900 mb-4">Insurance Shares</h4>
-                  {selectedSafeId.insuranceShares.length > 0 ? (
-                    <div className="space-y-3">
-                      {selectedSafeId.insuranceShares.map((share, index) => (
-                        <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-3">
-                              <BuildingOfficeIcon className="h-5 w-5 text-gray-500" />
-                              <div>
-                                <p className="font-medium text-gray-900">{share.provider}</p>
-                                <p className="text-sm text-gray-500">
-                                  Shared on {formatDate(share.sharedAt)}
-                                </p>
+                  <div className="px-6 py-4 space-y-6">
+                    {/* Safe ID Header */}
+                    <div className="flex items-center space-x-4">
+                      <div className="p-3 bg-purple-900/50 rounded-lg">
+                        <IdentificationIcon className="h-8 w-8 text-purple-400" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-semibold text-gray-100">{selectedSafeId.safeId}</h4>
+                        <p className="text-gray-400">{selectedSafeId.userName}</p>
+                        <div className="mt-2">
+                          {getStatusBadge(selectedSafeId.status)}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* User Information */}
+                    <div>
+                      <h5 className="text-sm font-medium text-gray-300 mb-2">User Information</h5>
+                      <div className="bg-gray-700 rounded-lg p-4 space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Name:</span>
+                          <span className="text-gray-100">{selectedSafeId.userName}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Email:</span>
+                          <span className="text-gray-100">{selectedSafeId.userEmail}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Location:</span>
+                          <span className="text-gray-100">{selectedSafeId.location}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Usage Statistics */}
+                    <div>
+                      <h5 className="text-sm font-medium text-gray-300 mb-2">Usage Statistics</h5>
+                      <div className="bg-gray-700 rounded-lg p-4 space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Total Shares:</span>
+                          <span className="text-gray-100">{selectedSafeId.shareCount}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Created:</span>
+                          <span className="text-gray-100">{formatDate(selectedSafeId.createdAt)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Last Used:</span>
+                          <span className="text-gray-100">{formatDate(selectedSafeId.lastUsed)}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Insurance Shares */}
+                    {selectedSafeId.insuranceShares.length > 0 && (
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300 mb-2">Insurance Shares</h5>
+                        <div className="bg-gray-700 rounded-lg p-4">
+                          <div className="space-y-3">
+                            {selectedSafeId.insuranceShares.map((share, index) => (
+                              <div key={index} className="flex items-center justify-between p-3 bg-gray-600 rounded-lg">
+                                <div>
+                                  <div className="text-sm font-medium text-gray-100">{share.provider}</div>
+                                  {share.claimId && (
+                                    <div className="text-xs text-gray-400">Claim: {share.claimId}</div>
+                                  )}
+                                </div>
+                                <div className="text-xs text-gray-400">
+                                  {formatDate(share.sharedAt)}
+                                </div>
                               </div>
-                            </div>
-                            {share.claimId && (
-                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {share.claimId}
-                              </span>
-                            )}
+                            ))}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 italic">No insurance shares yet</p>
-                  )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="px-6 py-4 border-t border-gray-700 flex justify-end space-x-3">
+                    <button
+                      onClick={() => setShowDetailModal(false)}
+                      className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-lg hover:bg-gray-600"
+                    >
+                      Close
+                    </button>
+                    <button
+                      onClick={() => copyToClipboard(selectedSafeId.safeId)}
+                      className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700"
+                    >
+                      Copy Safe ID
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

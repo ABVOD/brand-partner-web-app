@@ -128,25 +128,25 @@ export default function IncidentReports() {
     switch (severity) {
       case 'low':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
             Low
           </span>
         );
       case 'medium':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-900/50 text-yellow-300">
             Medium
           </span>
         );
       case 'high':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-900/50 text-orange-300">
             High
           </span>
         );
       case 'critical':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-900/50 text-red-300">
             Critical
           </span>
         );
@@ -159,28 +159,28 @@ export default function IncidentReports() {
     switch (status) {
       case 'pending':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-600/50 text-gray-300">
             <ClockIcon className="h-3 w-3 mr-1" />
             Pending
           </span>
         );
       case 'investigating':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/50 text-blue-300">
             <ExclamationTriangleIcon className="h-3 w-3 mr-1" />
             Investigating
           </span>
         );
       case 'resolved':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
             <CheckIcon className="h-3 w-3 mr-1" />
             Resolved
           </span>
         );
       case 'false_alarm':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900/50 text-purple-300">
             <XMarkIcon className="h-3 w-3 mr-1" />
             False Alarm
           </span>
@@ -198,91 +198,24 @@ export default function IncidentReports() {
     <AdminDashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Incident Reports</h1>
-            <p className="mt-1 text-gray-600">Monitor and manage accident reports and safety incidents</p>
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="bg-white rounded-lg px-4 py-2 shadow-sm border border-gray-200">
-              <div className="flex items-center space-x-2">
-                <ExclamationTriangleIcon className="h-5 w-5 text-red-500" />
-                <span className="text-sm font-medium text-gray-900">{filteredIncidents.length}</span>
-                <span className="text-sm text-gray-500">incidents</span>
-              </div>
-            </div>
-          </div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-100">Incident Reports</h1>
+          <p className="text-gray-400 mt-1">Monitor and manage security incidents and emergency reports</p>
         </div>
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-red-100 rounded-lg">
-                <ExclamationTriangleIcon className="h-6 w-6 text-red-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-2xl font-bold text-gray-900">
-                  {incidents.filter(i => i.status === 'pending').length}
-                </p>
-                <p className="text-sm text-gray-600">Pending</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <ClockIcon className="h-6 w-6 text-blue-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-2xl font-bold text-gray-900">
-                  {incidents.filter(i => i.status === 'investigating').length}
-                </p>
-                <p className="text-sm text-gray-600">Investigating</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <CheckIcon className="h-6 w-6 text-green-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-2xl font-bold text-gray-900">
-                  {incidents.filter(i => i.status === 'resolved').length}
-                </p>
-                <p className="text-sm text-gray-600">Resolved</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <ExclamationTriangleIcon className="h-6 w-6 text-orange-600" />
-              </div>
-              <div className="ml-3">
-                <p className="text-2xl font-bold text-gray-900">
-                  {incidents.filter(i => i.severity === 'critical' || i.severity === 'high').length}
-                </p>
-                <p className="text-sm text-gray-600">High Priority</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Filters and Search */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Filters */}
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Search */}
-            <div className="md:col-span-2">
+            <div>
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search by title, reporter, or location..."
+                  placeholder="Search incidents..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -292,7 +225,7 @@ export default function IncidentReports() {
               <select
                 value={filterSeverity}
                 onChange={(e) => setFilterSeverity(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
                 <option value="all">All Severities</option>
                 <option value="low">Low</option>
@@ -307,9 +240,9 @@ export default function IncidentReports() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                <option value="all">All Status</option>
+                <option value="all">All Statuses</option>
                 <option value="pending">Pending</option>
                 <option value="investigating">Investigating</option>
                 <option value="resolved">Resolved</option>
@@ -319,261 +252,225 @@ export default function IncidentReports() {
           </div>
         </div>
 
-        {/* Incidents Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Incident
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Reporter
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Severity
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Timestamp
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Location
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredIncidents.map((incident) => (
-                  <tr key={incident.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">{incident.title}</div>
-                        <div className="text-sm text-gray-500 mt-1 max-w-xs truncate">{incident.description}</div>
-                        {incident.images.length > 0 && (
-                          <div className="flex items-center mt-2">
-                            <PhotoIcon className="h-4 w-4 text-gray-400 mr-1" />
-                            <span className="text-xs text-gray-500">{incident.images.length} image(s)</span>
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
-                          <UserIcon className="h-5 w-5 text-gray-500" />
-                        </div>
-                        <div className="ml-3">
-                          <div className="text-sm font-medium text-gray-900">{incident.userName}</div>
-                          <div className="text-sm text-gray-500">{incident.userEmail}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getSeverityBadge(incident.severity)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getStatusBadge(incident.status)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <CalendarIcon className="h-4 w-4 text-gray-400 mr-1" />
-                        {formatTimestamp(incident.timestamp)}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <MapPinIcon className="h-4 w-4 text-gray-400 mr-1" />
-                        <span className="text-sm text-gray-500 max-w-xs truncate">{incident.location.address}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => openIncidentDetails(incident)}
-                          className="text-indigo-600 hover:text-indigo-900"
-                          title="View Details"
-                        >
-                          <EyeIcon className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() => window.open(`https://maps.google.com/?q=${incident.location.latitude},${incident.location.longitude}`, '_blank')}
-                          className="text-blue-600 hover:text-blue-900"
-                          title="View on Map"
-                        >
-                          <MapPinIcon className="h-4 w-4" />
-                        </button>
-                        {incident.status === 'pending' && (
-                          <button
-                            onClick={() => handleStatusUpdate(incident.id, 'investigating')}
-                            className="text-orange-600 hover:text-orange-900"
-                            title="Start Investigation"
-                          >
-                            <ExclamationTriangleIcon className="h-4 w-4" />
-                          </button>
-                        )}
-                        {incident.status === 'investigating' && (
-                          <button
-                            onClick={() => handleStatusUpdate(incident.id, 'resolved')}
-                            className="text-green-600 hover:text-green-900"
-                            title="Mark Resolved"
-                          >
-                            <CheckIcon className="h-4 w-4" />
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Incident Details Modal */}
-        {showIncidentModal && selectedIncident && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-            <div className="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 shadow-lg rounded-md bg-white">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-gray-900">Incident Details</h3>
-                <button
-                  onClick={() => setShowIncidentModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <XMarkIcon className="h-6 w-6" />
-                </button>
-              </div>
-              
-              <div className="space-y-6">
-                {/* Header Info */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Severity</label>
-                    <div className="mt-1">{getSeverityBadge(selectedIncident.severity)}</div>
+        {/* Incidents List */}
+        <div className="space-y-4">
+          {filteredIncidents.map((incident) => (
+            <div
+              key={incident.id}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-red-600/50 transition-colors"
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <h3 className="text-lg font-semibold text-gray-100">{incident.title}</h3>
+                    {getSeverityBadge(incident.severity)}
+                    {getStatusBadge(incident.status)}
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Status</label>
-                    <div className="mt-1">{getStatusBadge(selectedIncident.status)}</div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Timestamp</label>
-                    <p className="mt-1 text-sm text-gray-900">{formatTimestamp(selectedIncident.timestamp)}</p>
-                  </div>
-                </div>
 
-                {/* Title and Description */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Title</label>
-                  <p className="mt-1 text-lg font-semibold text-gray-900">{selectedIncident.title}</p>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Description</label>
-                  <p className="mt-1 text-sm text-gray-900">{selectedIncident.description}</p>
-                </div>
+                  <p className="text-gray-400 mb-4">{incident.description}</p>
 
-                {/* Reporter and Location */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Reporter</label>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="flex items-center space-x-3">
-                        <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                          <UserIcon className="h-6 w-6 text-gray-500" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">{selectedIncident.userName}</p>
-                          <p className="text-sm text-gray-500">{selectedIncident.userEmail}</p>
-                        </div>
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="flex items-center text-gray-400">
+                      <UserIcon className="h-4 w-4 mr-2" />
+                      <span>{incident.userName}</span>
+                    </div>
+                    <div className="flex items-center text-gray-400">
+                      <CalendarIcon className="h-4 w-4 mr-2" />
+                      <span>{formatTimestamp(incident.timestamp)}</span>
+                    </div>
+                    <div className="flex items-center text-gray-400">
+                      <MapPinIcon className="h-4 w-4 mr-2" />
+                      <span className="truncate">{incident.location.address}</span>
                     </div>
                   </div>
+
+                  {incident.assignedTo && (
+                    <div className="mt-2 text-sm text-gray-400">
+                      <span className="font-medium">Assigned to:</span> {incident.assignedTo}
+                    </div>
+                  )}
+
+                  {incident.images.length > 0 && (
+                    <div className="mt-2 flex items-center text-gray-400">
+                      <PhotoIcon className="h-4 w-4 mr-2" />
+                      <span>{incident.images.length} image{incident.images.length === 1 ? '' : 's'} attached</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => openIncidentDetails(incident)}
+                    className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg"
+                  >
+                    <EyeIcon className="h-4 w-4" />
+                  </button>
                   
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="flex items-start space-x-3">
-                        <MapPinIcon className="h-5 w-5 text-gray-500 mt-1" />
-                        <div>
-                          <p className="text-sm text-gray-900">{selectedIncident.location.address}</p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {selectedIncident.location.latitude}, {selectedIncident.location.longitude}
-                          </p>
-                          <button
-                            onClick={() => window.open(`https://maps.google.com/?q=${selectedIncident.location.latitude},${selectedIncident.location.longitude}`, '_blank')}
-                            className="text-xs text-blue-600 hover:text-blue-800 mt-2"
-                          >
-                            View on Google Maps →
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Actions Taken */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Actions Taken</label>
-                  <div className="mt-1 bg-yellow-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-900">{selectedIncident.actionsTaken}</p>
-                    {selectedIncident.assignedTo && (
-                      <p className="text-xs text-gray-600 mt-2">
-                        Assigned to: <span className="font-medium">{selectedIncident.assignedTo}</span>
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Images */}
-                {selectedIncident.images.length > 0 && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Attached Images</label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {selectedIncident.images.map((image, index) => (
-                        <div key={index} className="bg-gray-100 rounded-lg p-4 text-center">
-                          <PhotoIcon className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                          <p className="text-xs text-gray-600">{image}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Action Buttons */}
-                <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-                  {selectedIncident.status === 'pending' && (
+                  {incident.status === 'pending' && (
                     <button
-                      onClick={() => {
-                        handleStatusUpdate(selectedIncident.id, 'investigating');
-                        setShowIncidentModal(false);
-                      }}
-                      className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
+                      onClick={() => handleStatusUpdate(incident.id, 'investigating')}
+                      className="px-3 py-1 text-xs font-medium text-blue-300 bg-blue-900/50 rounded-full hover:bg-blue-800/50"
                     >
                       Start Investigation
                     </button>
                   )}
-                  {selectedIncident.status === 'investigating' && (
-                    <button
-                      onClick={() => {
-                        handleStatusUpdate(selectedIncident.id, 'resolved');
-                        setShowIncidentModal(false);
-                      }}
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                    >
-                      Mark as Resolved
-                    </button>
+                  
+                  {incident.status === 'investigating' && (
+                    <div className="flex space-x-1">
+                      <button
+                        onClick={() => handleStatusUpdate(incident.id, 'resolved')}
+                        className="px-3 py-1 text-xs font-medium text-green-300 bg-green-900/50 rounded-full hover:bg-green-800/50"
+                      >
+                        Resolve
+                      </button>
+                      <button
+                        onClick={() => handleStatusUpdate(incident.id, 'false_alarm')}
+                        className="px-3 py-1 text-xs font-medium text-purple-300 bg-purple-900/50 rounded-full hover:bg-purple-800/50"
+                      >
+                        False Alarm
+                      </button>
+                    </div>
                   )}
-                  <button
-                    onClick={() => setShowIncidentModal(false)}
-                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
-                  >
-                    Close
-                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {filteredIncidents.length === 0 && (
+          <div className="text-center py-12">
+            <ExclamationTriangleIcon className="mx-auto h-12 w-12 text-gray-500" />
+            <h3 className="mt-2 text-sm font-medium text-gray-100">No incidents found</h3>
+            <p className="mt-1 text-sm text-gray-400">
+              Try adjusting your search or filter criteria
+            </p>
+          </div>
+        )}
+
+        {/* Incident Details Modal */}
+        {showIncidentModal && selectedIncident && (
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center p-4">
+              <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowIncidentModal(false)}></div>
+              <div className="relative w-full max-w-4xl mx-auto">
+                <div className="bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+                  <div className="px-6 py-4 border-b border-gray-700">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium text-gray-100">Incident Details</h3>
+                      <button
+                        onClick={() => setShowIncidentModal(false)}
+                        className="text-gray-400 hover:text-gray-300"
+                      >
+                        <XMarkIcon className="h-6 w-6" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="px-6 py-4 space-y-6">
+                    {/* Header Info */}
+                    <div>
+                      <div className="flex items-center space-x-3 mb-2">
+                        <h4 className="text-xl font-semibold text-gray-100">{selectedIncident.title}</h4>
+                        {getSeverityBadge(selectedIncident.severity)}
+                        {getStatusBadge(selectedIncident.status)}
+                      </div>
+                      <p className="text-gray-400">{selectedIncident.description}</p>
+                    </div>
+
+                    {/* Grid Layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Reporter Info */}
+                      <div className="space-y-4">
+                        <h5 className="text-sm font-medium text-gray-300">Reporter Information</h5>
+                        <div className="bg-gray-700 rounded-lg p-4 space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <UserIcon className="h-4 w-4 text-gray-400" />
+                            <span className="text-gray-100">{selectedIncident.userName}</span>
+                          </div>
+                          <div className="text-sm text-gray-400">{selectedIncident.userEmail}</div>
+                        </div>
+                      </div>
+
+                      {/* Timing */}
+                      <div className="space-y-4">
+                        <h5 className="text-sm font-medium text-gray-300">Timeline</h5>
+                        <div className="bg-gray-700 rounded-lg p-4 space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <CalendarIcon className="h-4 w-4 text-gray-400" />
+                            <span className="text-gray-100">{formatTimestamp(selectedIncident.timestamp)}</span>
+                          </div>
+                          {selectedIncident.resolvedAt && (
+                            <div className="flex items-center space-x-2">
+                              <CheckIcon className="h-4 w-4 text-green-400" />
+                              <span className="text-gray-100">Resolved: {formatTimestamp(selectedIncident.resolvedAt)}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Location */}
+                      <div className="space-y-4">
+                        <h5 className="text-sm font-medium text-gray-300">Location</h5>
+                        <div className="bg-gray-700 rounded-lg p-4">
+                          <div className="flex items-start space-x-2">
+                            <MapPinIcon className="h-4 w-4 text-gray-400 mt-0.5" />
+                            <div>
+                              <div className="text-gray-100">{selectedIncident.location.address}</div>
+                              <div className="text-sm text-gray-400">
+                                {selectedIncident.location.latitude.toFixed(6)}, {selectedIncident.location.longitude.toFixed(6)}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Assignment */}
+                      <div className="space-y-4">
+                        <h5 className="text-sm font-medium text-gray-300">Assignment</h5>
+                        <div className="bg-gray-700 rounded-lg p-4">
+                          <div className="text-gray-100">
+                            {selectedIncident.assignedTo || 'Unassigned'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Actions Taken */}
+                    <div>
+                      <h5 className="text-sm font-medium text-gray-300 mb-2">Actions Taken</h5>
+                      <div className="bg-gray-700 rounded-lg p-4">
+                        <p className="text-gray-100">{selectedIncident.actionsTaken}</p>
+                      </div>
+                    </div>
+
+                    {/* Images */}
+                    {selectedIncident.images.length > 0 && (
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300 mb-2">Attached Images</h5>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {selectedIncident.images.map((image, index) => (
+                            <div key={index} className="bg-gray-700 rounded-lg p-4 text-center">
+                              <PhotoIcon className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                              <div className="text-xs text-gray-400">{image}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="px-6 py-4 border-t border-gray-700 flex justify-end space-x-3">
+                    <button
+                      onClick={() => setShowIncidentModal(false)}
+                      className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-lg hover:bg-gray-600"
+                    >
+                      Close
+                    </button>
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">
+                      Update Status
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -4,30 +4,53 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom scrollbar */
+/* Dark theme base styles */
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --text-primary: #f8f9fa;
+  --text-secondary: #e9ecef;
+  --text-muted: #adb5bd;
+  --border-color: #343a40;
+  --accent-primary: #6c63ff;
+  --accent-secondary: #4c4cff;
+}
+
+html {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Custom scrollbar - Dark theme */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #2a2a2a;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  background: linear-gradient(135deg, #6c63ff, #4c4cff);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  background: linear-gradient(135deg, #5a52ff, #3a3aff);
 }
 
-/* Firefox scrollbar */
+/* Firefox scrollbar - Dark theme */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #6366f1 #f1f5f9;
+  scrollbar-color: #6c63ff #2a2a2a;
 }
 
 /* Smooth animations */
@@ -37,33 +60,33 @@
   transition-duration: 200ms;
 }
 
-/* Enhanced shadows */
+/* Enhanced shadows - Dark theme */
 .shadow-glow {
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.4);
 }
 
 .shadow-glow-hover:hover {
-  box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 25px rgba(108, 99, 255, 0.5);
 }
 
-/* Glass morphism effect */
+/* Glass morphism effect - Dark theme */
 .glass {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(26, 26, 26, 0.8);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Gradient text */
+/* Gradient text - Dark theme */
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, #6c63ff, #4c4cff, #8b7aff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Enhanced focus states */
+/* Enhanced focus states - Dark theme */
 .focus-ring {
-  @apply focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500;
+  @apply focus:outline-none focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-400;
 }
 
 /* Custom animations */
@@ -103,7 +126,7 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 }
 
@@ -139,72 +162,77 @@
   animation: bounce 2s infinite;
 }
 
-/* Custom gradients */
+/* Custom gradients - Dark theme */
 .bg-gradient-primary {
-  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  background: linear-gradient(135deg, #6c63ff, #4c4cff);
 }
 
 .bg-gradient-secondary {
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, #00d4aa, #00b894);
 }
 
 .bg-gradient-accent {
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  background: linear-gradient(135deg, #8b7aff, #a855f7);
 }
 
-/* Button animations */
+.bg-gradient-dark {
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+}
+
+/* Button animations - Dark theme */
 .btn-hover-lift {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
 }
 
-/* Card hover effects */
+/* Card hover effects - Dark theme */
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-/* Enhanced form inputs */
+/* Enhanced form inputs - Dark theme */
 .form-input {
   display: block;
   width: 100%;
   border-radius: 0.5rem;
-  border: 2px solid #e5e7eb;
-  background-color: #ffffff;
+  border: 2px solid #343a40;
+  background-color: #1a1a1a;
   padding: 0.75rem 1rem;
-  color: #111827;
+  color: #f8f9fa;
   transition: all 0.2s;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.3);
+  background-color: #2a2a2a;
 }
 
 .form-input::placeholder {
-  color: #6b7280;
+  color: #adb5bd;
 }
 
 .form-select {
   display: block;
   width: 100%;
   border-radius: 0.5rem;
-  border: 2px solid #e5e7eb;
-  background-color: #ffffff;
+  border: 2px solid #343a40;
+  background-color: #1a1a1a;
   padding: 0.75rem 1rem;
-  color: #111827;
+  color: #f8f9fa;
   transition: all 0.2s;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23adb5bd' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.5rem center;
   background-size: 1.5em 1.5em;
@@ -212,14 +240,15 @@
 
 .form-select:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.3);
+  background-color: #2a2a2a;
 }
 
-/* Loading spinner */
+/* Loading spinner - Dark theme */
 .spinner {
-  border: 2px solid #f3f4f6;
-  border-top: 2px solid #6366f1;
+  border: 2px solid #343a40;
+  border-top: 2px solid #6c63ff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -229,9 +258,9 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Skeleton loading */
+/* Skeleton loading - Dark theme */
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
@@ -245,7 +274,7 @@
   }
 }
 
-/* Tooltip */
+/* Tooltip - Dark theme */
 .tooltip {
   position: relative;
 }
@@ -256,7 +285,7 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   color: white;
   padding: 0.5rem 0.75rem;
   border-radius: 0.375rem;
@@ -267,6 +296,7 @@
   transition: all 0.2s;
   pointer-events: none;
   z-index: 1000;
+  border: 1px solid #343a40;
 }
 
 .tooltip:hover::after {
@@ -275,7 +305,7 @@
   transform: translateX(-50%) translateY(-4px);
 }
 
-/* Enhanced DatePicker styling */
+/* Enhanced DatePicker styling - Dark theme */
 .react-datepicker-wrapper {
   width: 100%;
 }
@@ -284,44 +314,49 @@
   display: block;
   width: 100%;
   border-radius: 0.5rem;
-  border: 2px solid #e5e7eb;
-  background-color: #ffffff;
+  border: 2px solid #343a40;
+  background-color: #1a1a1a;
   padding: 0.75rem 1rem;
-  color: #111827;
+  color: #f8f9fa;
   transition: all 0.2s;
 }
 
 .react-datepicker__input-container input:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.3);
 }
 
 .react-datepicker {
   border-radius: 0.75rem;
-  border: 2px solid #e5e7eb;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 2px solid #343a40;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  background-color: #1a1a1a;
+  color: #f8f9fa;
 }
 
 .react-datepicker__header {
-  background: linear-gradient(to right, #6366f1, #3b82f6);
+  background: linear-gradient(to right, #6c63ff, #4c4cff);
   color: white;
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
 .react-datepicker__day--selected {
-  background-color: #6366f1;
+  background-color: #6c63ff;
   color: white;
 }
 
 .react-datepicker__day:hover {
-  background-color: #e0e7ff;
+  background-color: #2a2a2a;
+  color: #f8f9fa;
 }
 
-/* Map container enhancements */
+/* Map container enhancements - Dark theme */
 .map-container {
   position: relative;
   overflow: hidden;
+  background-color: #1a1a1a;
+  border: 1px solid #343a40;
 }
 
 .map-container::before {
@@ -331,7 +366,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #6366f1, #3b82f6, #10b981);
+  background: linear-gradient(90deg, #6c63ff, #4c4cff, #00d4aa);
   z-index: 1;
 }
 

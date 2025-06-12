@@ -249,23 +249,35 @@ export default function LocationActivity() {
 
   const getActivityTypeColor = (type: string) => {
     switch (type) {
-      case 'safe_id_share': return 'bg-blue-100 text-blue-800';
-      case 'campaign_view': return 'bg-purple-100 text-purple-800';
-      case 'offer_redeem': return 'bg-green-100 text-green-800';
-      case 'incident_report': return 'bg-red-100 text-red-800';
-      case 'insurance_check': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'safe_id_share':
+        return 'bg-green-900/50 text-green-300';
+      case 'campaign_view':
+        return 'bg-blue-900/50 text-blue-300';
+      case 'offer_redeem':
+        return 'bg-purple-900/50 text-purple-300';
+      case 'incident_report':
+        return 'bg-red-900/50 text-red-300';
+      case 'insurance_check':
+        return 'bg-orange-900/50 text-orange-300';
+      default:
+        return 'bg-gray-600/50 text-gray-300';
     }
   };
 
   const getActivityTypeIcon = (type: string) => {
     switch (type) {
-      case 'safe_id_share': return IdentificationIcon;
-      case 'campaign_view': return EyeIcon;
-      case 'offer_redeem': return TagIcon;
-      case 'incident_report': return ExclamationTriangleIcon;
-      case 'insurance_check': return BuildingOfficeIcon;
-      default: return MapPinIcon;
+      case 'safe_id_share':
+        return IdentificationIcon;
+      case 'campaign_view':
+        return EyeIcon;
+      case 'offer_redeem':
+        return TagIcon;
+      case 'incident_report':
+        return ExclamationTriangleIcon;
+      case 'insurance_check':
+        return BuildingOfficeIcon;
+      default:
+        return MapPinIcon;
     }
   };
 
@@ -295,208 +307,180 @@ export default function LocationActivity() {
     <AdminDashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Location Activity</h1>
-            <p className="mt-2 text-gray-600">
-              Monitor user activity patterns and location-based insights
-            </p>
+            <h1 className="text-2xl font-bold text-gray-100">Location Activity</h1>
+            <p className="text-gray-400 mt-1">Monitor user activities across different locations</p>
           </div>
-          <div className="flex items-center space-x-4">
-            <select
-              value={timeRange}
-              onChange={(e) => setTimeRange(e.target.value as any)}
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="24h">Last 24 hours</option>
-              <option value="7d">Last 7 days</option>
-              <option value="30d">Last 30 days</option>
-              <option value="90d">Last 90 days</option>
-            </select>
-            <button
-              onClick={exportData}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-            >
-              <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
-              Export Data
-            </button>
-          </div>
+          <button
+            onClick={exportData}
+            className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <ArrowDownTrayIcon className="h-4 w-4" />
+            <span>Export Data</span>
+          </button>
         </div>
 
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <ChartBarIcon className="h-6 w-6 text-blue-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Total Activities</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.totalActivities}</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <MapPinIcon className="h-6 w-6 text-green-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Unique Locations</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.uniqueLocations}</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <IdentificationIcon className="h-6 w-6 text-purple-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Safe ID Shares</dt>
-                    <dd className="text-lg font-medium text-gray-900">{stats.safeIdShares}</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <ClockIcon className="h-6 w-6 text-orange-400" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Peak Hour</dt>
-                    <dd className="text-lg font-medium text-gray-900">
-                      {stats.peakActivityHour}:00
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tab Navigation */}
-        <div className="border-b border-gray-200">
+        {/* Navigation Tabs */}
+        <div className="border-b border-gray-700">
           <nav className="-mb-px flex space-x-8">
             {[
-              { key: 'overview', label: 'Overview', icon: ChartBarIcon },
-              { key: 'heatmap', label: 'Heatmap', icon: GlobeAltIcon },
-              { key: 'activities', label: 'Activity Log', icon: ClockIcon },
-              { key: 'analytics', label: 'Analytics', icon: ArrowTrendingUpIcon }
-            ].map(tab => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as any)}
-                className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.key
-                    ? 'border-indigo-500 text-indigo-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                <tab.icon className="h-5 w-5" />
-                <span>{tab.label}</span>
-              </button>
-            ))}
+              { id: 'overview', label: 'Overview', icon: ChartBarIcon },
+              { id: 'heatmap', label: 'Heatmap', icon: GlobeAltIcon },
+              { id: 'activities', label: 'Activity Log', icon: ClockIcon },
+              { id: 'analytics', label: 'Analytics', icon: ArrowTrendingUpIcon }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`flex items-center space-x-2 py-2 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === tab.id
+                      ? 'border-purple-500 text-purple-400'
+                      : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </nav>
         </div>
 
         {/* Overview Tab */}
         {activeTab === 'overview' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Activity Breakdown */}
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-6">Activity Breakdown</h2>
-              
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <IdentificationIcon className="h-6 w-6 text-blue-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Safe ID Shares</div>
-                      <div className="text-sm text-gray-500">Emergency contact sharing</div>
-                    </div>
-                  </div>
-                  <div className="text-2xl font-bold text-blue-600">{stats.safeIdShares}</div>
-                </div>
-
-                <div className="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <EyeIcon className="h-6 w-6 text-purple-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Campaign Views</div>
-                      <div className="text-sm text-gray-500">Brand campaign interactions</div>
-                    </div>
-                  </div>
-                  <div className="text-2xl font-bold text-purple-600">{stats.campaignViews}</div>
-                </div>
-
-                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <TagIcon className="h-6 w-6 text-green-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Offer Redemptions</div>
-                      <div className="text-sm text-gray-500">Promotional offers used</div>
-                    </div>
-                  </div>
-                  <div className="text-2xl font-bold text-green-600">{stats.offerRedemptions}</div>
-                </div>
-
-                <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <ExclamationTriangleIcon className="h-6 w-6 text-red-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Incident Reports</div>
-                      <div className="text-sm text-gray-500">Accidents and incidents</div>
-                    </div>
-                  </div>
-                  <div className="text-2xl font-bold text-red-600">{stats.incidentReports}</div>
+          <div className="space-y-6">
+            {/* Time Range Filter */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-100">Time Range</h3>
+                <div className="flex space-x-2">
+                  {(['24h', '7d', '30d', '90d'] as const).map((range) => (
+                    <button
+                      key={range}
+                      onClick={() => setTimeRange(range)}
+                      className={`px-3 py-1 rounded-lg text-sm font-medium ${
+                        timeRange === range
+                          ? 'bg-purple-600 text-white'
+                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                      }`}
+                    >
+                      {range === '24h' ? '24 Hours' : range === '7d' ? '7 Days' : range === '30d' ? '30 Days' : '90 Days'}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Top Locations */}
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-6">Most Active Locations</h2>
-              
-              <div className="space-y-3">
-                {heatmapData
-                  .sort((a, b) => b.activities - a.activities)
-                  .slice(0, 5)
-                  .map((location, index) => (
-                    <div key={`${location.lat}-${location.lng}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <div className="flex items-center space-x-3">
-                        <div className="flex-shrink-0">
-                          <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-                            <span className="text-sm font-medium text-indigo-600">{index + 1}</span>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900">{location.location}</div>
-                          <div className="text-sm text-gray-500">
-                            {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
-                          </div>
-                        </div>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-purple-900/50 rounded-lg">
+                    <MapPinIcon className="h-6 w-6 text-purple-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.totalActivities}</p>
+                    <p className="text-sm text-gray-400">Total Activities</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-900/50 rounded-lg">
+                    <GlobeAltIcon className="h-6 w-6 text-blue-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.uniqueLocations}</p>
+                    <p className="text-sm text-gray-400">Unique Locations</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-green-900/50 rounded-lg">
+                    <IdentificationIcon className="h-6 w-6 text-green-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.safeIdShares}</p>
+                    <p className="text-sm text-gray-400">Safe ID Shares</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-orange-900/50 rounded-lg">
+                    <ClockIcon className="h-6 w-6 text-orange-400" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-2xl font-bold text-gray-100">{stats.peakActivityHour}:00</p>
+                    <p className="text-sm text-gray-400">Peak Hour</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Activity Breakdown */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Activity Types</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-green-900/50 rounded-lg">
+                        <IdentificationIcon className="h-4 w-4 text-green-400" />
                       </div>
-                      <div className="text-lg font-semibold text-gray-900">{location.activities}</div>
+                      <span className="text-sm text-gray-300">Safe ID Shares</span>
+                    </div>
+                    <span className="text-sm font-medium text-gray-100">{stats.safeIdShares}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-blue-900/50 rounded-lg">
+                        <EyeIcon className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <span className="text-sm text-gray-300">Campaign Views</span>
+                    </div>
+                    <span className="text-sm font-medium text-gray-100">{stats.campaignViews}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-purple-900/50 rounded-lg">
+                        <TagIcon className="h-4 w-4 text-purple-400" />
+                      </div>
+                      <span className="text-sm text-gray-300">Offer Redemptions</span>
+                    </div>
+                    <span className="text-sm font-medium text-gray-100">{stats.offerRedemptions}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-red-900/50 rounded-lg">
+                        <ExclamationTriangleIcon className="h-4 w-4 text-red-400" />
+                      </div>
+                      <span className="text-sm text-gray-300">Incident Reports</span>
+                    </div>
+                    <span className="text-sm font-medium text-gray-100">{stats.incidentReports}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Top Locations</h3>
+                <div className="space-y-4">
+                  {heatmapData.slice(0, 5).map((location, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="p-2 bg-purple-900/50 rounded-lg">
+                          <MapPinIcon className="h-4 w-4 text-purple-400" />
+                        </div>
+                        <span className="text-sm text-gray-300">{location.location}</span>
+                      </div>
+                      <span className="text-sm font-medium text-gray-100">{location.activities}</span>
                     </div>
                   ))}
+                </div>
               </div>
             </div>
           </div>
@@ -504,72 +488,16 @@ export default function LocationActivity() {
 
         {/* Heatmap Tab */}
         {activeTab === 'heatmap' && (
-          <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-6">Activity Heatmap</h2>
-            
-            {/* Placeholder for map - in real app, this would be a map component */}
-            <div className="h-96 bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
-              <div className="text-center">
-                <GlobeAltIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Interactive Map</h3>
-                <p className="text-gray-500 mb-4">Location-based activity heatmap would display here</p>
-                <div className="grid grid-cols-2 gap-4 max-w-md mx-auto text-sm">
-                  {heatmapData.slice(0, 4).map((point, index) => (
-                    <div key={index} className="bg-white p-3 rounded border text-left">
-                      <div className="font-medium">{point.location}</div>
-                      <div className="text-gray-600">{point.activities} activities</div>
-                      <div className="text-xs text-gray-500">
-                        Intensity: {(point.intensity * 100).toFixed(1)}%
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Map Legend */}
-            <div className="mt-6 flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <span className="text-sm font-medium text-gray-700">Activity Intensity:</span>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-blue-200 rounded"></div>
-                  <span className="text-xs text-gray-600">Low</span>
-                  <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                  <span className="text-xs text-gray-600">Medium</span>
-                  <div className="w-4 h-4 bg-blue-800 rounded"></div>
-                  <span className="text-xs text-gray-600">High</span>
-                </div>
-              </div>
-              <div className="text-sm text-gray-500">
-                {heatmapData.length} active locations
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Activities Tab */}
-        {activeTab === 'activities' && (
-          <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex justify-between items-center">
-                <h2 className="text-lg font-medium text-gray-900">Activity Log</h2>
-                
-                <div className="flex items-center space-x-4">
-                  <div className="relative">
-                    <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="Search locations..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="block w-64 rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                  
+          <div className="space-y-6">
+            {/* Filters */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Activity Type</label>
                   <select
                     value={activityFilter}
                     onChange={(e) => setActivityFilter(e.target.value as any)}
-                    className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
                   >
                     <option value="all">All Activities</option>
                     <option value="safe_id_share">Safe ID Shares</option>
@@ -578,151 +506,341 @@ export default function LocationActivity() {
                     <option value="incident_report">Incident Reports</option>
                   </select>
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Time Range</label>
+                  <select
+                    value={timeRange}
+                    onChange={(e) => setTimeRange(e.target.value as any)}
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="24h">Last 24 Hours</option>
+                    <option value="7d">Last 7 Days</option>
+                    <option value="30d">Last 30 Days</option>
+                    <option value="90d">Last 90 Days</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
+                  <select
+                    value={selectedLocation}
+                    onChange={(e) => setSelectedLocation(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">All Locations</option>
+                    {heatmapData.map((location, index) => (
+                      <option key={index} value={location.location}>
+                        {location.location}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Time & Location
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Activity
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      User
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Details
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredActivities.map((activity) => {
-                    const ActivityIcon = getActivityTypeIcon(activity.activityType);
-                    return (
-                      <tr key={activity.id} className="hover:bg-gray-50">
+            {/* Heatmap Visualization */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-gray-100 mb-4">Activity Heatmap</h3>
+              <div className="bg-gray-700 rounded-lg p-8 text-center">
+                <GlobeAltIcon className="mx-auto h-16 w-16 text-gray-500 mb-4" />
+                <p className="text-gray-400">Interactive map visualization would be implemented here</p>
+                <p className="text-sm text-gray-500 mt-2">
+                  Integration with mapping services like Google Maps or Mapbox
+                </p>
+              </div>
+            </div>
+
+            {/* Heatmap Data Table */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-700">
+                <h3 className="text-lg font-semibold text-gray-100">Location Data</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-700">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Location
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Coordinates
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Activities
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Intensity
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-gray-800 divide-y divide-gray-700">
+                    {heatmapData.map((location, index) => (
+                      <tr key={index} className="hover:bg-gray-700/50">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">
-                              {activity.timestamp.toLocaleString()}
+                          <div className="flex items-center">
+                            <MapPinIcon className="h-4 w-4 text-gray-400 mr-2" />
+                            <span className="text-sm text-gray-100">{location.location}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                          {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-100">
+                          {location.activities}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="w-16 bg-gray-700 rounded-full h-2 mr-2">
+                              <div
+                                className="bg-purple-600 h-2 rounded-full"
+                                style={{ width: `${(location.intensity / 10) * 100}%` }}
+                              ></div>
                             </div>
-                            <div className="text-sm text-gray-500">
-                              {activity.address}, {activity.city}, {activity.state}
-                            </div>
+                            <span className="text-sm text-gray-300">{location.intensity}/10</span>
                           </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center space-x-2">
-                            <ActivityIcon className="h-5 w-5 text-gray-400" />
-                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getActivityTypeColor(activity.activityType)}`}>
-                              {activity.activityType.replace('_', ' ')}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">{activity.userName}</div>
-                            <div className="text-sm text-gray-500">{activity.userType.replace('_', ' ')}</div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="text-sm text-gray-900">
-                            {JSON.stringify(activity.details, null, 2)}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <button className="text-indigo-600 hover:text-indigo-900">
-                            <EyeIcon className="h-4 w-4" />
-                          </button>
                         </td>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Activities Tab */}
+        {activeTab === 'activities' && (
+          <div className="space-y-6">
+            {/* Filters */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                  <div className="relative">
+                    <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Search activities..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <select
+                    value={activityFilter}
+                    onChange={(e) => setActivityFilter(e.target.value as any)}
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="all">All Activities</option>
+                    <option value="safe_id_share">Safe ID Shares</option>
+                    <option value="campaign_view">Campaign Views</option>
+                    <option value="offer_redeem">Offer Redemptions</option>
+                    <option value="incident_report">Incident Reports</option>
+                    <option value="insurance_check">Insurance Checks</option>
+                  </select>
+                </div>
+                <div>
+                  <select
+                    value={timeRange}
+                    onChange={(e) => setTimeRange(e.target.value as any)}
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="24h">Last 24 Hours</option>
+                    <option value="7d">Last 7 Days</option>
+                    <option value="30d">Last 30 Days</option>
+                    <option value="90d">Last 90 Days</option>
+                  </select>
+                </div>
+                <div>
+                  <select
+                    value={selectedLocation}
+                    onChange={(e) => setSelectedLocation(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">All Locations</option>
+                    {Array.from(new Set(activities.map(a => a.city))).map((city) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
 
-            {filteredActivities.length === 0 && (
-              <div className="text-center py-8">
-                <MapPinIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No activities found</h3>
-                <p className="text-gray-500">Try adjusting your filters or search terms.</p>
+            {/* Activities Table */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-700">
+                <h3 className="text-lg font-semibold text-gray-100">Activity Log</h3>
               </div>
-            )}
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-700">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Activity
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        User
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Location
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Time
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Details
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-gray-800 divide-y divide-gray-700">
+                    {activities
+                      .filter(activity => {
+                        if (activityFilter !== 'all' && activity.activityType !== activityFilter) return false;
+                        if (selectedLocation && activity.city !== selectedLocation) return false;
+                        if (searchQuery && !activity.userName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+                            !activity.address.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+                        return true;
+                      })
+                      .map((activity) => {
+                        const ActivityIcon = getActivityTypeIcon(activity.activityType);
+                        return (
+                          <tr key={activity.id} className="hover:bg-gray-700/50">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <div className="p-2 bg-purple-900/50 rounded-lg mr-3">
+                                  <ActivityIcon className="h-4 w-4 text-purple-400" />
+                                </div>
+                                <div>
+                                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getActivityTypeColor(activity.activityType)}`}>
+                                    {activity.activityType.replace('_', ' ')}
+                                  </span>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div>
+                                <div className="text-sm font-medium text-gray-100">{activity.userName}</div>
+                                <div className="text-sm text-gray-400">{activity.userType.replace('_', ' ')}</div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div>
+                                <div className="text-sm text-gray-100">{activity.address}</div>
+                                <div className="text-sm text-gray-400">{activity.city}, {activity.state}</div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div>
+                                <div className="text-sm text-gray-100">{activity.timestamp.toLocaleDateString()}</div>
+                                <div className="text-sm text-gray-400">{activity.timestamp.toLocaleTimeString()}</div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <button className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg">
+                                <EyeIcon className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
           <div className="space-y-6">
-            {/* Time-based Analytics */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-lg font-medium text-gray-900 mb-6">Hourly Activity Distribution</h2>
-                <div className="h-64 bg-gray-100 rounded flex items-center justify-center">
-                  <div className="text-center">
-                    <ChartBarIcon className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                    <p className="text-gray-500">Hourly activity chart would display here</p>
-                    <p className="text-sm text-gray-400 mt-2">Peak hour: {stats.peakActivityHour}:00</p>
+            {/* Key Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Activity Trends</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Average per Location</span>
+                    <span className="text-sm font-medium text-gray-100">
+                      {stats.averageActivityPerLocation.toFixed(1)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Peak Activity Hour</span>
+                    <span className="text-sm font-medium text-gray-100">{stats.peakActivityHour}:00</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Most Active Type</span>
+                    <span className="text-sm font-medium text-gray-100">Safe ID Shares</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-lg font-medium text-gray-900 mb-6">Geographic Distribution</h2>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Geographic Distribution</h3>
                 <div className="space-y-3">
-                  {['IL', 'TX', 'CA', 'NY', 'AZ'].map((state, index) => {
-                    const stateActivities = activities.filter(a => a.state === state).length;
-                    const percentage = activities.length > 0 ? (stateActivities / activities.length * 100) : 0;
-                    
-                    return (
-                      <div key={state} className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700">{state}</span>
-                        <div className="flex items-center space-x-2">
-                          <div className="w-24 bg-gray-200 rounded-full h-2">
-                            <div
-                              className="bg-indigo-600 h-2 rounded-full"
-                              style={{ width: `${percentage}%` }}
-                            ></div>
-                          </div>
-                          <span className="text-sm text-gray-600 w-8">{stateActivities}</span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Total Cities</span>
+                    <span className="text-sm font-medium text-gray-100">
+                      {Array.from(new Set(activities.map(a => a.city))).length}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Total States</span>
+                    <span className="text-sm font-medium text-gray-100">
+                      {Array.from(new Set(activities.map(a => a.state))).length}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Coverage Area</span>
+                    <span className="text-sm font-medium text-gray-100">National</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">User Engagement</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Active Users</span>
+                    <span className="text-sm font-medium text-gray-100">
+                      {Array.from(new Set(activities.map(a => a.userId))).length}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Repeat Users</span>
+                    <span className="text-sm font-medium text-gray-100">73%</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">Avg. Activities/User</span>
+                    <span className="text-sm font-medium text-gray-100">2.3</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Performance Metrics */}
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-6">Performance Metrics</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">{stats.averageActivityPerLocation.toFixed(1)}</div>
-                  <div className="text-sm text-gray-500">Avg Activities per Location</div>
+            {/* Charts Placeholder */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Activity Timeline</h3>
+                <div className="bg-gray-700 rounded-lg p-8 text-center">
+                  <ChartBarIcon className="mx-auto h-16 w-16 text-gray-500 mb-4" />
+                  <p className="text-gray-400">Timeline chart would be implemented here</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Showing activity patterns over time
+                  </p>
                 </div>
+              </div>
 
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600">{stats.uniqueLocations}</div>
-                  <div className="text-sm text-gray-500">Active Locations</div>
-                </div>
-
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600">{stats.totalActivities}</div>
-                  <div className="text-sm text-gray-500">Total Activities</div>
-                </div>
-
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-600">{stats.peakActivityHour}:00</div>
-                  <div className="text-sm text-gray-500">Peak Activity Hour</div>
+              <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Geographic Insights</h3>
+                <div className="bg-gray-700 rounded-lg p-8 text-center">
+                  <GlobeAltIcon className="mx-auto h-16 w-16 text-gray-500 mb-4" />
+                  <p className="text-gray-400">Geographic analysis chart would be implemented here</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Regional activity distribution and trends
+                  </p>
                 </div>
               </div>
             </div>

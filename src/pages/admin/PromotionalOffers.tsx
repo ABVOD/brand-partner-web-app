@@ -231,10 +231,11 @@ type FilterStatus = 'all' | 'active' | 'scheduled' | 'completed' | 'paused';
 export default function PromotionalOffers() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<FilterStatus>('all');
-  const [sortBy, setSortBy] = useState<'name' | 'spend' | 'performance' | 'date'>('date');
+  const [selectedOffer, setSelectedOffer] = useState<any>(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
 
-  const filteredAndSortedOffers = useMemo(() => {
-    let filtered = mockPromotionalOffers.filter(offer => {
+  const filteredOffers = useMemo(() => {
+    return mockPromotionalOffers.filter(offer => {
       const matchesSearch = offer.campaignName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            offer.brandName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            offer.location.city.toLowerCase().includes(searchTerm.toLowerCase());
@@ -243,56 +244,59 @@ export default function PromotionalOffers() {
       
       return matchesSearch && matchesStatus;
     });
-
-    // Sort the filtered results
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'name':
-          return a.campaignName.localeCompare(b.campaignName);
-        case 'spend':
-          return b.adSpend.spent - a.adSpend.spent;
-        case 'performance':
-          return b.performance.redemptions - a.performance.redemptions;
-        case 'date':
-        default:
-          return b.lastModified.getTime() - a.lastModified.getTime();
-      }
-    });
-
-    return filtered;
-  }, [searchTerm, statusFilter, sortBy]);
+  }, [searchTerm, statusFilter]);
 
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'active':
-        return { 
-          color: 'bg-green-100 text-green-800 border-green-200', 
-          icon: SparklesIcon,
-          label: 'Active'
+        return {
+          badge: (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
+              <CheckCircleIcon className="h-3 w-3 mr-1" />
+              Active
+            </span>
+          ),
+          bgColor: 'bg-green-900/20',
+          borderColor: 'border-green-600/30'
         };
       case 'scheduled':
-        return { 
-          color: 'bg-blue-100 text-blue-800 border-blue-200', 
-          icon: ClockIcon,
-          label: 'Scheduled'
+        return {
+          badge: (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/50 text-blue-300">
+              <ClockIcon className="h-3 w-3 mr-1" />
+              Scheduled
+            </span>
+          ),
+          bgColor: 'bg-blue-900/20',
+          borderColor: 'border-blue-600/30'
         };
       case 'completed':
-        return { 
-          color: 'bg-gray-100 text-gray-800 border-gray-200', 
-          icon: CheckCircleIcon,
-          label: 'Completed'
+        return {
+          badge: (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-600/50 text-gray-300">
+              <CheckCircleIcon className="h-3 w-3 mr-1" />
+              Completed
+            </span>
+          ),
+          bgColor: 'bg-gray-700/20',
+          borderColor: 'border-gray-600/30'
         };
       case 'paused':
-        return { 
-          color: 'bg-yellow-100 text-yellow-800 border-yellow-200', 
-          icon: ExclamationTriangleIcon,
-          label: 'Paused'
+        return {
+          badge: (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-900/50 text-yellow-300">
+              <ExclamationTriangleIcon className="h-3 w-3 mr-1" />
+              Paused
+            </span>
+          ),
+          bgColor: 'bg-yellow-900/20',
+          borderColor: 'border-yellow-600/30'
         };
       default:
-        return { 
-          color: 'bg-gray-100 text-gray-800 border-gray-200', 
-          icon: ClockIcon,
-          label: 'Unknown'
+        return {
+          badge: null,
+          bgColor: 'bg-gray-700/20',
+          borderColor: 'border-gray-600/30'
         };
     }
   };
@@ -364,79 +368,79 @@ export default function PromotionalOffers() {
 
         {/* Summary Stats */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="rounded-lg bg-green-50 p-3">
-                  <SparklesIcon className="h-6 w-6 text-green-600" />
+                <div className="rounded-lg bg-green-900/50 p-3">
+                  <SparklesIcon className="h-6 w-6 text-green-400" />
                 </div>
               </div>
               <div className="ml-4 flex-1">
-                <p className="text-sm font-medium text-gray-600">Active Offers</p>
-                <p className="text-2xl font-bold text-gray-900">{summaryStats.activeOffers}</p>
+                <p className="text-sm font-medium text-gray-400">Active Offers</p>
+                <p className="text-2xl font-bold text-gray-100">{summaryStats.activeOffers}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="rounded-lg bg-blue-50 p-3">
-                  <CurrencyDollarIcon className="h-6 w-6 text-blue-600" />
+                <div className="rounded-lg bg-blue-900/50 p-3">
+                  <CurrencyDollarIcon className="h-6 w-6 text-blue-400" />
                 </div>
               </div>
               <div className="ml-4 flex-1">
-                <p className="text-sm font-medium text-gray-600">Total Ad Spend</p>
-                <p className="text-2xl font-bold text-gray-900">{formatCurrency(summaryStats.totalSpend)}</p>
+                <p className="text-sm font-medium text-gray-400">Total Ad Spend</p>
+                <p className="text-2xl font-bold text-gray-100">{formatCurrency(summaryStats.totalSpend)}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="rounded-lg bg-purple-50 p-3">
-                  <EyeIcon className="h-6 w-6 text-purple-600" />
+                <div className="rounded-lg bg-purple-900/50 p-3">
+                  <EyeIcon className="h-6 w-6 text-purple-400" />
                 </div>
               </div>
               <div className="ml-4 flex-1">
-                <p className="text-sm font-medium text-gray-600">Total Impressions</p>
-                <p className="text-2xl font-bold text-gray-900">{formatNumber(summaryStats.totalImpressions)}</p>
+                <p className="text-sm font-medium text-gray-400">Total Impressions</p>
+                <p className="text-2xl font-bold text-gray-100">{formatNumber(summaryStats.totalImpressions)}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="rounded-lg bg-orange-50 p-3">
-                  <CheckCircleIcon className="h-6 w-6 text-orange-600" />
+                <div className="rounded-lg bg-orange-900/50 p-3">
+                  <CheckCircleIcon className="h-6 w-6 text-orange-400" />
                 </div>
               </div>
               <div className="ml-4 flex-1">
-                <p className="text-sm font-medium text-gray-600">Total Redemptions</p>
-                <p className="text-2xl font-bold text-gray-900">{formatNumber(summaryStats.totalRedemptions)}</p>
+                <p className="text-sm font-medium text-gray-400">Total Redemptions</p>
+                <p className="text-2xl font-bold text-gray-100">{formatNumber(summaryStats.totalRedemptions)}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="rounded-lg bg-red-50 p-3">
-                  <ChartBarIcon className="h-6 w-6 text-red-600" />
+                <div className="rounded-lg bg-red-900/50 p-3">
+                  <ChartBarIcon className="h-6 w-6 text-red-400" />
                 </div>
               </div>
               <div className="ml-4 flex-1">
-                <p className="text-sm font-medium text-gray-600">Avg. Redemption Rate</p>
-                <p className="text-2xl font-bold text-gray-900">{summaryStats.avgRedemptionRate.toFixed(1)}%</p>
+                <p className="text-sm font-medium text-gray-400">Avg. Redemption Rate</p>
+                <p className="text-2xl font-bold text-gray-100">{summaryStats.avgRedemptionRate.toFixed(1)}%</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Filters and Search */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               {/* Search */}
@@ -447,7 +451,7 @@ export default function PromotionalOffers() {
                   placeholder="Search campaigns, brands, locations..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="pl-10 pr-4 py-2 border border-gray-600 bg-gray-700 text-gray-100 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder:text-gray-400"
                 />
               </div>
 
@@ -457,7 +461,7 @@ export default function PromotionalOffers() {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value as FilterStatus)}
-                  className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none bg-white"
+                  className="pl-10 pr-8 py-2 border border-gray-600 bg-gray-700 text-gray-100 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none"
                 >
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
@@ -468,73 +472,56 @@ export default function PromotionalOffers() {
               </div>
             </div>
 
-            {/* Sort By */}
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-600">Sort by:</span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              >
-                <option value="date">Last Modified</option>
-                <option value="name">Campaign Name</option>
-                <option value="spend">Ad Spend</option>
-                <option value="performance">Performance</option>
-              </select>
-            </div>
+
           </div>
         </div>
 
         {/* Offers List */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Promotional Campaigns ({filteredAndSortedOffers.length})
+        <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700">
+          <div className="px-6 py-4 border-b border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-100">
+              Promotional Campaigns ({filteredOffers.length})
             </h2>
           </div>
 
-          <div className="divide-y divide-gray-200">
-            {filteredAndSortedOffers.map((offer) => {
+          <div className="divide-y divide-gray-700">
+            {filteredOffers.map((offer: any) => {
               const statusConfig = getStatusConfig(offer.status);
-              const StatusIcon = statusConfig.icon;
 
               return (
-                <div key={offer.id} className="p-6 hover:bg-gray-50 transition-colors">
+                <div key={offer.id} className="p-6 hover:bg-gray-700/50 transition-colors">
                   <div className="flex items-start justify-between">
                     <div className="flex-1 space-y-4">
                       {/* Header */}
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-3">
-                          <div className="rounded-lg bg-gray-100 p-2">
-                            <TagIcon className="h-5 w-5 text-gray-600" />
+                          <div className="rounded-lg bg-gray-700 p-2">
+                            <TagIcon className="h-5 w-5 text-gray-400" />
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-900">{offer.campaignName}</h3>
+                            <h3 className="text-lg font-semibold text-gray-100">{offer.campaignName}</h3>
                             <div className="flex items-center space-x-2 mt-1">
                               <BuildingStorefrontIcon className="h-4 w-4 text-gray-400" />
-                              <span className="text-sm text-gray-600">{offer.brandName}</span>
-                              <span className="text-gray-300">•</span>
-                              <span className="text-sm text-gray-500">ID: {offer.brandId}</span>
+                              <span className="text-sm text-gray-300">{offer.brandName}</span>
+                              <span className="text-gray-500">•</span>
+                              <span className="text-sm text-gray-400">ID: {offer.brandId}</span>
                             </div>
                           </div>
                         </div>
-                        <div className={`inline-flex items-center space-x-2 rounded-full border px-3 py-1 text-sm font-medium ${statusConfig.color}`}>
-                          <StatusIcon className="h-4 w-4" />
-                          <span>{statusConfig.label}</span>
-                        </div>
+                        {statusConfig.badge}
                       </div>
 
                       {/* Offer Details */}
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="bg-blue-900/20 border border-blue-700/50 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
-                          <TagIcon className="h-5 w-5 text-blue-600 mt-0.5" />
+                          <TagIcon className="h-5 w-5 text-blue-400 mt-0.5" />
                           <div>
-                            <p className="text-sm font-medium text-blue-900">Offer Details</p>
-                            <p className="text-sm text-blue-800 mt-1">{offer.offerDetails}</p>
+                            <p className="text-sm font-medium text-blue-300">Offer Details</p>
+                            <p className="text-sm text-blue-400 mt-1">{offer.offerDetails}</p>
                             {offer.couponCode && (
-                              <div className="mt-2 inline-flex items-center space-x-2 bg-blue-100 rounded-md px-2 py-1">
-                                <span className="text-xs font-medium text-blue-900">Code:</span>
-                                <span className="text-xs font-mono text-blue-800">{offer.couponCode}</span>
+                              <div className="mt-2 inline-flex items-center space-x-2 bg-blue-800/50 rounded-md px-2 py-1">
+                                <span className="text-xs font-medium text-blue-300">Code:</span>
+                                <span className="text-xs font-mono text-blue-400">{offer.couponCode}</span>
                               </div>
                             )}
                           </div>
@@ -543,13 +530,13 @@ export default function PromotionalOffers() {
 
                       {/* Location and Range */}
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div className="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
                           <div className="flex items-start space-x-3">
-                            <MapPinIcon className="h-5 w-5 text-green-600 mt-0.5" />
+                            <MapPinIcon className="h-5 w-5 text-green-400 mt-0.5" />
                             <div>
-                              <p className="text-sm font-medium text-green-900">Location & Range</p>
-                              <p className="text-sm text-green-800 mt-1">{offer.location.address}</p>
-                              <div className="mt-2 flex items-center space-x-4 text-xs text-green-700">
+                              <p className="text-sm font-medium text-green-300">Location & Range</p>
+                              <p className="text-sm text-green-400 mt-1">{offer.location.address}</p>
+                              <div className="mt-2 flex items-center space-x-4 text-xs text-green-500">
                                 <span>Radius: {formatRadius(offer.location.radius)}</span>
                                 <span>•</span>
                                 <span>Lat: {offer.location.lat.toFixed(4)}</span>
@@ -560,15 +547,15 @@ export default function PromotionalOffers() {
                           </div>
                         </div>
 
-                        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                        <div className="bg-purple-900/20 border border-purple-700/50 rounded-lg p-4">
                           <div className="flex items-start space-x-3">
-                            <CalendarIcon className="h-5 w-5 text-purple-600 mt-0.5" />
+                            <CalendarIcon className="h-5 w-5 text-purple-400 mt-0.5" />
                             <div>
-                              <p className="text-sm font-medium text-purple-900">Campaign Period</p>
-                              <p className="text-sm text-purple-800 mt-1">
+                              <p className="text-sm font-medium text-purple-300">Campaign Period</p>
+                              <p className="text-sm text-purple-400 mt-1">
                                 {offer.dateRange.startDate.toLocaleDateString()} - {offer.dateRange.endDate.toLocaleDateString()}
                               </p>
-                              <p className="text-xs text-purple-700 mt-1">
+                              <p className="text-xs text-purple-500 mt-1">
                                 {calculateDaysRunning(offer.dateRange.startDate, offer.dateRange.endDate, offer.status)}
                               </p>
                             </div>
@@ -577,39 +564,39 @@ export default function PromotionalOffers() {
                       </div>
 
                       {/* Ad Spend Details */}
-                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                      <div className="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
-                          <CurrencyDollarIcon className="h-5 w-5 text-yellow-600 mt-0.5" />
+                          <CurrencyDollarIcon className="h-5 w-5 text-yellow-400 mt-0.5" />
                           <div className="flex-1">
-                            <p className="text-sm font-medium text-yellow-900">Ad Spend & Budget</p>
+                            <p className="text-sm font-medium text-yellow-300">Ad Spend & Budget</p>
                             <div className="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-4">
                               <div>
-                                <p className="text-xs text-yellow-700">Total Spent</p>
-                                <p className="text-lg font-bold text-yellow-900">{formatCurrency(offer.adSpend.spent)}</p>
+                                <p className="text-xs text-yellow-500">Total Spent</p>
+                                <p className="text-lg font-bold text-yellow-400">{formatCurrency(offer.adSpend.spent)}</p>
                               </div>
                               <div>
-                                <p className="text-xs text-yellow-700">Total Budget</p>
-                                <p className="text-lg font-bold text-yellow-900">{formatCurrency(offer.adSpend.totalBudget)}</p>
+                                <p className="text-xs text-yellow-500">Total Budget</p>
+                                <p className="text-lg font-bold text-yellow-400">{formatCurrency(offer.adSpend.totalBudget)}</p>
                               </div>
                               <div>
-                                <p className="text-xs text-yellow-700">Daily Budget</p>
-                                <p className="text-lg font-bold text-yellow-900">{formatCurrency(offer.adSpend.dailyBudget)}</p>
+                                <p className="text-xs text-yellow-500">Daily Budget</p>
+                                <p className="text-lg font-bold text-yellow-400">{formatCurrency(offer.adSpend.dailyBudget)}</p>
                               </div>
                               <div>
-                                <p className="text-xs text-yellow-700">CPM Rate</p>
-                                <p className="text-lg font-bold text-yellow-900">{formatCurrency(offer.adSpend.cpm)}</p>
+                                <p className="text-xs text-yellow-500">CPM Rate</p>
+                                <p className="text-lg font-bold text-yellow-400">{formatCurrency(offer.adSpend.cpm)}</p>
                               </div>
                             </div>
                             <div className="mt-3">
                               <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs text-yellow-700">Budget Usage</span>
-                                <span className="text-xs text-yellow-800 font-medium">
+                                <span className="text-xs text-yellow-500">Budget Usage</span>
+                                <span className="text-xs text-yellow-400 font-medium">
                                   {((offer.adSpend.spent / offer.adSpend.totalBudget) * 100).toFixed(1)}%
                                 </span>
                               </div>
-                              <div className="w-full bg-yellow-200 rounded-full h-2">
+                              <div className="w-full bg-yellow-800/50 rounded-full h-2">
                                 <div 
-                                  className="bg-yellow-600 h-2 rounded-full transition-all duration-300"
+                                  className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
                                   style={{ width: `${Math.min((offer.adSpend.spent / offer.adSpend.totalBudget) * 100, 100)}%` }}
                                 ></div>
                               </div>
@@ -619,40 +606,40 @@ export default function PromotionalOffers() {
                       </div>
 
                       {/* Performance Metrics */}
-                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <div className="bg-gray-700/50 border border-gray-600 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
-                          <ChartBarIcon className="h-5 w-5 text-gray-600 mt-0.5" />
+                          <ChartBarIcon className="h-5 w-5 text-gray-400 mt-0.5" />
                           <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-900">Performance Metrics</p>
+                            <p className="text-sm font-medium text-gray-300">Performance Metrics</p>
                             <div className="mt-3 grid grid-cols-2 lg:grid-cols-5 gap-4">
                               <div className="text-center">
-                                <div className="flex items-center justify-center space-x-1 text-lg font-bold text-gray-900">
-                                  <EyeIcon className="h-4 w-4 text-blue-500" />
+                                <div className="flex items-center justify-center space-x-1 text-lg font-bold text-gray-100">
+                                  <EyeIcon className="h-4 w-4 text-blue-400" />
                                   <span>{formatNumber(offer.performance.impressions)}</span>
                                 </div>
-                                <p className="text-xs text-gray-600 mt-1">Impressions</p>
+                                <p className="text-xs text-gray-400 mt-1">Impressions</p>
                               </div>
                               <div className="text-center">
-                                <div className="flex items-center justify-center space-x-1 text-lg font-bold text-gray-900">
-                                  <CursorArrowRaysIcon className="h-4 w-4 text-green-500" />
+                                <div className="flex items-center justify-center space-x-1 text-lg font-bold text-gray-100">
+                                  <CursorArrowRaysIcon className="h-4 w-4 text-green-400" />
                                   <span>{formatNumber(offer.performance.clicks)}</span>
                                 </div>
-                                <p className="text-xs text-gray-600 mt-1">Clicks</p>
+                                <p className="text-xs text-gray-400 mt-1">Clicks</p>
                               </div>
                               <div className="text-center">
-                                <div className="flex items-center justify-center space-x-1 text-lg font-bold text-gray-900">
-                                  <CheckCircleIcon className="h-4 w-4 text-purple-500" />
+                                <div className="flex items-center justify-center space-x-1 text-lg font-bold text-gray-100">
+                                  <CheckCircleIcon className="h-4 w-4 text-purple-400" />
                                   <span>{formatNumber(offer.performance.redemptions)}</span>
                                 </div>
-                                <p className="text-xs text-gray-600 mt-1">Redemptions</p>
+                                <p className="text-xs text-gray-400 mt-1">Redemptions</p>
                               </div>
                               <div className="text-center">
-                                <div className="text-lg font-bold text-gray-900">{offer.performance.clickThroughRate.toFixed(1)}%</div>
-                                <p className="text-xs text-gray-600 mt-1">CTR</p>
+                                <div className="text-lg font-bold text-gray-100">{offer.performance.clickThroughRate.toFixed(1)}%</div>
+                                <p className="text-xs text-gray-400 mt-1">CTR</p>
                               </div>
                               <div className="text-center">
-                                <div className="text-lg font-bold text-gray-900">{offer.performance.redemptionRate.toFixed(1)}%</div>
-                                <p className="text-xs text-gray-600 mt-1">Redemption Rate</p>
+                                <div className="text-lg font-bold text-gray-100">{offer.performance.redemptionRate.toFixed(1)}%</div>
+                                <p className="text-xs text-gray-400 mt-1">Redemption Rate</p>
                               </div>
                             </div>
                           </div>
@@ -660,17 +647,17 @@ export default function PromotionalOffers() {
                       </div>
 
                       {/* Target Audience */}
-                      <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                      <div className="bg-indigo-900/20 border border-indigo-700/50 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
-                          <EyeIcon className="h-5 w-5 text-indigo-600 mt-0.5" />
+                          <EyeIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
                           <div>
-                            <p className="text-sm font-medium text-indigo-900">Target Audience</p>
+                            <p className="text-sm font-medium text-indigo-300">Target Audience</p>
                             <div className="mt-2 flex flex-wrap items-center gap-2">
-                              <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">
+                              <span className="inline-flex items-center rounded-md bg-indigo-800/50 px-2 py-1 text-xs font-medium text-indigo-300">
                                 Age: {offer.targetAudience.ageRange}
                               </span>
-                              {offer.targetAudience.interests.map((interest, index) => (
-                                <span key={index} className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">
+                              {offer.targetAudience.interests.map((interest: any, index: number) => (
+                                <span key={index} className="inline-flex items-center rounded-md bg-indigo-800/50 px-2 py-1 text-xs font-medium text-indigo-300">
                                   {interest}
                                 </span>
                               ))}
@@ -680,7 +667,7 @@ export default function PromotionalOffers() {
                       </div>
 
                       {/* Timestamps */}
-                      <div className="flex justify-between items-center text-xs text-gray-500 pt-2 border-t border-gray-200">
+                      <div className="flex justify-between items-center text-xs text-gray-400 pt-2 border-t border-gray-700">
                         <span>Created: {offer.createdAt.toLocaleDateString()}</span>
                         <span>Last Modified: {offer.lastModified.toLocaleDateString()}</span>
                       </div>
@@ -690,11 +677,11 @@ export default function PromotionalOffers() {
               );
             })}
 
-            {filteredAndSortedOffers.length === 0 && (
+            {filteredOffers.length === 0 && (
               <div className="text-center py-12">
                 <TagIcon className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-2 text-sm font-medium text-gray-900">No promotional offers found</h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <h3 className="mt-2 text-sm font-medium text-gray-300">No promotional offers found</h3>
+                <p className="mt-1 text-sm text-gray-400">
                   {searchTerm || statusFilter !== 'all'
                     ? 'Try adjusting your search or filter criteria.'
                     : 'Brand partners haven\'t created any promotional offers yet.'
@@ -704,6 +691,134 @@ export default function PromotionalOffers() {
             )}
           </div>
         </div>
+
+        {/* Detail Modal */}
+        {showDetailModal && selectedOffer && (
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center p-4">
+              <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowDetailModal(false)}></div>
+              <div className="relative w-full max-w-4xl mx-auto">
+                <div className="bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+                  <div className="px-6 py-4 border-b border-gray-700">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium text-gray-100">Campaign Details</h3>
+                      <button
+                        onClick={() => setShowDetailModal(false)}
+                        className="text-gray-400 hover:text-gray-300"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="px-6 py-4 space-y-6">
+                    {/* Campaign Header */}
+                    <div className="flex items-center space-x-4">
+                      <div className="p-3 bg-purple-900/50 rounded-lg">
+                        <BuildingStorefrontIcon className="h-8 w-8 text-purple-400" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-semibold text-gray-100">{selectedOffer.campaignName}</h4>
+                        <p className="text-gray-400">{selectedOffer.brandName}</p>
+                        <div className="mt-2">
+                          {getStatusConfig(selectedOffer.status).badge}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Grid Layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Offer Details */}
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300 mb-2">Offer Details</h5>
+                        <div className="bg-gray-700 rounded-lg p-4 space-y-3">
+                          <p className="text-gray-100">{selectedOffer.offerDetails}</p>
+                          <div className="flex items-center space-x-2">
+                            <TagIcon className="h-4 w-4 text-gray-400" />
+                            <code className="text-sm bg-gray-600 px-2 py-1 rounded text-gray-300">
+                              {selectedOffer.couponCode}
+                            </code>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Performance Metrics */}
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300 mb-2">Performance</h5>
+                        <div className="bg-gray-700 rounded-lg p-4 space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Impressions:</span>
+                            <span className="text-gray-100">{formatNumber(selectedOffer.performance.impressions)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Clicks:</span>
+                            <span className="text-gray-100">{formatNumber(selectedOffer.performance.clicks)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">CTR:</span>
+                            <span className="text-gray-100">{selectedOffer.performance.clickThroughRate}%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Redemptions:</span>
+                            <span className="text-gray-100">{formatNumber(selectedOffer.performance.redemptions)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Location & Budget */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300 mb-2">Location</h5>
+                        <div className="bg-gray-700 rounded-lg p-4">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <MapPinIcon className="h-4 w-4 text-gray-400" />
+                            <span className="text-gray-100">{selectedOffer.location.city}, {selectedOffer.location.state}</span>
+                          </div>
+                          <p className="text-sm text-gray-400">
+                            {formatRadius(selectedOffer.location.radius)} radius
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="text-sm font-medium text-gray-300 mb-2">Budget</h5>
+                        <div className="bg-gray-700 rounded-lg p-4 space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Total Budget:</span>
+                            <span className="text-gray-100">{formatCurrency(selectedOffer.adSpend.totalBudget)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Spent:</span>
+                            <span className="text-gray-100">{formatCurrency(selectedOffer.adSpend.spent)}</span>
+                          </div>
+                          <div className="w-full bg-gray-600 rounded-full h-2">
+                            <div 
+                              className="bg-purple-500 h-2 rounded-full" 
+                              style={{ width: `${(selectedOffer.adSpend.spent / selectedOffer.adSpend.totalBudget) * 100}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="px-6 py-4 border-t border-gray-700 flex justify-end space-x-3">
+                    <button
+                      onClick={() => setShowDetailModal(false)}
+                      className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-lg hover:bg-gray-600"
+                    >
+                      Close
+                    </button>
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700">
+                      Edit Campaign
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AdminDashboardLayout>
   );

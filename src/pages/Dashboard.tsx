@@ -126,38 +126,38 @@ export default function Dashboard() {
       <div className="space-y-8">
         {/* Header */}
         <div>
-          <h2 className="text-3xl font-bold leading-7 text-gray-900 sm:truncate sm:text-4xl sm:tracking-tight">
+          <h2 className="text-3xl font-bold leading-7 text-gray-100 sm:truncate sm:text-4xl sm:tracking-tight">
             Dashboard
           </h2>
-          <p className="mt-2 text-lg leading-6 text-gray-600">
+          <p className="mt-2 text-lg leading-6 text-gray-400">
             Monitor your location-based marketing performance
           </p>
         </div>
 
         {/* Key Metrics */}
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Performance Metrics</h3>
+          <h3 className="text-lg font-semibold text-gray-100 mb-4">Key Performance Metrics</h3>
           <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
                 onClick={() => handleStatClick(item.name, item.href)}
-                className="relative overflow-hidden rounded-xl bg-white px-6 py-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+                className="relative overflow-hidden rounded-xl bg-gray-800 px-6 py-6 shadow-sm border border-gray-700 hover:shadow-md hover:bg-gray-750 transition-all duration-200"
               >
                 <dt>
-                  <div className="absolute rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 p-3">
+                  <div className="absolute rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 p-3">
                     <item.icon className="h-6 w-6 text-white" aria-hidden="true" />
                   </div>
-                  <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
+                  <p className="ml-16 truncate text-sm font-medium text-gray-300">{item.name}</p>
                   <p className="ml-16 text-xs text-gray-400 mt-1">{item.description}</p>
                 </dt>
                 <dd className="ml-16 flex items-baseline justify-between pb-6 sm:pb-7">
-                  <p className="text-2xl font-bold text-gray-900">{item.value}</p>
+                  <p className="text-2xl font-bold text-gray-100">{item.value}</p>
                   <div className={`inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium ${
                     item.changeType === 'increase' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-red-100 text-red-800'
+                      ? 'bg-green-900/50 text-green-300' 
+                      : 'bg-red-900/50 text-red-300'
                   }`}>
                     {item.changeType === 'increase' ? (
                       <ArrowUpIcon className="h-4 w-4 mr-1" />
@@ -173,21 +173,21 @@ export default function Dashboard() {
         </div>
 
         {/* Performance Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700">
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Campaign Performance</h3>
-                <p className="text-sm text-gray-600">Weekly performance overview</p>
+                <h3 className="text-lg font-semibold text-gray-100">Campaign Performance</h3>
+                <p className="text-sm text-gray-400">Weekly performance overview</p>
               </div>
               <div className="flex space-x-2">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-900/50 text-blue-300">
                   Impressions
                 </span>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-900/50 text-green-300">
                   Clicks
                 </span>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-900/50 text-purple-300">
                   Conversions
                 </span>
               </div>
@@ -197,37 +197,37 @@ export default function Dashboard() {
             <div className="space-y-4">
               {performanceData.map((week, index) => (
                 <div key={week.period} className="flex items-center space-x-4">
-                  <div className="w-16 text-sm font-medium text-gray-600">{week.period}</div>
+                  <div className="w-16 text-sm font-medium text-gray-300">{week.period}</div>
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center">
-                      <div className="w-24 text-xs text-gray-500">Impressions</div>
-                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                      <div className="w-24 text-xs text-gray-400">Impressions</div>
+                      <div className="flex-1 bg-gray-700 rounded-full h-2">
                         <div 
                           className="bg-blue-500 h-2 rounded-full" 
                           style={{ width: `${(week.impressions / 35000) * 100}%` }}
                         ></div>
                       </div>
-                      <div className="w-16 text-xs text-gray-600 text-right">{week.impressions.toLocaleString()}</div>
+                      <div className="w-16 text-xs text-gray-300 text-right">{week.impressions.toLocaleString()}</div>
                     </div>
                     <div className="flex items-center">
-                      <div className="w-24 text-xs text-gray-500">Clicks</div>
-                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                      <div className="w-24 text-xs text-gray-400">Clicks</div>
+                      <div className="flex-1 bg-gray-700 rounded-full h-2">
                         <div 
                           className="bg-green-500 h-2 rounded-full" 
                           style={{ width: `${(week.clicks / 1400) * 100}%` }}
                         ></div>
                       </div>
-                      <div className="w-16 text-xs text-gray-600 text-right">{week.clicks.toLocaleString()}</div>
+                      <div className="w-16 text-xs text-gray-300 text-right">{week.clicks.toLocaleString()}</div>
                     </div>
                     <div className="flex items-center">
-                      <div className="w-24 text-xs text-gray-500">Conversions</div>
-                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                      <div className="w-24 text-xs text-gray-400">Conversions</div>
+                      <div className="flex-1 bg-gray-700 rounded-full h-2">
                         <div 
                           className="bg-purple-500 h-2 rounded-full" 
                           style={{ width: `${(week.conversions / 68) * 100}%` }}
                         ></div>
                       </div>
-                      <div className="w-16 text-xs text-gray-600 text-right">{week.conversions}</div>
+                      <div className="w-16 text-xs text-gray-300 text-right">{week.conversions}</div>
                     </div>
                   </div>
                 </div>
@@ -239,29 +239,33 @@ export default function Dashboard() {
         {/* Two column layout for campaigns and activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Campaigns */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">Recent Campaigns</h3>
+                <h3 className="text-lg font-semibold text-gray-100">Recent Campaigns</h3>
                 <Link 
                   to="/location-campaigns"
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  className="text-sm font-medium text-purple-400 hover:text-purple-300"
                 >
                   View all
                 </Link>
               </div>
               <div className="space-y-4">
                 {recentCampaigns.map((campaign) => (
-                  <div key={campaign.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div key={campaign.id} className="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-medium text-gray-900">{campaign.name}</h4>
-                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${campaign.statusColor}`}>
+                        <h4 className="text-sm font-medium text-gray-100">{campaign.name}</h4>
+                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                          campaign.status === 'Active' ? 'bg-green-900/50 text-green-300' :
+                          campaign.status === 'Paused' ? 'bg-yellow-900/50 text-yellow-300' :
+                          'bg-gray-600 text-gray-300'
+                        }`}>
                           {campaign.status}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">{campaign.location}</p>
-                      <div className="flex items-center space-x-4 mt-2 text-xs text-gray-600">
+                      <p className="text-xs text-gray-400 mt-1">{campaign.location}</p>
+                      <div className="flex items-center space-x-4 mt-2 text-xs text-gray-300">
                         <span>{campaign.impressions} impressions</span>
                         <span>{campaign.ctr} CTR</span>
                         <span>{campaign.spend} spent</span>
@@ -276,41 +280,41 @@ export default function Dashboard() {
           {/* Recent Activity & Quick Actions */}
           <div className="space-y-6">
             {/* Recent Activity */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700">
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                <h3 className="text-lg font-semibold text-gray-100 mb-4">Recent Activity</h3>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                        <MapPinIcon className="w-4 h-4 text-green-600" />
+                      <div className="w-8 h-8 bg-green-900/50 rounded-full flex items-center justify-center">
+                        <MapPinIcon className="w-4 h-4 text-green-400" />
                       </div>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">New campaign launched</p>
-                      <p className="text-xs text-gray-500">Summer Sale Downtown - 2 hours ago</p>
+                      <p className="text-sm font-medium text-gray-100">New campaign launched</p>
+                      <p className="text-xs text-gray-400">Summer Sale Downtown - 2 hours ago</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <ChartBarIcon className="w-4 h-4 text-blue-600" />
+                      <div className="w-8 h-8 bg-blue-900/50 rounded-full flex items-center justify-center">
+                        <ChartBarIcon className="w-4 h-4 text-blue-400" />
                       </div>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">Performance milestone reached</p>
-                      <p className="text-xs text-gray-500">100K impressions achieved - 5 hours ago</p>
+                      <p className="text-sm font-medium text-gray-100">Performance milestone reached</p>
+                      <p className="text-xs text-gray-400">100K impressions achieved - 5 hours ago</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                        <ChatBubbleLeftRightIcon className="w-4 h-4 text-purple-600" />
+                      <div className="w-8 h-8 bg-purple-900/50 rounded-full flex items-center justify-center">
+                        <ChatBubbleLeftRightIcon className="w-4 h-4 text-purple-400" />
                       </div>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">Support ticket resolved</p>
-                      <p className="text-xs text-gray-500">Campaign optimization inquiry - 1 day ago</p>
+                      <p className="text-sm font-medium text-gray-100">Support ticket resolved</p>
+                      <p className="text-xs text-gray-400">Campaign optimization inquiry - 1 day ago</p>
                     </div>
                   </div>
                 </div>
@@ -318,13 +322,13 @@ export default function Dashboard() {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-sm">
+            <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-sm">
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
                 <div className="space-y-3">
                   <Link
                     to="/location-campaigns"
-                    className="flex w-full items-center justify-center rounded-lg bg-white px-4 py-3 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-gray-50 transition-colors duration-200"
+                    className="flex w-full items-center justify-center rounded-lg bg-gray-800 border border-purple-600/50 px-4 py-3 text-sm font-semibold text-purple-400 shadow-sm hover:bg-gray-700 transition-colors duration-200"
                   >
                     <MapPinIcon className="w-5 h-5 mr-2" />
                     Create New Campaign
