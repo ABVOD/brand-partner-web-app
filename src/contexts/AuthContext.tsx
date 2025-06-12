@@ -224,7 +224,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  async function signup(email: string, password: string, role: UserRole = 'brand_partner') {
+  async function signup(email: string, _password: string, role: UserRole = 'brand_partner') {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 500));
 

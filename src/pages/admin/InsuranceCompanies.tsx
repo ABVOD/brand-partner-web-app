@@ -11,7 +11,6 @@ import {
   CheckCircleIcon,
   XCircleIcon,
   ClockIcon,
-  FunnelIcon,
   ArrowDownTrayIcon,
   DocumentTextIcon,
   ShieldCheckIcon,
@@ -274,10 +273,7 @@ export default function InsuranceCompanies() {
     return matchesSearch && matchesStatus && matchesType;
   });
 
-  const handleStatusUpdate = (companyId: string, newStatus: string) => {
-    console.log(`Updating company ${companyId} to status: ${newStatus}`);
-    // In a real app, this would make an API call
-  };
+
 
   const handleDelete = (companyId: string) => {
     if (confirm('Are you sure you want to delete this insurance company?')) {
@@ -293,7 +289,6 @@ export default function InsuranceCompanies() {
 
   const openEditModal = (company: InsuranceCompany) => {
     setSelectedCompany(company);
-    setShowEditModal(true);
   };
 
   const exportData = () => {
@@ -393,7 +388,6 @@ export default function InsuranceCompanies() {
               Export
             </button>
             <button
-              onClick={() => setShowCreateModal(true)}
               className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <PlusIcon className="h-4 w-4 mr-2" />

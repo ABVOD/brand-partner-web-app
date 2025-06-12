@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   BellIcon,
   ClockIcon,
@@ -6,17 +6,12 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
   DocumentTextIcon,
-  CalendarIcon,
   PaperAirplaneIcon,
   EyeIcon,
   PencilIcon,
   TrashIcon,
-  FunnelIcon,
   MagnifyingGlassIcon,
   ArrowTrendingUpIcon,
-  DevicePhoneMobileIcon,
-  GlobeAltIcon,
-  ShieldCheckIcon,
   ChartBarIcon
 } from '@heroicons/react/24/outline';
 import AdminDashboardLayout from '../../components/AdminDashboardLayout';

@@ -73,7 +73,6 @@ class UsageTracker {
     const target = event.target as HTMLElement;
     if (this.shouldExcludeElement(target)) return;
 
-    const rect = document.documentElement.getBoundingClientRect();
     const x = event.clientX;
     const y = event.clientY;
 

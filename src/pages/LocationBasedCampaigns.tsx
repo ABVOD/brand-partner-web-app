@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback,  } from 'react';
 import DashboardLayout from '../components/DashboardLayout';
 import LocationPicker from '../components/LocationPicker';
 import DatePicker from 'react-datepicker';
@@ -13,8 +13,6 @@ import {
   CursorArrowRaysIcon,
   CheckCircleIcon,
   PlusIcon,
-  PhotoIcon,
-  DocumentTextIcon,
   TagIcon,
   QrCodeIcon
 } from '@heroicons/react/24/outline';
@@ -56,7 +54,7 @@ export default function LocationBasedCampaigns() {
 
   const [campaigns, setCampaigns] = useState<LocationBasedCampaign[]>([]);
   const [isCreating, setIsCreating] = useState(false);
-  const [selectedBanner, setSelectedBanner] = useState<File | null>(null);
+  const [, setSelectedBanner] = useState<File | null>(null);
   const [bannerPreview, setBannerPreview] = useState<string>('');
   const [qrCodePreview, setQrCodePreview] = useState<string>('');
   const [newCampaign, setNewCampaign] = useState<Partial<LocationBasedCampaign>>({

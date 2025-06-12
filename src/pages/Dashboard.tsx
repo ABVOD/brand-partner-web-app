@@ -7,7 +7,6 @@ import {
   EyeIcon,
   CursorArrowRaysIcon,
   BanknotesIcon,
-  UsersIcon,
   ArrowUpIcon,
   ArrowDownIcon,
   ChartBarIcon
@@ -104,7 +103,7 @@ const performanceData = [
 ];
 
 export default function Dashboard() {
-  const { trackEvent, trackFeatureUsage } = useUsageTracking();
+  const { trackFeatureUsage } = useUsageTracking();
 
   const handleStatClick = (statName: string, href: string) => {
     trackFeatureUsage('dashboard_stat_click', { 
@@ -113,13 +112,7 @@ export default function Dashboard() {
     });
   };
 
-  const handleCampaignView = (campaignId: number, campaignName: string) => {
-    trackEvent('campaign_view', { 
-      campaignId, 
-      campaignName,
-      source: 'dashboard'
-    });
-  };
+ 
 
   return (
     <DashboardLayout>
@@ -195,7 +188,7 @@ export default function Dashboard() {
             
             {/* Simple bar chart representation */}
             <div className="space-y-4">
-              {performanceData.map((week, index) => (
+              {performanceData.map((week) => (
                 <div key={week.period} className="flex items-center space-x-4">
                   <div className="w-16 text-sm font-medium text-gray-300">{week.period}</div>
                   <div className="flex-1 space-y-2">

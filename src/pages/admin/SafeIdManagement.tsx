@@ -8,7 +8,6 @@ import {
   CheckCircleIcon,
   XCircleIcon,
   BuildingOfficeIcon,
-  FunnelIcon,
   ArrowDownTrayIcon
 } from '@heroicons/react/24/outline';
 import AdminDashboardLayout from '../../components/AdminDashboardLayout';

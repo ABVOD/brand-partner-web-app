@@ -2,13 +2,10 @@ import { useState, useMemo } from 'react';
 import {
   UsersIcon,
   MagnifyingGlassIcon,
-  FunnelIcon,
   EyeIcon,
   ShieldCheckIcon,
-  ShieldExclamationIcon,
   ClockIcon,
   MapPinIcon,
-  DocumentTextIcon,
   UserIcon,
   NoSymbolIcon,
   CheckBadgeIcon,
@@ -52,7 +49,6 @@ export default function UserManagement() {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [sortField, setSortField] = useState<SortField>('joinDate');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
-  const [showActivityLog, setShowActivityLog] = useState(false);
 
   // Mock data - in a real app, this would come from your backend
   const users: User[] = [

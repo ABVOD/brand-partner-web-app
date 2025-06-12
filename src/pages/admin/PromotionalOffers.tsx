@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import  { useState, useMemo } from 'react';
 import {
   MapPinIcon,
   CalendarIcon,
@@ -231,7 +231,7 @@ type FilterStatus = 'all' | 'active' | 'scheduled' | 'completed' | 'paused';
 export default function PromotionalOffers() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<FilterStatus>('all');
-  const [selectedOffer, setSelectedOffer] = useState<any>(null);
+  const [selectedOffer] = useState<any>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
 
   const filteredOffers = useMemo(() => {

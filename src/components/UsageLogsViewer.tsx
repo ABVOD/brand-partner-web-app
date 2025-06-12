@@ -90,7 +90,6 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
     })).sort((a, b) => b.views - a.views).slice(0, 10);
 
     // Calculate click heatmap data
-    const clickHeatmapData: ClickHeatmapData[] = [];
     const clickMap = new Map<string, ClickHeatmapData>();
 
     clicks.forEach(log => {
@@ -294,7 +293,7 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {filteredLogs.slice(0, 100).map((log, index) => (
+            {filteredLogs.slice(0, 100).map((log) => (
               <tr key={log.id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 text-sm text-gray-600">
                   {new Date(log.timestamp).toLocaleString()}
@@ -302,9 +301,9 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
                 <td className="px-4 py-2 text-sm text-gray-600">{log.userId}</td>
                 <td className="px-4 py-2">
                   <span className={`inline-flex px-2 py-1 text-xs rounded-full ${log.action === 'click' ? 'bg-blue-100 text-blue-800' :
-                      log.action === 'page_view' ? 'bg-green-100 text-green-800' :
-                        log.action === 'scroll' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-800'
+                    log.action === 'page_view' ? 'bg-green-100 text-green-800' :
+                      log.action === 'scroll' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-gray-100 text-gray-800'
                     }`}>
                     {log.action}
                   </span>
@@ -477,8 +476,8 @@ export default function UsageLogsViewer({ className = '' }: UsageLogsViewerProps
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key as any)}
                 className={`px-4 py-2 font-medium ${currentView === tab.key
-                    ? 'text-blue-600 border-b-2 border-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
                   }`}
               >
                 {tab.label}

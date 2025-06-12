@@ -5,25 +5,25 @@
  * Use these credentials to login and test the application.
  */
 
-import type { UserProfile, UserRole } from '../contexts/AuthContext';
+import type { UserProfile } from '../contexts/AuthContext';
 
 // Test Credentials - Use any password with these emails
 export const TEST_CREDENTIALS = {
   // Admin Accounts
   ADMIN: 'admin@example.com',
   SUPER_ADMIN: 'superadmin@example.com',
-  
+
   // Easy to remember test accounts
   TEST: 'test@test.com',
-  DEMO: 'demo@demo.com', 
+  DEMO: 'demo@demo.com',
   USER: 'user@user.com',
-  
+
   // Brand partner accounts
   BRAND_PARTNER: 'partner@example.com',
   STARBUCKS: 'starbucks@demo.com',
   MCDONALDS: 'mcdonalds@demo.com',
   SUBWAY: 'subway@demo.com',
-  
+
   // Business accounts
   PIZZA_HUT: 'marketing@pizzahut.com',
   BEST_BUY: 'promo@bestbuy.com',
@@ -156,7 +156,7 @@ if (typeof window !== 'undefined') {
   (window as any).quickLogin = quickLogin;
   (window as any).dummyDataUtils = dummyDataUtils;
   (window as any).TEST_CREDENTIALS = TEST_CREDENTIALS;
-  
+
   // Auto-log available credentials on page load
   setTimeout(() => {
     console.log('🚀 Dummy data loaded! Type "quickLogin.all()" to see all test accounts.');

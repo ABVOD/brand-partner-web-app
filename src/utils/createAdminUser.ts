@@ -26,20 +26,20 @@ function generateUID(): string {
 
 // This is a utility function for creating admin users
 // In a real app, this would be done through a secure admin interface
-export async function createAdminUser(email: string, password: string, role: UserRole = 'admin') {
+export async function createAdminUser(email: string, role: UserRole = 'admin') {
   try {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     const users = getStoredUsers();
     const existingUser = users.find(u => u.email === email);
-    
+
     if (existingUser) {
       throw new Error('User already exists');
     }
-    
+
     const uid = generateUID();
-    
+
     // Create the user profile with admin role
     const userProfile: UserProfile = {
       uid,
@@ -50,11 +50,11 @@ export async function createAdminUser(email: string, password: string, role: Use
       isActive: true,
       lastLogin: new Date()
     };
-    
+
     // Save to local storage
     users.push(userProfile);
     saveUsers(users);
-    
+
     console.log(`Successfully created ${role} user:`, email);
     console.log('You can now login with this email and any password');
     return userProfile;

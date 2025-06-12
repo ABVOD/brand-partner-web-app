@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useUsageTracking } from '../../hooks/useUsageTracking';
 import UsageLogsViewer from '../../components/UsageLogsViewer';
 import HeatmapVisualization from '../../components/HeatmapVisualization';
